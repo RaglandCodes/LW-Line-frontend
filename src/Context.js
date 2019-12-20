@@ -8,6 +8,20 @@ function appReducer(state, action) {
         feedItems: [...state.feedItems, ...action.payload]
       };
     }
+    case 'appendSubscription': {
+      return {
+        ...state,
+        subscriptions: [...state.subscriptions, action.payload]
+      };
+    }
+    case 'removeSubscription': {
+      let oldSubscriptions = state.subscriptions;
+      oldSubscriptions.splice(oldSubscriptions.indexOf(action.payload), 1);
+      return {
+        ...state,
+        subscriptions: [...oldSubscriptions]
+      };
+    }
     case 'change_page': {
       return {
         ...state,
@@ -36,10 +50,11 @@ function ContextProvider(props) {
     currentPage: 'home', // home | settings | search | bookmarks
     theme: 'light',
     fontSize: 'medium',
-    subscriptions: ['The Verge', 'Vox'],
+    subscriptions: ['The Atlantic', 'The Verge', 'Vox'],
     feedItems: [],
     mutePhrases: [],
     previewModal: {
+      openOnClick: false,
       open: false,
       title: '',
       description: '',

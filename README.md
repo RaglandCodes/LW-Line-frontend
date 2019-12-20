@@ -4,10 +4,15 @@
 ## What's new
 
 ## TODO
-- Choose fonts
-- Handle server response
+- UI
+    - Choose fonts, colours
+    - Dark Theme
+- Handle failed server response when
+    - fetching feed
+    - searching for sources
 - Pagination
 - Settings
+    - Save to Local Storage
 - Organize files based on domain
 - Check out suspense
 

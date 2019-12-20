@@ -18,34 +18,36 @@ const useStyles = createUseStyles({
     backgroundColor: '#F5F5F5',
     width: '90%',
     margin: '5px auto',
-    padding: 3,
-    fontFamily: 'Merriweather',
+    padding: 3
+
     //fontFamily: 'Lora',
-    fontSize: 15
-  }
+  },
+  title: { fontFamily: 'Merriweather', fontSize: 15 },
+  description: { fontFamily: 'Merriweather', fontSize: 13, margin: { top: 3 } }
 });
 function ArticleBox(item) {
   const classes = useStyles();
-  console.log(`${item.image} <== item.image\n\n`);
-
   let { state, dispatch } = React.useContext(Context);
 
   return (
     <div
       className={classes.ArticleBox}
       onClick={() =>
-        dispatch({
-          type: 'togglePreview',
-          payload: {
-            title: item.title,
-            description: item.description,
-            image: item.image,
-            link: item.link
-          }
-        })
+        state.previewModal.openOnClick
+          ? dispatch({
+              type: 'togglePreview',
+              payload: {
+                title: item.title,
+                description: item.description,
+                image: item.image,
+                link: item.link
+              }
+            })
+          : window.open(item.link)
       }
     >
-      {item.title}
+      <div className={classes.title}>{item.title}</div>
+      <div className={classes.description}>{item.metaDescription}</div>
     </div>
   );
 }

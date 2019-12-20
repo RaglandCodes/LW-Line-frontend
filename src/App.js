@@ -19,7 +19,7 @@ function App() {
       <TopBox />
       {state.currentPage === 'home' ? <Feed /> : <Settings />}
 
-      {/* <Navigation /> */}
+      <Navigation />
     </div>
   );
 }

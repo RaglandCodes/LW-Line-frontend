@@ -6,19 +6,28 @@ const colours = {
 
 const header2 = {
   fontSize: 23,
-  fontFamily: 'Lato',
-  fontWeight: 500,
+  fontFamily: 'Merriweather',
+  fontWeight: 400,
   margin: {
     top: 18
   }
 };
 
 const header3 = {
-  fontSize: 18,
-  fontFamily: 'Lato',
-  fontWeight: 400,
+  fontSize: 17,
+  fontFamily: 'Merriweather',
+  fontWeight: 300,
   margin: {
-    top: 9
+    top: 11
   }
 };
-module.exports = { colours, header2, header3 };
+
+const header4 = {
+  fontSize: 15,
+  fontFamily: 'Merriweather',
+  fontWeight: 300,
+  margin: {
+    top: 11
+  }
+};
+module.exports = { colours, header2, header3, header4 };

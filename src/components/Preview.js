@@ -10,15 +10,20 @@ const useStyles = createUseStyles({
   Preview: {
     zIndex: 4,
     width: '100%',
+    height: '100%',
     //bottom: 0,
     //height: ' 100%',
-
-    position: 'relative',
-    backgroundColor: 'white'
+    top: 0,
+    borderRadius: '7px 7px 0 0 ',
+    position: 'fixed',
+    overflowX: 'scroll'
+  },
+  paddingDiv: {
+    paddingTop: '30%'
   },
   previewContent: {
-    backgroundColor: 'yellow',
-    overflow: 'scroll'
+    bottom: 0,
+    backgroundColor: 'white'
   },
   title: {
     fontSize: 33,
@@ -35,6 +40,7 @@ function Preview() {
 
   return (
     <div className={classes.Preview}>
+      <div className={classes.paddingDiv}></div>
       <div className={classes.previewContent}>
         <div className={classes.title}>{state.previewModal.title}</div>
         <div className={classes.description}>
