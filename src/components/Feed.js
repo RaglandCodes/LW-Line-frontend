@@ -19,16 +19,36 @@ function Feed() {
     fetch(queryString)
       .then(res => res.json())
       .then(jsonRes => {
-        dispatch({ type: 'appendFeed', payload: jsonRes });
+        dispatch({ type: 'setFeed', payload: jsonRes.data });
+        dispatch({ type: 'setAfter', payload: jsonRes.after });
+
+        //console.dir(jsonRes);
       });
   }, []);
 
+  let getMoreItems = () => {
+    let queryString = `http://192.168.1.108:5151/getItems/?subscriptions=${state.subscriptions.join(
+      'AaNnDd'
+    )}&afterRef=${state.after.ref}&afterTs=${state.after.ts}`;
+
+    fetch(queryString)
+      .then(res => res.json())
+      .then(jsonRes => {
+        dispatch({ type: 'appendFeed', payload: jsonRes.data });
+        dispatch({ type: 'setAfter', payload: jsonRes.after });
+
+        console.dir(jsonRes);
+      });
+
+    console.log(`${queryString} <== queryString\n\n`);
+  };
   return (
     <div>
       {state.feedItems.map(item => (
         <ArticleBox key={item.id} {...item} />
       ))}
       {state.previewModal.open ? <Preview /> : null}
+      <button onClick={() => getMoreItems()}>Load more stories</button>
       <br />
       <br />
       <br />

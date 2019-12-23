@@ -2,10 +2,22 @@ import React, { useReducer, useEffect } from 'react';
 
 function appReducer(state, action) {
   switch (action.type) {
+    case 'setFeed': {
+      return {
+        ...state,
+        feedItems: [...action.payload]
+      };
+    }
     case 'appendFeed': {
       return {
         ...state,
         feedItems: [...state.feedItems, ...action.payload]
+      };
+    }
+    case 'setAfter': {
+      return {
+        ...state,
+        after: action.payload
       };
     }
     case 'appendSubscription': {
@@ -66,7 +78,10 @@ function ContextProvider(props) {
   useEffect(() => {
     console.dir(state);
     console.log('⬆ Latest global state');
+
   }, [state]);
+
+  
   return (
     <Context.Provider value={{ state, dispatch }}>
       {props.children}

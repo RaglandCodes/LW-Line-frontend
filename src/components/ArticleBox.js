@@ -8,7 +8,7 @@ import WebFont from 'webfontloader';
 
 WebFont.load({
   google: {
-    families: ['Merriweather:300', 'Lora', 'serif', 'Playfair Display']
+    families: ['Merriweather:300', 'Lato', 'serif', 'Playfair Display']
   }
 });
 
@@ -18,12 +18,21 @@ const useStyles = createUseStyles({
     backgroundColor: '#F5F5F5',
     width: '90%',
     margin: '5px auto',
-    padding: 3
-
-    //fontFamily: 'Lora',
+    padding: 4
   },
-  title: { fontFamily: 'Merriweather', fontSize: 15 },
-  description: { fontFamily: 'Merriweather', fontSize: 13, margin: { top: 3 } }
+  title: { fontFamily: 'Merriweather', fontSize: 15, padding: { top: 3 } },
+  source: {
+    fontFamily: 'Lato',
+    fontSize: 12,
+    padding: { top: 2, bottom: 3 },
+    color: '#424242'
+  },
+  description: {
+    fontFamily: 'Merriweather',
+    fontSize: 13,
+    margin: { top: 0 },
+    color: '#263238'
+  }
 });
 function ArticleBox(item) {
   const classes = useStyles();
@@ -47,6 +56,7 @@ function ArticleBox(item) {
       }
     >
       <div className={classes.title}>{item.title}</div>
+      <div className={classes.source}>{item.source}</div>
       <div className={classes.description}>{item.metaDescription}</div>
     </div>
   );
