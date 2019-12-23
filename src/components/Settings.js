@@ -2,13 +2,13 @@
 import React, { useState } from 'react';
 import { Context } from '../Context';
 
+//Components
+import SourceBox from './SourceBox';
+
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
 import { header2, header3, header4 } from '../styles';
-
-//Components
-import SourceBox from './SourceBox';
 
 WebFont.load({
   google: {
@@ -58,7 +58,10 @@ function Settings() {
 
   let searchSources = () => {
     // Call server with  sourceSearchInput and setSourceSearchResults
-    let searchQuery = `http://localhost:5151/getSources/?searchTerm=${sourceSearchInput}`;
+
+    //let searchQuery = `http://localhost:5151/getSources/?searchTerm=${sourceSearchInput}`;
+    let searchQuery = `https://lw-line.glitch.me/getSources/?searchTerm=${sourceSearchInput}`;
+
     fetch(searchQuery)
       .then(res => res.json())
       .then(jsonRes => {

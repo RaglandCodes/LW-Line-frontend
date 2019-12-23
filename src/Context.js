@@ -59,10 +59,10 @@ let Context = React.createContext();
 
 function ContextProvider(props) {
   const [state, dispatch] = useReducer(appReducer, {
-    currentPage: 'home', // home | settings | search | bookmarks
+    currentPage: '', // home | settings | search | bookmarks
     theme: 'light',
     fontSize: 'medium',
-    subscriptions: ['The Atlantic', 'The Verge', 'Vox'],
+    subscriptions: [],
     feedItems: [],
     mutePhrases: [],
     previewModal: {
@@ -75,13 +75,19 @@ function ContextProvider(props) {
     }
   });
 
+  // useEffect(() => {
+  //   console.dir(state);
+  //   console.log('⬆ Latest global state');
+  // }, [state]);
+
   useEffect(() => {
-    console.dir(state);
-    console.log('⬆ Latest global state');
+    // Update local storage whenever the page is changed
+    localStorage.setItem('currentPage', state.currentPage);
+    localStorage.setItem('theme', state.theme);
+    localStorage.setItem('subscriptions', state.subscriptions.join('AnNdDd'));
+    localStorage.setItem('mutePhrases', state.mutePhrases.join('AnNdDd'));
+  }, [state.currentPage]);
 
-  }, [state]);
-
-  
   return (
     <Context.Provider value={{ state, dispatch }}>
       {props.children}

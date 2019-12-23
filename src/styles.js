@@ -1,7 +1,8 @@
 // Contains theme data
 
 const colours = {
-  blue: '#1565C0'
+  blue: '#1565C0',
+  blue900: '#0D47A1'
 };
 
 const header2 = {

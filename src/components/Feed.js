@@ -7,14 +7,25 @@ import ArticleBox from './ArticleBox';
 import Preview from './Preview';
 
 //Styles
+import { createUseStyles } from 'react-jss';
+import WebFont from 'webfontloader';
+
+const useStyles = createUseStyles({
+  getMoreItemsBtn: {
+    margin: 'auto'
+  }
+});
 
 function Feed() {
+  const classes = useStyles();
+
   let { state, dispatch } = React.useContext(Context);
   useEffect(() => {
     console.log(`${state.subscriptions} <== state.subscriptions\n\n`);
-    let queryString = `http://192.168.1.108:5151/getItems/?subscriptions=${state.subscriptions.join(
+    let queryString = `https://lw-line.glitch.me/getItems/?subscriptions=${state.subscriptions.join(
       'AaNnDd'
     )}`;
+    console.log('Feed mounted');
 
     fetch(queryString)
       .then(res => res.json())
@@ -23,11 +34,14 @@ function Feed() {
         dispatch({ type: 'setAfter', payload: jsonRes.after });
 
         //console.dir(jsonRes);
+      })
+      .catch(feedFetchError => {
+        console.log(`${feedFetchError} <== feedFetchError\n\n`);
       });
   }, []);
 
   let getMoreItems = () => {
-    let queryString = `http://192.168.1.108:5151/getItems/?subscriptions=${state.subscriptions.join(
+    let queryString = `https://lw-line.glitch.me/getItems/?subscriptions=${state.subscriptions.join(
       'AaNnDd'
     )}&afterRef=${state.after.ref}&afterTs=${state.after.ts}`;
 
@@ -48,7 +62,12 @@ function Feed() {
         <ArticleBox key={item.id} {...item} />
       ))}
       {state.previewModal.open ? <Preview /> : null}
-      <button onClick={() => getMoreItems()}>Load more stories</button>
+      <button
+        className={classes.getMoreItemsBtn}
+        onClick={() => getMoreItems()}
+      >
+        Load more stories
+      </button>
       <br />
       <br />
       <br />
