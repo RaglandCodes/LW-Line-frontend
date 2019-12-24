@@ -14,6 +14,12 @@ function appReducer(state, action) {
         feedItems: [...state.feedItems, ...action.payload]
       };
     }
+    case 'setOrientation': {
+      return {
+        ...state,
+        oritentation: action.payload
+      };
+    }
     case 'setAfter': {
       return {
         ...state,
@@ -64,6 +70,7 @@ function ContextProvider(props) {
     fontSize: 'medium',
     subscriptions: [],
     feedItems: [],
+    oritentation: 'potrait',
     mutePhrases: [],
     previewModal: {
       openOnClick: false,
@@ -75,10 +82,10 @@ function ContextProvider(props) {
     }
   });
 
-  // useEffect(() => {
-  //   console.dir(state);
-  //   console.log('⬆ Latest global state');
-  // }, [state]);
+  useEffect(() => {
+    console.dir(state);
+    console.log('⬆ Latest global state');
+  }, [state]);
 
   useEffect(() => {
     // Update local storage whenever the page is changed

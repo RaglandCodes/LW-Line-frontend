@@ -45,7 +45,7 @@ const useStyles = createUseStyles({
   //   width: 44
   // },
   currentPage: {
-    padding: '48px 5px',
+    padding: '85px 5px',
     fontSize: 39,
     width: '90%',
     margin: 'auto',
@@ -59,6 +59,7 @@ const useStyles = createUseStyles({
 function TopBox() {
   let { state, dispatch } = React.useContext(Context);
   let [displayText, setDisplayText] = useState('LW Line');
+  const classes = useStyles();
 
   useEffect(() => {
     switch (state.currentPage) {
@@ -72,7 +73,7 @@ function TopBox() {
         setDisplayText('LW Line');
     }
   }, [state.currentPage]);
-  const classes = useStyles();
+  
   return (
     <div className={classes.TopBox}>
       <div className={classes.currentPage}>{displayText}</div>

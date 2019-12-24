@@ -13,6 +13,12 @@ import Navigation from './components/Navigation';
 
 function App() {
   let { state, dispatch } = React.useContext(Context);
+
+  // let handleScreenSize = () => {
+  //   let { innerWidth: screenWidth, innerHeight: screenHeight } = window;
+  //   console.log('resizing');
+  //   console.log(`${innerHeight} <== innerWidth\n\n`);
+  // };
   useEffect(() => {
     // Check if user is using for the first time
 
@@ -25,7 +31,6 @@ function App() {
 
       subscriptions.forEach(subscription => {
         if (subscription !== '') {
-          console.log('Adding subscriptions from LS' + subscription);
           dispatch({ type: 'appendSubscription', payload: subscription });
         }
       });
@@ -41,6 +46,23 @@ function App() {
         payload: 'home'
       });
     }
+
+    dispatch({
+      type: 'setOrientation',
+      payload:
+        //window.screen.width > window.screen.height ? 'landscape' : 'potrait'
+        window.innerWidth > window.innerHeight ? 'landscape' : 'potrait'
+    });
+    //     console.log(`${window.scrollY} <==
+    // window.scr\n\n`);
+
+    window.addEventListener('resize', () => {
+      dispatch({
+        type: 'setOrientation',
+        payload:
+          window.innerWidth > window.innerHeight ? 'landscape' : 'potrait'
+      });
+    });
   }, []);
   return (
     <div className="App">

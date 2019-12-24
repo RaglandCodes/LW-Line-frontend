@@ -14,7 +14,8 @@ WebFont.load({
 
 const useStyles = createUseStyles({
   ArticleBox: {
-    borderBottom: '1px solid #1565C0',
+    //borderBottom: '1px solid #1565C0',263238
+    borderBottom: '1px solid #455A64',
     backgroundColor: '#F5F5F5',
     width: '90%',
     margin: '5px auto',

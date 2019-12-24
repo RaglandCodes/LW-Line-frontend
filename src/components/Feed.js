@@ -21,11 +21,10 @@ function Feed() {
 
   let { state, dispatch } = React.useContext(Context);
   useEffect(() => {
-    console.log(`${state.subscriptions} <== state.subscriptions\n\n`);
     let queryString = `https://lw-line.glitch.me/getItems/?subscriptions=${state.subscriptions.join(
       'AaNnDd'
     )}`;
-    console.log('Feed mounted');
+    // console.log('Feed mounted');
 
     fetch(queryString)
       .then(res => res.json())
