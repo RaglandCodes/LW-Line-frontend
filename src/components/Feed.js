@@ -11,15 +11,24 @@ import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
 
 const useStyles = createUseStyles({
+  Feed: state => ({
+    height: '100%',
+    overflow: 'auto',
+    gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
+    gridColumnEnd: 3,
+    gridRowStart: 1,
+    gridRowEnd: state.orientation === 'potrait' ? 2 : 3
+  }),
   getMoreItemsBtn: {
     margin: 'auto'
   }
 });
 
 function Feed() {
-  const classes = useStyles();
-
   let { state, dispatch } = React.useContext(Context);
+  console.log(`${state.orientation} <== state.orientation\n\n`);
+
+  const classes = useStyles(state);
   useEffect(() => {
     let queryString = `https://lw-line.glitch.me/getItems/?subscriptions=${state.subscriptions.join(
       'AaNnDd'
@@ -56,7 +65,7 @@ function Feed() {
     console.log(`${queryString} <== queryString\n\n`);
   };
   return (
-    <div>
+    <div className={classes.Feed}>
       {state.feedItems.map(item => (
         <ArticleBox key={item.id} {...item} />
       ))}

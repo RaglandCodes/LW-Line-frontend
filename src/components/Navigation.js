@@ -23,23 +23,37 @@ const useStyles = createUseStyles({
     backgroundColor: '#263238',
     color: 'white',
     display: 'flex',
-    justifyContent: 'space-evenly',
+    justifyContent: 'spaceEvenly',
     boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.85)',
-    position: 'fixed',
-    flexDirection: state.oritentation === 'potrait' ? 'row' : 'column',
-    bottom: 0,
-    left: 0,
-    width: state.oritentation === 'potrait' ? '100%' : 'auto',
-    height: state.oritentation === 'potrait' ? 'auto' : '100%'
+    flexDirection: state.orientation === 'potrait' ? 'row' : 'column',
+    alignItems: 'center',
+    gridColumnStart: 1,
+    gridColumnEnd: state.orientation === 'landscape' ? 2 : 3,
+    gridRowStart: state.orientation === 'landscape' ? 1 : 2,
+    //gridRowEnd: state.orientation === 'landscape' ? 2 : 3,
+    gridRowEnd: 3,
+    // position: 'fixed',
+    // bottom: 0,
+    // left: 0,
+    width: state.orientation === 'potrait' ? '100%' : 'auto',
+    height: state.orientation === 'potrait' ? 'auto' : '100%'
   }),
-
+  navIconContainer: state => ({
+    flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: state.orientation === 'potrait' ? 'column' : 'row'
+  }),
   navIcon: {
     width: 23,
     height: 23,
-    padding: {
-      top: 6,
-      bottom: 5
-    }
+
+    // padding: {
+    //   top: 6,
+    //   bottom: 5
+    // }
+
+    padding: 11
   }
 });
 
@@ -49,32 +63,43 @@ function Navigation() {
 
   return (
     <div className={classes.Navigation}>
-      <img
-        className={classes.navIcon}
-        src={state.currentPage === 'home' ? homeIcon : homeLineIcon}
-        alt="Feed"
-        onClick={() => dispatch({ type: 'change_page', payload: 'home' })}
-      />
-      <img
-        className={classes.navIcon}
-        src={searchIcon}
-        alt="Search"
-        onClick={() => dispatch({ type: 'change_page', payload: 'search' })}
-      />
-      <img
-        className={classes.navIcon}
-        src={
-          state.currentPage === 'bookmarks' ? bookmarkIcon : bookmarksLineIcon
-        }
-        alt="Bookmarks"
-        onClick={() => dispatch({ type: 'change_page', payload: 'search' })}
-      />
-      <img
-        className={classes.navIcon}
-        src={state.currentPage === 'settings' ? settingIcon : settingsLineIcon}
-        alt="Settings"
-        onClick={() => dispatch({ type: 'change_page', payload: 'settings' })}
-      />
+      <div className={classes.navIconContainer}>
+        <img
+          className={classes.navIcon}
+          src={state.currentPage === 'home' ? homeIcon : homeLineIcon}
+          alt="Feed"
+          onClick={() => dispatch({ type: 'change_page', payload: 'home' })}
+        />
+      </div>
+
+      <div className={classes.navIconContainer}>
+        <img
+          className={classes.navIcon}
+          src={searchIcon}
+          alt="Search"
+          onClick={() => dispatch({ type: 'change_page', payload: 'search' })}
+        />
+      </div>
+      <div className={classes.navIconContainer}>
+        <img
+          className={classes.navIcon}
+          src={
+            state.currentPage === 'bookmarks' ? bookmarkIcon : bookmarksLineIcon
+          }
+          alt="Bookmarks"
+          onClick={() => dispatch({ type: 'change_page', payload: 'search' })}
+        />
+      </div>
+      <div className={classes.navIconContainer}>
+        <img
+          className={classes.navIcon}
+          src={
+            state.currentPage === 'settings' ? settingIcon : settingsLineIcon
+          }
+          alt="Settings"
+          onClick={() => dispatch({ type: 'change_page', payload: 'settings' })}
+        />
+      </div>
     </div>
   );
 }

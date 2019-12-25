@@ -36,8 +36,8 @@ const useStyles = createUseStyles({
   }
 });
 function ArticleBox(item) {
-  const classes = useStyles();
   let { state, dispatch } = React.useContext(Context);
+  const classes = useStyles();
 
   return (
     <div

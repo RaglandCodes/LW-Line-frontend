@@ -22,10 +22,16 @@ WebFont.load({
 });
 
 const useStyles = createUseStyles({
-  Navigation: {
+  Settings: state => ({
     width: '90%',
-    margin: 'auto'
-  },
+    margin: 'auto',
+    height: '100%',
+    overflow: 'auto',
+    gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
+    gridColumnEnd: 3,
+    gridRowStart: 1,
+    gridRowEnd: state.orientation === 'potrait' ? 2 : 3
+  }),
   header2: { ...header2 },
   header3: { ...header3 },
   header4: { ...header4 },
@@ -50,9 +56,9 @@ const useStyles = createUseStyles({
 });
 
 function Settings() {
-  const classes = useStyles();
-
   let { state, dispatch } = React.useContext(Context);
+  const classes = useStyles(state);
+
   let [sourceSearchResults, setSourceSearchResults] = useState([]);
   let [sourceSearchInput, setsourceSearchInput] = useState('');
 
@@ -72,7 +78,7 @@ function Settings() {
       });
   };
   return (
-    <div className={classes.Navigation}>
+    <div className={classes.Settings}>
       <div className={classes.header2}>Content</div>
       {/* ------ ----- ----- Sources ----- ----- ----- */}
       <div className={classes.header3}>Sources</div>

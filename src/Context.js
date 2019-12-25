@@ -17,7 +17,7 @@ function appReducer(state, action) {
     case 'setOrientation': {
       return {
         ...state,
-        oritentation: action.payload
+        orientation: action.payload
       };
     }
     case 'setAfter': {
@@ -70,7 +70,7 @@ function ContextProvider(props) {
     fontSize: 'medium',
     subscriptions: [],
     feedItems: [],
-    oritentation: 'potrait',
+    orientation: 'potrait',
     mutePhrases: [],
     previewModal: {
       openOnClick: false,
