@@ -12,8 +12,8 @@ import WebFont from 'webfontloader';
 
 const useStyles = createUseStyles({
   Feed: state => ({
-    height: '100%',
-    overflow: 'auto',
+    //height: state.innerHeight,
+    overflow: 'scroll',
     gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
     gridColumnEnd: 3,
     gridRowStart: 1,

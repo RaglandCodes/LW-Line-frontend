@@ -14,10 +14,17 @@ function appReducer(state, action) {
         feedItems: [...state.feedItems, ...action.payload]
       };
     }
+    
     case 'setOrientation': {
       return {
         ...state,
         orientation: action.payload
+      };
+    }
+    case 'setInnerHeight': {
+      return {
+        ...state,
+        innerHeight: action.payload
       };
     }
     case 'setAfter': {

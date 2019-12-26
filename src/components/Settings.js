@@ -23,10 +23,16 @@ WebFont.load({
 
 const useStyles = createUseStyles({
   Settings: state => ({
-    width: '90%',
-    margin: 'auto',
-    height: '100%',
-    overflow: 'auto',
+    //width: '90%',
+    //margin: 'auto',
+    //height: '100%',
+    // overflow: 'scroll',
+    // gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
+    // gridColumnEnd: 3,
+    // gridRowStart: 1,
+    // gridRowEnd: state.orientation === 'potrait' ? 2 : 3
+    padding:"0 8px",
+    overflow: 'scroll',
     gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
     gridColumnEnd: 3,
     gridRowStart: 1,

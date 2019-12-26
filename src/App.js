@@ -13,12 +13,13 @@ import './App.css';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
-  App: {
+  App: state => ({
     display: 'grid',
-    height: '100vh',
-    gridTemplateColumns: '40px 1fr',
-    gridTemplateRows: '1fr 40px'
-  },
+    //    maxHeight: '100%',
+    height: state.innerHeight,
+    gridTemplateColumns: '40px auto',
+    gridTemplateRows: 'auto 40px'
+  }),
   feedNavWrapper: {}
 });
 
@@ -62,10 +63,13 @@ function App() {
 
     dispatch({
       type: 'setOrientation',
-      payload:
-        //window.screen.width > window.screen.height ? 'landscape' : 'potrait'
-        window.innerWidth > window.innerHeight ? 'landscape' : 'potrait'
+      payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait'
     });
+    dispatch({
+      type: 'setInnerHeight',
+      payload: window.innerHeight
+    });
+
     //     console.log(`${window.scrollY} <==
     // window.scr\n\n`);
 
@@ -77,6 +81,10 @@ function App() {
         type: 'setOrientation',
         payload:
           window.innerWidth > window.innerHeight ? 'landscape' : 'potrait'
+      });
+      dispatch({
+        type: 'setInnerHeight',
+        payload: window.innerHeight
       });
     });
   }, []);

@@ -30,13 +30,12 @@ const useStyles = createUseStyles({
     gridColumnStart: 1,
     gridColumnEnd: state.orientation === 'landscape' ? 2 : 3,
     gridRowStart: state.orientation === 'landscape' ? 1 : 2,
-    //gridRowEnd: state.orientation === 'landscape' ? 2 : 3,
-    gridRowEnd: 3,
+    gridRowEnd: 3
     // position: 'fixed',
     // bottom: 0,
     // left: 0,
-    width: state.orientation === 'potrait' ? '100%' : 'auto',
-    height: state.orientation === 'potrait' ? 'auto' : '100%'
+    // width: state.orientation === 'potrait' ? '100%' : 'auto',
+    // height: state.orientation === 'potrait' ? 'auto' : '100%'
   }),
   navIconContainer: state => ({
     flexGrow: 1,
