@@ -1,3 +1,4 @@
+//React
 import React, { useReducer, useEffect } from 'react';
 
 function appReducer(state, action) {
@@ -14,7 +15,7 @@ function appReducer(state, action) {
         feedItems: [...state.feedItems, ...action.payload]
       };
     }
-    
+
     case 'setOrientation': {
       return {
         ...state,
@@ -95,12 +96,13 @@ function ContextProvider(props) {
   }, [state]);
 
   useEffect(() => {
-    // Update local storage whenever the page is changed
-    localStorage.setItem('currentPage', state.currentPage);
     localStorage.setItem('theme', state.theme);
-    localStorage.setItem('subscriptions', state.subscriptions.join('AnNdDd'));
     localStorage.setItem('mutePhrases', state.mutePhrases.join('AnNdDd'));
-  }, [state.currentPage]);
+  }, [state]);
+
+  useEffect(() => {
+    localStorage.setItem('subscriptions', state.subscriptions.join('AnNdDd'));
+  }, [state.subscriptions]);
 
   return (
     <Context.Provider value={{ state, dispatch }}>

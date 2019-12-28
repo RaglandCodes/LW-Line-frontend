@@ -17,7 +17,7 @@ const useStyles = createUseStyles({
     //borderBottom: '1px solid #1565C0',263238
     borderBottom: '1px solid #455A64',
     backgroundColor: '#F5F5F5',
-    width: '90%',
+    width: '95%',
     margin: '5px auto',
     padding: 4
   },

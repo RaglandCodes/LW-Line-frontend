@@ -4,6 +4,7 @@ import { Context } from '../Context';
 
 //Components
 import SourceBox from './SourceBox';
+import Sheet from './Sheet';
 
 //Styles
 import { createUseStyles } from 'react-jss';
@@ -31,12 +32,11 @@ const useStyles = createUseStyles({
     // gridColumnEnd: 3,
     // gridRowStart: 1,
     // gridRowEnd: state.orientation === 'potrait' ? 2 : 3
-    padding:"0 8px",
-    overflow: 'scroll',
-    gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
-    gridColumnEnd: 3,
-    gridRowStart: 1,
-    gridRowEnd: state.orientation === 'potrait' ? 2 : 3
+    // overflow: 'scroll',
+    // gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
+    // gridColumnEnd: 3,
+    // gridRowStart: 1,
+    // gridRowEnd: state.orientation === 'potrait' ? 2 : 3
   }),
   header2: { ...header2 },
   header3: { ...header3 },
@@ -84,7 +84,7 @@ function Settings() {
       });
   };
   return (
-    <div className={classes.Settings}>
+    <Sheet page="Settings">
       <div className={classes.header2}>Content</div>
       {/* ------ ----- ----- Sources ----- ----- ----- */}
       <div className={classes.header3}>Sources</div>
@@ -168,7 +168,7 @@ function Settings() {
       <br />
       <br />
       <br />
-    </div>
+    </Sheet>
   );
 }
 

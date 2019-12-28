@@ -1,6 +1,7 @@
 //React
 import React from 'react';
 import { Context } from '../Context';
+import { Link } from 'react-router-dom';
 
 //Assets
 import settingIcon from '../assets/material_settings.png';
@@ -56,48 +57,55 @@ const useStyles = createUseStyles({
   }
 });
 
-function Navigation() {
+function Navigation(props) {
   let { state, dispatch } = React.useContext(Context);
   const classes = useStyles(state);
 
   return (
     <div className={classes.Navigation}>
       <div className={classes.navIconContainer}>
-        <img
-          className={classes.navIcon}
-          src={state.currentPage === 'home' ? homeIcon : homeLineIcon}
-          alt="Feed"
-          onClick={() => dispatch({ type: 'change_page', payload: 'home' })}
-        />
+        <Link to="/">
+          <img
+            className={classes.navIcon}
+            src={props.page === 'Feed' ? homeIcon : homeLineIcon}
+            alt="Feed"
+            // onClick={() => dispatch({ type: 'change_page', payload: 'home' })}
+          />
+        </Link>
+      </div>
+      <div className={classes.navIconContainer}>
+        <Link to="/">
+          <img
+            className={classes.navIcon}
+            src={searchIcon}
+            alt="Search"
+            // onClick={() => dispatch({ type: 'change_page', payload: 'search' })}
+          />
+        </Link>
       </div>
 
       <div className={classes.navIconContainer}>
-        <img
-          className={classes.navIcon}
-          src={searchIcon}
-          alt="Search"
-          onClick={() => dispatch({ type: 'change_page', payload: 'search' })}
-        />
+        <Link to="/">
+          <img
+            className={classes.navIcon}
+            src={props.page === 'bookmarks' ? bookmarkIcon : bookmarksLineIcon}
+            alt="Bookmarks"
+            // onClick={() => dispatch({ type: 'change_page', payload: 'search' })}
+          />
+        </Link>
       </div>
+
       <div className={classes.navIconContainer}>
-        <img
-          className={classes.navIcon}
-          src={
-            state.currentPage === 'bookmarks' ? bookmarkIcon : bookmarksLineIcon
-          }
-          alt="Bookmarks"
-          onClick={() => dispatch({ type: 'change_page', payload: 'search' })}
-        />
-      </div>
-      <div className={classes.navIconContainer}>
-        <img
-          className={classes.navIcon}
-          src={
-            state.currentPage === 'settings' ? settingIcon : settingsLineIcon
-          }
-          alt="Settings"
-          onClick={() => dispatch({ type: 'change_page', payload: 'settings' })}
-        />
+        <Link to="/settings">
+          <img
+            className={classes.navIcon}
+            src={props.page === 'Settings' ? settingIcon : settingsLineIcon}
+            alt="Settings"
+            // onClick={() =>
+            //   dispatch({ type: 'change_page', payload: 'settings' })
+            // }
+          />
+        </Link>
       </div>
     </div>
   );

@@ -1,12 +1,14 @@
 //React
 import React, { useEffect } from 'react';
 import { Context } from './Context';
+import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
 
 //Components
 import TopBox from './components/TopBox';
 import Feed from './components/Feed';
 import Settings from './components/Settings';
 import Navigation from './components/Navigation';
+import PreviewSource from './components/PreviewSource';
 
 //Styles
 import './App.css';
@@ -15,30 +17,21 @@ import { createUseStyles } from 'react-jss';
 const useStyles = createUseStyles({
   App: state => ({
     display: 'grid',
-    //    maxHeight: '100%',
     height: state.innerHeight,
     gridTemplateColumns: '40px auto',
     gridTemplateRows: 'auto 40px'
-  }),
-  feedNavWrapper: {}
+  })
 });
 
 function App() {
   let { state, dispatch } = React.useContext(Context);
   const classes = useStyles(state);
 
-  // let handleScreenSize = () => {
-  //   let { innerWidth: screenWidth, innerHeight: screenHeight } = window;
-  //   console.log('resizing');
-  //   console.log(`${innerHeight} <== innerWidth\n\n`);
-  // };
-
   useEffect(() => {
     // Check if user is using for the first time
 
-    if (localStorage.getItem('currentPage')) {
+    if (localStorage.getItem('theme')) {
       console.log('come back');
-      console.log(localStorage.getItem('currentPage'));
 
       let subscriptions = localStorage.getItem('subscriptions').split('AnNdDd');
       console.log(`${subscriptions} <== subscriptions\n\n`);
@@ -48,17 +41,8 @@ function App() {
           dispatch({ type: 'appendSubscription', payload: subscription });
         }
       });
-
-      dispatch({
-        type: 'change_page',
-        payload: localStorage.getItem('currentPage')
-      });
     } else {
       console.log('new');
-      dispatch({
-        type: 'change_page',
-        payload: 'home'
-      });
     }
 
     dispatch({
@@ -90,20 +74,25 @@ function App() {
   }, []);
   return (
     <div className={`App ${classes.App}`}>
-      {/* <TopBox /> */}
-      {/* <div className={classes.feedNavWrapper}> */}
-      {state.currentPage === 'home' ? (
-        state.subscriptions.length === 0 ? (
-          'Please subscribe to something'
-        ) : (
-          <Feed />
-        )
-      ) : null}
+      <Router>
+        {/* {state.currentPage === 'home' ? (
+          state.subscriptions.length === 0 ? (
+            'Please subscribe to something'
+          ) : (
+            <Feed />
+          )
+        ) : null} */}
 
-      {state.currentPage === 'settings' ? <Settings /> : null}
+        {/* {state.currentPage === 'settings' ? <Settings /> : null} */}
+        <Route exact path="/" render={props => <Feed />}></Route>
+        <Route exact path="/settings" render={props => <Settings />}></Route>
 
-      <Navigation />
-      {/* </div> */}
+        <Route
+          path="/source/:sourceName"
+          render={props => <PreviewSource sheetType="tag" {...props} />}
+        ></Route>
+        {/* <Navigation /> */}
+      </Router>
     </div>
   );
 }

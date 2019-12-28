@@ -4,21 +4,14 @@ import { Context } from '../Context';
 
 //Components
 import ArticleBox from './ArticleBox';
-import Preview from './Preview';
+import PreviewItem from './PreviewItem';
+import Sheet from './Sheet';
 
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
 
 const useStyles = createUseStyles({
-  Feed: state => ({
-    //height: state.innerHeight,
-    overflow: 'scroll',
-    gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
-    gridColumnEnd: 3,
-    gridRowStart: 1,
-    gridRowEnd: state.orientation === 'potrait' ? 2 : 3
-  }),
   getMoreItemsBtn: {
     margin: 'auto'
   }
@@ -34,19 +27,21 @@ function Feed() {
       'AaNnDd'
     )}`;
     // console.log('Feed mounted');
-
-    fetch(queryString)
-      .then(res => res.json())
-      .then(jsonRes => {
-        dispatch({ type: 'setFeed', payload: jsonRes.data });
-        dispatch({ type: 'setAfter', payload: jsonRes.after });
-
-        //console.dir(jsonRes);
-      })
-      .catch(feedFetchError => {
-        console.log(`${feedFetchError} <== feedFetchError\n\n`);
-      });
-  }, []);
+    console.log(`${queryString} <== queryString\n\n`);
+    if (state.subscriptions.length > 0) {
+      fetch(queryString)
+        .then(res => res.json())
+        .then(jsonRes => {
+          dispatch({ type: 'setFeed', payload: jsonRes.data });
+          dispatch({ type: 'setAfter', payload: jsonRes.after });
+        })
+        .catch(feedFetchError => {
+          console.log(`${feedFetchError} <== feedFetchError\n\n`);
+        });
+    } else {
+      console.log('Deciding not to make network call');
+    }
+  }, [state.subscriptions]);
 
   let getMoreItems = () => {
     let queryString = `https://lw-line.glitch.me/getItems/?subscriptions=${state.subscriptions.join(
@@ -65,11 +60,12 @@ function Feed() {
     console.log(`${queryString} <== queryString\n\n`);
   };
   return (
-    <div className={classes.Feed}>
+    // <div className={classes.Feed}>
+    <Sheet page="Feed">
       {state.feedItems.map(item => (
         <ArticleBox key={item.id} {...item} />
       ))}
-      {state.previewModal.open ? <Preview /> : null}
+      {state.previewModal.open ? <PreviewItem /> : null}
       <button
         className={classes.getMoreItemsBtn}
         onClick={() => getMoreItems()}
@@ -80,7 +76,8 @@ function Feed() {
       <br />
       <br />
       <br />
-    </div>
+    </Sheet>
+    // </div>
   );
 }
 

@@ -34,7 +34,7 @@ const useStyles = createUseStyles({
   }
 });
 
-function Preview() {
+function PreviewItem() {
   const classes = useStyles();
   let { state, dispatch } = React.useContext(Context);
 
@@ -51,4 +51,4 @@ function Preview() {
   );
 }
 
-export default Preview;
+export default PreviewItem;

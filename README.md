@@ -30,6 +30,7 @@
 - Organize files based on domain
 - Check out suspense
 - Analytics
+- Reduce number of network calls
 
 
 
