@@ -5,6 +5,15 @@ const colours = {
   blue900: '#0D47A1'
 };
 
+const header1 = {
+  fontSize: 25,
+  fontFamily: 'Merriweather',
+  fontWeight: 400,
+  margin: {
+    top: 18
+  }
+};
+
 const header2 = {
   fontSize: 23,
   fontFamily: 'Merriweather',
@@ -31,4 +40,4 @@ const header4 = {
     top: 11
   }
 };
-module.exports = { colours, header2, header3, header4 };
+module.exports = { colours, header1, header2, header3, header4 };

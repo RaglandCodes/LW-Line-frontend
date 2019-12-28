@@ -80,13 +80,8 @@ function ContextProvider(props) {
     feedItems: [],
     orientation: 'potrait',
     mutePhrases: [],
-    previewModal: {
-      openOnClick: false,
-      open: false,
-      title: '',
-      description: '',
-      link: '',
-      image: ''
+    itemPreview: {
+      openOnClick: true
     }
   });
 

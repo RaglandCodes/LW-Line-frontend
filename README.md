@@ -11,7 +11,7 @@
     - Nav bar must indicate current active screen
 - Local storage
     - Save to Local Storage
-- Pagination
+
 
 ## TODO
 - UI
@@ -26,7 +26,6 @@
     - Don't fetch items
     - Don't show the "You're subscribed to" when there're no subscriptions
 - Settings
-    - Theme
 - Organize files based on domain
 - Check out suspense
 - Analytics

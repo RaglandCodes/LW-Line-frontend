@@ -1,6 +1,7 @@
 //React
 import React from 'react';
 import { Context } from '../Context';
+import { useHistory } from 'react-router-dom';
 
 //Styles
 import { createUseStyles } from 'react-jss';
@@ -39,20 +40,13 @@ function ArticleBox(item) {
   let { state, dispatch } = React.useContext(Context);
   const classes = useStyles();
 
+  let history = useHistory();
   return (
     <div
       className={classes.ArticleBox}
       onClick={() =>
-        state.previewModal.openOnClick
-          ? dispatch({
-              type: 'togglePreview',
-              payload: {
-                title: item.title,
-                description: item.description,
-                image: item.image,
-                link: item.link
-              }
-            })
+        state.itemPreview.openOnClick
+          ? history.push(`/item/${item.id}`)
           : window.open(item.link)
       }
     >

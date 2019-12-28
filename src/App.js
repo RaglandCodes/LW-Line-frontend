@@ -4,11 +4,10 @@ import { Context } from './Context';
 import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
 
 //Components
-import TopBox from './components/TopBox';
 import Feed from './components/Feed';
 import Settings from './components/Settings';
-import Navigation from './components/Navigation';
 import PreviewSource from './components/PreviewSource';
+import PreviewItem from './components/PreviewItem';
 
 //Styles
 import './App.css';
@@ -75,15 +74,6 @@ function App() {
   return (
     <div className={`App ${classes.App}`}>
       <Router>
-        {/* {state.currentPage === 'home' ? (
-          state.subscriptions.length === 0 ? (
-            'Please subscribe to something'
-          ) : (
-            <Feed />
-          )
-        ) : null} */}
-
-        {/* {state.currentPage === 'settings' ? <Settings /> : null} */}
         <Route exact path="/" render={props => <Feed />}></Route>
         <Route exact path="/settings" render={props => <Settings />}></Route>
 
@@ -91,7 +81,10 @@ function App() {
           path="/source/:sourceName"
           render={props => <PreviewSource sheetType="tag" {...props} />}
         ></Route>
-        {/* <Navigation /> */}
+        <Route
+          path="/item/:id"
+          render={props => <PreviewItem sheetType="tag" {...props} />}
+        ></Route>
       </Router>
     </div>
   );

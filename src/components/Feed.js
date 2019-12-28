@@ -4,7 +4,6 @@ import { Context } from '../Context';
 
 //Components
 import ArticleBox from './ArticleBox';
-import PreviewItem from './PreviewItem';
 import Sheet from './Sheet';
 
 //Styles
@@ -65,7 +64,7 @@ function Feed() {
       {state.feedItems.map(item => (
         <ArticleBox key={item.id} {...item} />
       ))}
-      {state.previewModal.open ? <PreviewItem /> : null}
+
       <button
         className={classes.getMoreItemsBtn}
         onClick={() => getMoreItems()}
