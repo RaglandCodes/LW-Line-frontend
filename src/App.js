@@ -62,8 +62,7 @@ function App() {
 
       dispatch({
         type: 'setOrientation',
-        payload:
-          window.innerWidth > window.innerHeight ? 'landscape' : 'potrait'
+        payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait'
       });
       dispatch({
         type: 'setInnerHeight',
@@ -77,10 +76,9 @@ function App() {
         <Route exact path="/" render={props => <Feed />}></Route>
         <Route exact path="/settings" render={props => <Settings />}></Route>
 
-        <Route
-          path="/source/:sourceName"
-          render={props => <PreviewSource sheetType="tag" {...props} />}
-        ></Route>
+        <Route path="/source/:sourceName">
+          <PreviewSource />
+        </Route>
         <Route
           path="/item/:id"
           render={props => <PreviewItem sheetType="tag" {...props} />}

@@ -26,10 +26,7 @@ const useStyles = createUseStyles({
     //flexDirection: 'column',
     width: '100%',
     padding: 5,
-    margin: {
-      bottom: 5,
-      right: 5
-    },
+    margin: '5px auto',
     fontFamily: 'Roboto'
   },
   followButton: {
@@ -38,8 +35,7 @@ const useStyles = createUseStyles({
   },
   removeButton: {
     backgroundColor: '#455A64',
-    borderRadius: 3,
-    border: 0,
+    ...button,
     color: '#FAFAFA'
   },
   previewButton: {
@@ -47,7 +43,8 @@ const useStyles = createUseStyles({
     ...button
   },
   sourceName: {
-    flexGrow: 1
+    flexGrow: 1,
+    fontSize: 16
   }
 });
 
@@ -71,18 +68,14 @@ function SourceBox(source) {
       {source.subscribed ? (
         <button
           className={classes.removeButton}
-          onClick={() =>
-            dispatch({ type: 'removeSubscription', payload: source.name })
-          }
+          onClick={() => dispatch({ type: 'removeSubscription', payload: source.name })}
         >
           Remove
         </button>
       ) : (
         <button
           className={classes.followButton}
-          onClick={() =>
-            dispatch({ type: 'appendSubscription', payload: source.name })
-          }
+          onClick={() => dispatch({ type: 'appendSubscription', payload: source.name })}
         >
           Follow
         </button>

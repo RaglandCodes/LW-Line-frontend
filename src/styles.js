@@ -33,7 +33,7 @@ const header3 = {
 };
 
 const header4 = {
-  fontSize: 15,
+  fontSize: 16,
   fontFamily: 'Merriweather',
   fontWeight: 300,
   margin: {
@@ -50,6 +50,8 @@ const button = {
   color: '#FAFAFA',
   borderRadius: 3,
   border: 0,
-  padding: 5
+  padding: 5,
+  margin: 3,
+  fontSize: 14
 };
 module.exports = { colours, header1, header2, header3, header4, box, button };

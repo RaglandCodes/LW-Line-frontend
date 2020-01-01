@@ -1,9 +1,11 @@
 //React
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Context } from '../Context';
+import { useParams } from 'react-router-dom';
 
 //Components
-
+import Sheet from './Sheet';
+import ArticleBox from './ArticleBox';
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
@@ -13,6 +15,9 @@ import WebFont from 'webfontloader';
 //     families: ['Merriweather']
 //   }
 // });
+
+const HOST = 'http://localhost:5151';
+//const HOST = 'https://lw-line.glitch.me';
 
 const useStyles = createUseStyles({
   PreviewSource: {
@@ -28,10 +33,41 @@ const useStyles = createUseStyles({
   }
 });
 
-function PreviewSource() {
+function PreviewSource(props) {
   let { state, dispatch } = React.useContext(Context);
   const classes = useStyles(state);
-  return <div className={classes.PreviewSource}>Preview Source</div>;
+
+  let [title, setTitle] = useState('Title');
+  let [description, setDescription] = useState('Descriprion');
+  let [feedItems, setFeedItems] = useState([]);
+
+  let { sourceName } = useParams();
+  console.log(`${sourceName} <= sourceName`);
+  useEffect(() => {
+    console.log('effected');
+
+    let previewSourceQuery = `${HOST}/previewSource/?source=${sourceName}`;
+    fetch(previewSourceQuery)
+      .then(res => res.json())
+      .then(jsonRes => {
+        setTitle(jsonRes.title);
+        setDescription(jsonRes.about);
+        setFeedItems(jsonRes.items.data);
+        console.dir(jsonRes);
+      });
+  }, []);
+
+  return (
+    <Sheet>
+      <div className={classes.PreviewSource}>
+        <h1>{title}</h1>
+        <p>{description}</p>
+        {feedItems.map(item => (
+          <ArticleBox key={item.id} {...item} />
+        ))}
+      </div>
+    </Sheet>
+  );
 }
 
 export default PreviewSource;
