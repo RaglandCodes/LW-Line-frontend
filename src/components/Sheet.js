@@ -16,9 +16,9 @@ const useStyles = createUseStyles({
     gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
     gridColumnEnd: 3,
     gridRowStart: 1,
-    gridRowEnd: state.orientation === 'potrait' ? 2 : 3,
+    gridRowEnd: state.orientation === 'potrait' ? 2 : 3
 
-    padding: '0 10px'
+    //padding: '0 10px'
   })
 });
 

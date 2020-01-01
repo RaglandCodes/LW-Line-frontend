@@ -40,4 +40,16 @@ const header4 = {
     top: 11
   }
 };
-module.exports = { colours, header1, header2, header3, header4 };
+
+const box = {
+  borderBottom: '1px solid #455A64',
+  backgroundColor: '#F5F5F5'
+};
+
+const button = {
+  color: '#FAFAFA',
+  borderRadius: 3,
+  border: 0,
+  padding: 5
+};
+module.exports = { colours, header1, header2, header3, header4, box, button };

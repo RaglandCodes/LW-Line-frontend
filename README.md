@@ -26,6 +26,7 @@
     - Don't fetch items
     - Don't show the "You're subscribed to" when there're no subscriptions
 - Settings
+- [Readuce Bundle size](https://material-ui.com/guides/minimizing-bundle-size/#option-2)
 - Organize files based on domain
 - Check out suspense
 - Analytics

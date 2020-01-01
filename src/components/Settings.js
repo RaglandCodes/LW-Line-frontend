@@ -1,15 +1,19 @@
 //React
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Context } from '../Context';
 
 //Components
 import SourceBox from './SourceBox';
 import Sheet from './Sheet';
+import Paginator from './Paginator';
 
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
 import { header2, header3, header4 } from '../styles';
+
+const HOST = 'http://localhost:5151';
+//const HOST = 'https://lw-line.glitch.me';
 
 WebFont.load({
   google: {
@@ -21,32 +25,27 @@ WebFont.load({
     ]
   }
 });
-
+const padded = {
+  padding: {
+    left: 10,
+    right: 10
+  }
+};
 const useStyles = createUseStyles({
-  Settings: state => ({
-    //width: '90%',
-    //margin: 'auto',
-    //height: '100%',
-    // overflow: 'scroll',
-    // gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
-    // gridColumnEnd: 3,
-    // gridRowStart: 1,
-    // gridRowEnd: state.orientation === 'potrait' ? 2 : 3
-    // overflow: 'scroll',
-    // gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
-    // gridColumnEnd: 3,
-    // gridRowStart: 1,
-    // gridRowEnd: state.orientation === 'potrait' ? 2 : 3
-  }),
-  header2: { ...header2 },
-  header3: { ...header3 },
-  header4: { ...header4 },
+  header2: {
+    ...header2,
+    ...padded
+  },
+  header3: { ...header3, ...padded },
+  header4: { ...header4, ...padded },
   checkboxSettingWrap: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    ...padded
   },
   inputButtonWrap: {
-    display: 'flex'
+    display: 'flex',
+    ...padded
   },
   settingsExplanation: {
     fontFamily: 'Merriweather',
@@ -67,12 +66,60 @@ function Settings() {
 
   let [sourceSearchResults, setSourceSearchResults] = useState([]);
   let [sourceSearchInput, setsourceSearchInput] = useState('');
+  let [techSources, setTechSources] = useState([]);
+  let [newsSources, setNewsSources] = useState([]);
+  let [designSources, setDesignSources] = useState([]);
+  let [techShowing, setTechShowing] = useState(3);
+  // let [initSources, setInitSources] = useState();
 
+  useEffect(() => {
+    // let techSourceSearchQuery = `${HOST}/getSources/?searchTopic=tech`;
+    // let newsSourceSearchQuery = `${HOST}/getSources/?searchTopic=news`;
+    // let designSourceSearchQuery = `${HOST}/getSources/?searchTopic=design`;
+    let initSourceSearchQuery = `${HOST}/getSources/?searchTerm=I_N_I_T`;
+
+    // fetch(techSourceSearchQuery).then(res => res.json()).then(jsonRes => {
+    //   jsonRes = jsonRes.filter(source => state.subscriptions.indexOf(source.title) === -1)
+    //   setTechSources(jsonRes)
+    // });
+
+    // fetch(newsSourceSearchQuery).then(res => res.json()).then(jsonRes => {
+    //   jsonRes = jsonRes.filter(source => state.subscriptions.indexOf(source.title) === -1)
+    //   setNewsSources(jsonRes)
+    // });
+
+    // fetch(designSourceSearchQuery).then(res => res.json()).then(jsonRes => {
+    //   jsonRes = jsonRes.filter(source => state.subscriptions.indexOf(source.title) === -1)
+    //   setDesignSources(jsonRes)
+    // });
+    console.log(`${initSourceSearchQuery} <== initSourceSearchQuery\n\n`);
+
+    fetch(initSourceSearchQuery)
+      .then(res => res.json())
+      .then(jsonRes => {
+        setTechSources(
+          jsonRes.tech.filter(
+            source => state.subscriptions.indexOf(source.title) === -1
+          )
+        );
+        setNewsSources(
+          jsonRes.news.filter(
+            source => state.subscriptions.indexOf(source.title) === -1
+          )
+        );
+        setDesignSources(
+          jsonRes.design.filter(
+            source => state.subscriptions.indexOf(source.title) === -1
+          )
+        );
+      })
+      .catch(e => console.log(`${e} <== e\n\n`));
+  }, [state.subscriptions]);
   let searchSources = () => {
     // Call server with  sourceSearchInput and setSourceSearchResults
 
-    //let searchQuery = `http://localhost:5151/getSources/?searchTerm=${sourceSearchInput}`;
-    let searchQuery = `https://lw-line.glitch.me/getSources/?searchTerm=${sourceSearchInput}`;
+    let searchQuery = `${HOST}/getSources/?searchTerm=${sourceSearchInput}`;
+    //let searchQuery = `https://lw-line.glitch.me/getSources/?searchTerm=${sourceSearchInput}`;
 
     fetch(searchQuery)
       .then(res => res.json())
@@ -84,7 +131,7 @@ function Settings() {
       });
   };
   return (
-    <Sheet page="Settings">
+    <Sheet page="Settings" className={classes.Settings}>
       <div className={classes.header2}>Content</div>
       {/* ------ ----- ----- Sources ----- ----- ----- */}
       <div className={classes.header3}>Sources</div>
@@ -106,13 +153,27 @@ function Settings() {
             key={result.title}
           />
         ))}
+      <h4 className={classes.header4}>Tech</h4>
+      {techSources.map(source => (
+        <SourceBox name={source.title} />
+      ))}
+      <h4 className={classes.header4}>News</h4>
+
+      {newsSources.map(source => (
+        <SourceBox name={source.title} />
+      ))}
+
+      <h4 className={classes.header4}>Design</h4>
+      {designSources.map(source => (
+        <SourceBox name={source.title} />
+      ))}
 
       <div className={classes.header4}>You're subscribed to</div>
       {state.subscriptions.map(subscription => (
         <SourceBox name={subscription} key={subscription} subscribed={true} />
       ))}
-
       {/* ------ ----- ----- Mute ----- ----- ----- */}
+
       <div className={classes.header3}>Mute phrases</div>
 
       <div className={classes.inputButtonWrap}>
@@ -133,6 +194,7 @@ function Settings() {
       <div className={classes.settingsExplanation}>
         Opens AMP page if available
       </div>
+      <hr />
       <div className={classes.header2}>Display</div>
 
       <div className={classes.checkboxSettingWrap}>

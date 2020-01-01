@@ -21,7 +21,6 @@ const pagePadding = 11;
 const useStyles = createUseStyles({
   Preview: state => ({
     overflow: 'scroll',
-
     gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
     gridColumnEnd: 3,
     gridRowStart: 1,
@@ -60,6 +59,7 @@ function PreviewItem() {
     'Description is loading'
   );
   let [description, setDescription] = useState('Description is loading');
+  let [link, setLink] = useState('');
 
   useEffect(() => {
     if (state.feedItems.length > 0) {
@@ -68,8 +68,13 @@ function PreviewItem() {
       setTitle(itemToShow.title);
       setMetaDescription(itemToShow.metaDescription);
       setDescription(itemToShow.description);
+      setLink(itemToShow.link);
     } else {
-      //TODO get from server
+      // TODO get from server
+      setTitle('Not found');
+      setMetaDescription('Not found');
+      setDescription('Not found');
+      setLink('Not found');
     }
   }, [state.feedItems]);
   return (
@@ -78,6 +83,7 @@ function PreviewItem() {
         <h1 className={classes.header1}>{title}</h1>
         <p className={classes.metaDescription}>{metaDescription}</p>
         <p className={classes.description}>{description}</p>
+        <p onClick={() => window.open(link)}> Read full story</p>
       </div>
       <Navigation />
     </>
