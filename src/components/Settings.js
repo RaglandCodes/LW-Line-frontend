@@ -2,18 +2,18 @@
 import React, { useState, useEffect } from 'react';
 import { Context } from '../Context';
 
+//utils
+import { dataFetch } from '../modules/dataFetch';
+
 //Components
 import SourceBox from './SourceBox';
 import Sheet from './Sheet';
-import Paginator from './Paginator';
+import ChooseSources from './ChooseSources';
 
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
 import { header2, header3, header4, button } from '../styles';
-
-//const HOST = 'http://localhost:5151';
-const HOST = 'https://lw-line.glitch.me';
 
 WebFont.load({
   google: {
@@ -37,24 +37,24 @@ const useStyles = createUseStyles({
   },
   header2: {
     ...header2
-    // ...padded
   },
-  header3: { ...header3, ...padded },
+  header3: { ...header3 },
   header4: {
     ...header4,
-    // ...padded,
     margin: {
       top: 35
     }
   },
   checkboxSettingWrap: {
     display: 'flex',
-    justifyContent: 'space-between'
-    // ...padded
+    justifyContent: 'space-between',
+    backgroundColor: '#F5F5F5',
+    margin: {
+      top: 5
+    }
   },
   inputButtonWrap: {
     display: 'flex'
-    //  ...padded
   },
   settingsExplanation: {
     fontFamily: 'Merriweather',
@@ -80,44 +80,11 @@ function Settings() {
 
   let [sourceSearchResults, setSourceSearchResults] = useState([]);
   let [sourceSearchInput, setsourceSearchInput] = useState('');
-  let [techSources, setTechSources] = useState([]);
-  let [newsSources, setNewsSources] = useState([]);
-  let [designSources, setDesignSources] = useState([]);
-  let [techShowing, setTechShowing] = useState(3);
-  let [newsShowing, setNewsShowing] = useState(3);
-  // let [initSources, setInitSources] = useState();
 
-  useEffect(() => {
-    // TODO do only one fetch on mount not on state.subscriptions
-    let initSourceSearchQuery = `${HOST}/getSources/?searchTerm=I_N_I_T`;
-
-    console.log(`${initSourceSearchQuery} <== initSourceSearchQuery\n\n`);
-
-    fetch(initSourceSearchQuery)
-      .then(res => res.json())
-      .then(jsonRes => {
-        setTechSources(
-          jsonRes.tech.filter(source => state.subscriptions.indexOf(source.title) === -1)
-        );
-        setNewsSources(
-          jsonRes.news.filter(source => state.subscriptions.indexOf(source.title) === -1)
-        );
-        setDesignSources(
-          jsonRes.design.filter(
-            source => state.subscriptions.indexOf(source.title) === -1
-          )
-        );
-      })
-      .catch(e => console.log(`${e} <== e\n\n`));
-  }, [state.subscriptions]);
   let searchSources = () => {
     // Call server with  sourceSearchInput and setSourceSearchResults
 
-    let searchQuery = `${HOST}/getSources/?searchTerm=${sourceSearchInput}`;
-    //let searchQuery = `https://lw-line.glitch.me/getSources/?searchTerm=${sourceSearchInput}`;
-
-    fetch(searchQuery)
-      .then(res => res.json())
+    dataFetch('getSources', { searchTerm: sourceSearchInput })
       .then(jsonRes => {
         setSourceSearchResults(jsonRes);
       })
@@ -145,7 +112,7 @@ function Settings() {
           .map(result => (
             <SourceBox name={result.title} subscribed={false} key={result.title} />
           ))}
-        <h4 className={classes.header4}>Tech</h4>
+        {/* <h4 className={classes.header4}>Tech</h4>
         {techSources.slice(0, techShowing).map(source => (
           <SourceBox name={source.title} />
         ))}
@@ -180,7 +147,8 @@ function Settings() {
         <div className={classes.header4}>You're subscribed to</div>
         {state.subscriptions.map(subscription => (
           <SourceBox name={subscription} key={subscription} subscribed={true} />
-        ))}
+        ))} */}
+        <ChooseSources />
         {/* ------ ----- ----- Mute ----- ----- ----- */}
 
         <div className={classes.header3}>Mute phrases</div>
@@ -192,15 +160,10 @@ function Settings() {
         </div>
 
         <div className={classes.inputButtonWrap}></div>
-        <div className={classes.settingsExplanation}>
+        <p className={classes.settingsExplanation}>
           You will not be shown articles containing those phrases
-        </div>
-        <div className={classes.checkboxSettingWrap}>
-          <div className={classes.header3}>Get AMP Page</div>
-          <input type="checkbox" className={classes.checkBoxInput} />
-        </div>
+        </p>
 
-        <div className={classes.settingsExplanation}>Opens AMP page if available</div>
         <hr />
         <div className={classes.header2}>Display</div>
 
@@ -218,7 +181,9 @@ function Settings() {
           <div className={classes.header3}>Directly open external site</div>{' '}
           <input type="checkbox" className={classes.checkBoxInput} />
         </div>
-        <div>Leaving this unchecked will open a model with some more information.</div>
+        <p className={classes.settingsExplanation}>
+          Leaving this unchecked will open a model with some more information.
+        </p>
         <div className={classes.checkboxSettingWrap}>
           <div className={classes.header3}>Show descriptions</div>{' '}
           <input type="checkbox" className={classes.checkBoxInput} />

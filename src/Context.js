@@ -37,6 +37,7 @@ function appReducer(state, action) {
     case 'appendSubscription': {
       return {
         ...state,
+        feedItems: [],
         subscriptions: [...state.subscriptions, action.payload]
       };
     }
@@ -45,6 +46,7 @@ function appReducer(state, action) {
       oldSubscriptions.splice(oldSubscriptions.indexOf(action.payload), 1);
       return {
         ...state,
+        feedItems: [],
         subscriptions: [...oldSubscriptions]
       };
     }
@@ -100,9 +102,7 @@ function ContextProvider(props) {
   }, [state.subscriptions]);
 
   return (
-    <Context.Provider value={{ state, dispatch }}>
-      {props.children}
-    </Context.Provider>
+    <Context.Provider value={{ state, dispatch }}>{props.children}</Context.Provider>
   );
 }
 

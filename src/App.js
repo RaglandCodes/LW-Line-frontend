@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Context } from './Context';
 import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
+import ScrollMemory from 'react-router-scroll-memory';
 
 //Components
 import Feed from './components/Feed';
@@ -73,6 +74,7 @@ function App() {
   return (
     <div className={`App ${classes.App}`}>
       <Router>
+        {/* <ScrollMemory /> */}
         <Route exact path="/" render={props => <Feed />}></Route>
         <Route exact path="/settings" render={props => <Settings />}></Route>
 

@@ -53,7 +53,7 @@ function TopBox(props) {
 
   return (
     <div className={classes.TopBox}>
-      <div className={classes.currentPage}>{props.page}</div>
+      <h1 className={classes.currentPage}>{props.page}</h1>
     </div>
   );
 }

@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Context } from '../Context';
 import { useParams } from 'react-router-dom';
 
+//utils
+import { dataFetch } from '../modules/dataFetch';
+
 //Components
 import Navigation from './Navigation';
 
@@ -21,6 +24,8 @@ const pagePadding = 11;
 const useStyles = createUseStyles({
   Preview: state => ({
     overflow: 'scroll',
+    // maxWidth: 440,
+    // margin: 'auto',
     gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
     gridColumnEnd: 3,
     gridRowStart: 1,
@@ -42,6 +47,7 @@ const useStyles = createUseStyles({
     fontSize: 17,
     fontFamily: 'Merriweather'
   },
+  metaImage: { width: ' 100%' },
   description: {
     padding: { left: pagePadding, right: pagePadding },
     fontFamily: 'Merriweather',
@@ -55,35 +61,50 @@ function PreviewItem() {
 
   let { id } = useParams();
   let [title, setTitle] = useState('Title is loading');
-  let [metaDescription, setMetaDescription] = useState(
-    'Description is loading'
-  );
+  let [metaDescription, setMetaDescription] = useState('Description is loading');
+  let [metaImage, setMetaImage] = useState('');
   let [description, setDescription] = useState('Description is loading');
   let [link, setLink] = useState('');
+
+  let getFromDatabase = () => {
+    console.log('Getting from DB');
+
+    dataFetch('singleItem', { id }).then(jsonRes => {
+      setTitle(jsonRes.title);
+      setMetaDescription(jsonRes.metaDescription);
+      setDescription(jsonRes.description);
+      setMetaImage(jsonRes.image);
+    });
+  };
 
   useEffect(() => {
     if (state.feedItems.length > 0) {
       let itemToShow = state.feedItems.filter(item => item.id === id)[0];
-
-      setTitle(itemToShow.title);
-      setMetaDescription(itemToShow.metaDescription);
-      setDescription(itemToShow.description);
-      setLink(itemToShow.link);
+      if (itemToShow) {
+        setTitle(itemToShow.title);
+        setMetaDescription(itemToShow.metaDescription);
+        setDescription(itemToShow.description);
+        setLink(itemToShow.link);
+        setMetaImage(itemToShow.image);
+      } else {
+        getFromDatabase();
+      }
+      console.log(`${itemToShow} <= itemToShow`);
     } else {
-      // TODO get from server
-      setTitle('Not found');
-      setMetaDescription('Not found');
-      setDescription('Not found');
-      setLink('Not found');
+      getFromDatabase();
     }
   }, [state.feedItems]);
   return (
     <>
       <div className={classes.Preview}>
+        {metaImage ? (
+          <img src={metaImage} alt={title} className={classes.metaImage} />
+        ) : null}
+
         <h1 className={classes.header1}>{title}</h1>
         <p className={classes.metaDescription}>{metaDescription}</p>
         <p className={classes.description}>{description}</p>
-        <p onClick={() => window.open(link)}> Read full story</p>
+        <a onClick={() => window.open(link)}> Read full story</a>
       </div>
       <Navigation />
     </>

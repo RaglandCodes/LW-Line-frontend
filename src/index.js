@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ContextProvider } from './Context';
+import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
+import ScrollMemory from 'react-router-scroll-memory';
 
 import './index.css';
 import App from './App';
@@ -17,4 +19,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();
