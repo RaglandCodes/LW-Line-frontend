@@ -62,7 +62,7 @@ function ChooseSources(props) {
           setTechShowing(techShowing + 3);
         }}
       >
-        Show more
+        More Tech sources
       </button>
       <h4 className={classes.header4}>News</h4>
 
@@ -76,7 +76,7 @@ function ChooseSources(props) {
           setNewsShowing(newsShowing + 3);
         }}
       >
-        Show more
+        More News sources
       </button>
       <h4 className={classes.header4}>Design</h4>
       {designSources.map(source => (

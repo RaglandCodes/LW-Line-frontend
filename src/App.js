@@ -18,8 +18,8 @@ const useStyles = createUseStyles({
   App: state => ({
     display: 'grid',
     height: state.innerHeight,
-    gridTemplateColumns: '40px auto',
-    gridTemplateRows: 'auto 40px'
+    gridTemplateColumns: '60px auto',
+    gridTemplateRows: 'auto 50px'
   })
 });
 

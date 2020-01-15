@@ -1,37 +1,36 @@
 # LW Line frontend
 
-
 ## Stack
+
 - ReactJS
 - [Material icons and colours](material.io)
 
-
 ## What's new
-- UI
-    - Nav bar must indicate current active screen
-- Local storage
-    - Save to Local Storage
 
+- UI
+  - Nav bar must indicate current active screen
+- Local storage
+  - Save to Local Storage
 
 ## TODO
+
 - UI
-    - Choose fonts, colours
-    - Dark Theme
-    - [Sound](https://material.io/design/sound/applying-sound-to-ui.html)
-    - [Accessibility](https://material.io/design/usability/accessibility.html#)
+  - Choose fonts, colours
+  - Dark Theme
+  - Add Bookmark icon for preview
+  - [Sound](https://material.io/design/sound/applying-sound-to-ui.html)
+  - [Accessibility](https://material.io/design/usability/accessibility.html#)
 - Handle failed server response when
-    - fetching feed
-    - searching for sources
+  - fetching feed
+  - searching for sources
 - Handle case for new user
-    - Don't fetch items
-    - Don't show the "You're subscribed to" when there're no subscriptions
+  - Don't fetch items
+  - Don't show the "You're subscribed to" when there're no subscriptions
 - Settings
 - [Readuce Bundle size](https://material-ui.com/guides/minimizing-bundle-size/#option-2)
 - Organize files based on domain
 - Check out suspense
 - Analytics
 - Reduce number of network calls
-
-
 
 Icons may be from [FontAwesome](https://fontawesome.com/license)

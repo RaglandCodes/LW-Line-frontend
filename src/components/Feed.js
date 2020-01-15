@@ -1,5 +1,5 @@
 //React
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Context } from '../Context';
 import { useHistory } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import ArticleBox from './ArticleBox';
 import Sheet from './Sheet';
 import ChooseSources from './ChooseSources';
+import ChooseSources2 from './ChooseSources2';
 
 //Styles
 import { createUseStyles } from 'react-jss';
@@ -30,6 +31,7 @@ function Feed() {
   let { state, dispatch } = React.useContext(Context);
   let history = useHistory();
   const classes = useStyles(state);
+  let [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     let queryString = `https://lw-line.glitch.me/getItems/?subscriptions=${state.subscriptions.join(
@@ -43,6 +45,9 @@ function Feed() {
           dispatch({ type: 'setAfter', payload: jsonRes.after });
         })
         .catch(feedFetchError => {
+          setErrorMessage(
+            "Couldn't get items. Please try refreshing or unfollow some sources. "
+          );
           console.log(`${feedFetchError} <== feedFetchError\n\n`);
         });
     } else {
@@ -64,15 +69,16 @@ function Feed() {
   };
   return (
     <Sheet page="Feed">
+      {errorMessage ? errorMessage : null}
       {state.subscriptions.length === 0 ? (
         <>
           <p>
             Welcome! <br />
-            You aren't subscribed to anything.
-            <br />
-            Please subscribe in the{' '}
-            <a onClick={() => history.push('/settings')}>settings</a>
+            Please choose your interestes / search for publishers to get started. You can
+            also link to any feed in the future
           </p>
+
+          <ChooseSources2 />
         </>
       ) : (
         <>
@@ -85,9 +91,6 @@ function Feed() {
         </>
       )}
 
-      {/* <button className={classes.getMoreItemsBtn} onClick={() => getMoreItems()}>
-        Load more stories
-      </button> */}
       <br />
       <br />
       <br />

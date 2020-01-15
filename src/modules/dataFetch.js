@@ -1,10 +1,11 @@
-//const HOST = 'http://localhost:5151';
-const HOST = 'https://lw-line.glitch.me';
+const HOST = 'http://192.168.43.150:5151';
+//const HOST = 'https://lw-line.glitch.me';
 
 export function dataFetch(endpoint, params, options) {
   let stringifiedParams = '';
 
   if (params) {
+    // TODO try using array..reduce
     for (const key in params) {
       stringifiedParams += `${key}=${params[key]}`;
     }

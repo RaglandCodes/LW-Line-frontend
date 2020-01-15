@@ -9,6 +9,9 @@ import { dataFetch } from '../modules/dataFetch';
 //Components
 import Navigation from './Navigation';
 
+//icons
+import { OpenInNew, Share, Bookmark } from '@material-ui/icons';
+
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
@@ -52,7 +55,19 @@ const useStyles = createUseStyles({
     padding: { left: pagePadding, right: pagePadding },
     fontFamily: 'Merriweather',
     fontSize: 14
-  }
+  },
+  previewActions: {
+    display: 'flex',
+    fontSize: 20
+  },
+  actionIconContainer: {
+    flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
+  actionLabel: { fontFamily: 'Lato', fontSize: 15 }
 });
 
 function PreviewItem() {
@@ -73,6 +88,7 @@ function PreviewItem() {
       setTitle(jsonRes.title);
       setMetaDescription(jsonRes.metaDescription);
       setDescription(jsonRes.description);
+      setLink(jsonRes.link);
       setMetaImage(jsonRes.image);
     });
   };
@@ -82,6 +98,7 @@ function PreviewItem() {
       let itemToShow = state.feedItems.filter(item => item.id === id)[0];
       if (itemToShow) {
         setTitle(itemToShow.title);
+
         setMetaDescription(itemToShow.metaDescription);
         setDescription(itemToShow.description);
         setLink(itemToShow.link);
@@ -89,7 +106,6 @@ function PreviewItem() {
       } else {
         getFromDatabase();
       }
-      console.log(`${itemToShow} <= itemToShow`);
     } else {
       getFromDatabase();
     }
@@ -104,7 +120,21 @@ function PreviewItem() {
         <h1 className={classes.header1}>{title}</h1>
         <p className={classes.metaDescription}>{metaDescription}</p>
         <p className={classes.description}>{description}</p>
-        <a onClick={() => window.open(link)}> Read full story</a>
+        <div className={classes.previewActions}>
+          <div className={classes.actionIconContainer} onClick={() => window.open(link)}>
+            <OpenInNew />
+            <span className={classes.actionLabel}>Read story</span>
+          </div>
+          <div className={classes.actionIconContainer}>
+            <Share />
+            <span className={classes.actionLabel}>Share</span>
+          </div>
+          <div className={classes.actionIconContainer}>
+            <Bookmark />
+            <span className={classes.actionLabel}>Save</span>
+          </div>
+        </div>
+        {/* <a onClick={() => window.open(link)}> Read full story</a> */}
       </div>
       <Navigation />
     </>

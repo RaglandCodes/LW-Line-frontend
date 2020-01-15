@@ -27,7 +27,12 @@ import {
 } from '@material-ui/icons';
 import { colours } from '../styles';
 
-//import WebFont from 'webfontloader';
+import WebFont from 'webfontloader';
+WebFont.load({
+  google: {
+    families: ['Lato']
+  }
+});
 
 const useStyles = createUseStyles({
   Navigation: state => ({
@@ -44,28 +49,24 @@ const useStyles = createUseStyles({
     gridColumnEnd: state.orientation === 'landscape' ? 2 : 3,
     gridRowStart: state.orientation === 'landscape' ? 1 : 2,
     gridRowEnd: 3
-    // position: 'fixed',
-    // bottom: 0,
-    // left: 0,
-    // width: state.orientation === 'potrait' ? '100%' : 'auto',
-    // height: state.orientation === 'potrait' ? 'auto' : '100%'
   }),
   navIconContainer: state => ({
     flexGrow: 1,
     display: 'flex',
     alignItems: 'center',
-    flexDirection: state.orientation === 'potrait' ? 'column' : 'row'
+    justifyContent: 'center',
+    //flexDirection: state.orientation === 'potrait' ? 'column' : 'row'
+    flexDirection: 'column',
+    color: '#263238'
   }),
-  navIcon: {
-    // width: 23,
-    // height: 23,
-    color: '#263238',
-    // padding: {
-    //   top: 6,
-    //   bottom: 5
-    // }
 
-    padding: 11
+  navIconActive: { color: '#1A237E' },
+  navLabel: { fontFamily: 'Lato', fontSize: 15, display: 'block' },
+  navLabelActive: {
+    fontFamily: 'Lato',
+    fontSize: 16,
+    display: 'block',
+    color: '#1A237E'
   }
 });
 
@@ -73,63 +74,46 @@ function Navigation(props) {
   let { state, dispatch } = React.useContext(Context);
   const history = useHistory();
   const classes = useStyles(state);
+  console.dir(props);
+  console.log('^ props in nav');
 
   return (
     <div className={classes.Navigation}>
-      <div
-        className={classes.navIconContainer}
-        onClick={() => history.push('/')}
-      >
-        {/* <Link to="/"> */}
-        {/* <img
-            className={classes.navIcon}
-            src={props.page === 'Feed' ? homeIcon : homeLineIcon}
-            alt="Feed"
-            // onClick={() => dispatch({ type: 'change_page', payload: 'home' })}
-          /> */}
-        <Home className={classes.navIcon} />
-        {/* </Link> */}
+      <div className={classes.navIconContainer} onClick={() => history.push('/')}>
+        {props.page === 'Feed' ? (
+          <Home className={classes.navIconActive} />
+        ) : (
+          <HomeOutlined className={classes.navIcon} />
+        )}
+        <span
+          className={props.page === 'Feed' ? classes.navLabelActive : classes.navLabel}
+        >
+          Home
+        </span>
       </div>
-      <div className={classes.navIconContainer}>
-        <Link to="/">
-          {/* <img
-          
-            className={classes.navIcon}
-            src={searchIcon}
-            alt="Search"
-            // onClick={() => dispatch({  type: 'change_page', payload: 'search' })}
-          /> */}
-          <Search className={classes.navIcon} />
-        </Link>
+      <div className={classes.navIconContainer} onClick={() => history.push('/')}>
+        <SearchOutlined className={classes.navIcon} />
+        <span className={classes.navLabel}>Search</span>
       </div>
 
-      <div className={classes.navIconContainer}>
-        <Link to="/">
-          {/* <img
-            className={classes.navIcon}
-            src={props.page === 'bookmarks' ? bookmarkIcon : bookmarksLineIcon}
-            alt="Bookmarks"
-            // onClick={() => dispatch({ type: 'change_page', payload: 'search' })}
-          /> */}
-          <Bookmark className={classes.navIcon} />
-        </Link>
+      <div className={classes.navIconContainer} onClick={() => history.push('/')}>
+        <BookmarkOutlined className={classes.navIcon} />
+        <span className={classes.navLabel}>Saved</span>
       </div>
 
-      <div
-        className={classes.navIconContainer}
-        onClick={() => history.push('/settings')}
-      >
-        {/* <Link to="/settings"> */}
-        {/* <img
-            className={classes.navIcon}
-            src={props.page === 'Settings' ? settingIcon : settingsLineIcon}
-            alt="Settings"
-            // onClick={() =>
-            //   dispatch({ type: 'change_page', payload: 'settings' })
-            // }
-          /> */}
-        <SettingsApplications className={classes.navIcon} />
-        {/* </Link> */}
+      <div className={classes.navIconContainer} onClick={() => history.push('/settings')}>
+        {props.page === 'Settings' ? (
+          <SettingsApplications className={classes.navIconActive} />
+        ) : (
+          <SettingsApplicationsOutlined className={classes.navIcon} />
+        )}
+        <span
+          className={
+            props.page === 'Settings' ? classes.navLabelActive : classes.navLabel
+          }
+        >
+          Settings
+        </span>
       </div>
     </div>
   );
