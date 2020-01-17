@@ -1,5 +1,5 @@
 //React
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Context } from '../Context';
 
 //utils
@@ -112,42 +112,6 @@ function Settings() {
           .map(result => (
             <SourceBox name={result.title} subscribed={false} key={result.title} />
           ))}
-        {/* <h4 className={classes.header4}>Tech</h4>
-        {techSources.slice(0, techShowing).map(source => (
-          <SourceBox name={source.title} />
-        ))}
-        <button
-          className={classes.showMoreBtn}
-          style={{ display: techShowing > techSources.length ? 'none' : 'block' }}
-          onClick={() => {
-            setTechShowing(techShowing + 3);
-          }}
-        >
-          Show more
-        </button>
-        <h4 className={classes.header4}>News</h4>
-
-        {newsSources.slice(0, newsShowing).map(source => (
-          <SourceBox name={source.title} />
-        ))}
-        <button
-          className={classes.showMoreBtn}
-          style={{ display: newsShowing > newsSources.length ? 'none' : 'block' }}
-          onClick={() => {
-            setNewsShowing(newsShowing + 3);
-          }}
-        >
-          Show more
-        </button>
-        <h4 className={classes.header4}>Design</h4>
-        {designSources.map(source => (
-          <SourceBox name={source.title} />
-        ))}
-
-        <div className={classes.header4}>You're subscribed to</div>
-        {state.subscriptions.map(subscription => (
-          <SourceBox name={subscription} key={subscription} subscribed={true} />
-        ))} */}
         <ChooseSources />
         {/* ------ ----- ----- Mute ----- ----- ----- */}
 
@@ -168,22 +132,48 @@ function Settings() {
         <div className={classes.header2}>Display</div>
 
         <div className={classes.checkboxSettingWrap}>
-          <div className={classes.header3}>Dark Theme</div>{' '}
+          <div className={classes.header3}>Dark Theme</div>
           <input
             type="checkbox"
             checked={state.theme === 'dark'}
-            onClick={dispatch({ type: 'toggleTheme', action: '' })}
+            onChange={() => dispatch({ type: 'toggleTheme', action: '' })}
             className={classes.checkBoxInput}
           />
         </div>
+        <p className={classes.settingsExplanation}>
+          Only light theme is available for now. You can{' '}
+          <a href="https://github.com/RaglandCodes/LW-Line-frontend">fork this project</a>{' '}
+          and make your own theme.
+        </p>
 
         <div className={classes.checkboxSettingWrap}>
-          <div className={classes.header3}>Directly open external site</div>{' '}
-          <input type="checkbox" className={classes.checkBoxInput} />
+          <div className={classes.header3}>Show preview</div>
+          <input
+            type="checkbox"
+            className={classes.checkBoxInput}
+            onChange={() => dispatch({ type: 'toggleShowPreview', action: '' })}
+            checked={state.itemPreview.openOnClick}
+          />
         </div>
         <p className={classes.settingsExplanation}>
-          Leaving this unchecked will open a model with some more information.
+          Check this to see just a part of the story before choosing to view the entire
+          site
         </p>
+
+        <div className={classes.checkboxSettingWrap}>
+          <div className={classes.header3}>Split screen</div>
+          <input
+            type="checkbox"
+            className={classes.checkBoxInput}
+            onChange={() => dispatch({ type: 'toggleSplitScreen', action: '' })}
+            checked={state.itemPreview.showInSplitScreen}
+          />
+        </div>
+        <p className={classes.settingsExplanation}>
+          Read the story without leaving the page. Recomended to use only on larger
+          screens
+        </p>
+
         <div className={classes.checkboxSettingWrap}>
           <div className={classes.header3}>Show descriptions</div>{' '}
           <input type="checkbox" className={classes.checkBoxInput} />

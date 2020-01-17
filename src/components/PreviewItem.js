@@ -27,10 +27,8 @@ const pagePadding = 11;
 const useStyles = createUseStyles({
   Preview: state => ({
     overflow: 'scroll',
-    // maxWidth: 440,
-    // margin: 'auto',
     gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
-    gridColumnEnd: 3,
+    gridColumnEnd: 4,
     gridRowStart: 1,
     gridRowEnd: state.orientation === 'potrait' ? 2 : 3
   }),
@@ -73,8 +71,12 @@ const useStyles = createUseStyles({
 function PreviewItem() {
   let { state, dispatch } = React.useContext(Context);
   const classes = useStyles(state);
-
   let { id } = useParams();
+  if (state.itemPreview.showInSplitScreen) {
+    id = state.itemPreview.currentPreview.id;
+  }
+
+  console.log(`${id} <= id in PReview Item`);
   let [title, setTitle] = useState('Title is loading');
   let [metaDescription, setMetaDescription] = useState('Description is loading');
   let [metaImage, setMetaImage] = useState('');
@@ -109,7 +111,9 @@ function PreviewItem() {
     } else {
       getFromDatabase();
     }
-  }, [state.feedItems]);
+    // TODO check the dependencies
+  }, [state.feedItems, id]);
+
   return (
     <>
       <div className={classes.Preview}>
@@ -134,9 +138,9 @@ function PreviewItem() {
             <span className={classes.actionLabel}>Save</span>
           </div>
         </div>
-        {/* <a onClick={() => window.open(link)}> Read full story</a> */}
       </div>
-      <Navigation />
+
+      {state.itemPreview.showInSplitScreen ? null : <Navigation />}
     </>
   );
 }

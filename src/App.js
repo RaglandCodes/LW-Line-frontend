@@ -18,7 +18,7 @@ const useStyles = createUseStyles({
   App: state => ({
     display: 'grid',
     height: state.innerHeight,
-    gridTemplateColumns: '60px auto',
+    gridTemplateColumns: '[nav-start] 60px [nav-end] 1fr 1fr',
     gridTemplateRows: 'auto 50px'
   })
 });
@@ -77,10 +77,11 @@ function App() {
         {/* <ScrollMemory /> */}
         <Route exact path="/" render={props => <Feed />}></Route>
         <Route exact path="/settings" render={props => <Settings />}></Route>
-
-        <Route path="/source/:sourceName">
-          <PreviewSource />
-        </Route>
+        <Route
+          exact
+          path="/source/:sourceName"
+          render={props => <PreviewSource />}
+        ></Route>
         <Route
           path="/item/:id"
           render={props => <PreviewItem sheetType="tag" {...props} />}

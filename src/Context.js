@@ -9,10 +9,26 @@ function appReducer(state, action) {
         feedItems: [...action.payload]
       };
     }
+
+    case 'setCurrentFeed': {
+      return {
+        ...state,
+        currentFeed: {
+          ...action.payload
+        }
+      };
+    }
     case 'appendFeed': {
       return {
         ...state,
         feedItems: [...state.feedItems, ...action.payload]
+      };
+    }
+
+    case 'setPreview': {
+      return {
+        ...state,
+        itemPreview: { ...state.itemPreview, currentPreview: { ...action.payload } }
       };
     }
 
@@ -50,21 +66,48 @@ function appReducer(state, action) {
         subscriptions: [...oldSubscriptions]
       };
     }
+    case 'setChosenTopics': {
+      return { ...state, chosenTopics: action.payload };
+    }
     case 'change_page': {
       return {
         ...state,
         currentPage: action.payload
       };
     }
-    case 'togglePreview': {
+    case 'toggleTheme': {
       return {
         ...state,
-        previewModal: {
-          open: !state.previewModal.open,
-          ...action.payload
+        theme: state.theme === 'light' ? 'dark' : 'light'
+      };
+    }
+    case 'toggleShowPreview': {
+      return {
+        ...state,
+        itemPreview: {
+          ...state.itemPreview,
+          openOnClick: !state.itemPreview.openOnClick
         }
       };
     }
+    case 'toggleSplitScreen': {
+      return {
+        ...state,
+        itemPreview: {
+          ...state.itemPreview,
+          showInSplitScreen: !state.itemPreview.showInSplitScreen
+        }
+      };
+    }
+    // case 'togglePreview': {
+    //   return {
+    //     ...state,
+    //     previewModal: {
+    //       open: !state.previewModal.open,
+    //       ...action.payload
+    //     }
+    //   };
+    // }
     default: {
       return state;
     }
@@ -81,10 +124,19 @@ function ContextProvider(props) {
     subscriptions: [],
     feedItems: [],
     orientation: 'potrait',
+    currentFeed: {
+      name: '',
+      items: []
+    },
     mutePhrases: [],
-
+    chosenTopics: [],
     itemPreview: {
-      openOnClick: true
+      openOnClick: true,
+      showInSplitScreen: true,
+      currentPreview: {
+        type: '', // 'preview' | 'fullSite'
+        id: '' // item id | URL
+      }
     }
   });
 

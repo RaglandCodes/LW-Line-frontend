@@ -46,7 +46,7 @@ const useStyles = createUseStyles({
     alignItems: 'center',
     zIndex: 2,
     gridColumnStart: 1,
-    gridColumnEnd: state.orientation === 'landscape' ? 2 : 3,
+    gridColumnEnd: state.orientation === 'landscape' ? 2 : 4,
     gridRowStart: state.orientation === 'landscape' ? 1 : 2,
     gridRowEnd: 3
   }),
@@ -74,8 +74,6 @@ function Navigation(props) {
   let { state, dispatch } = React.useContext(Context);
   const history = useHistory();
   const classes = useStyles(state);
-  console.dir(props);
-  console.log('^ props in nav');
 
   return (
     <div className={classes.Navigation}>

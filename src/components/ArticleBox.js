@@ -39,16 +39,31 @@ const useStyles = createUseStyles({
 function ArticleBox(item) {
   let { state, dispatch } = React.useContext(Context);
   const classes = useStyles();
-
   let history = useHistory();
   return (
     <div
       className={classes.ArticleBox}
-      onClick={() =>
-        state.itemPreview.openOnClick
-          ? history.push(`/item/${item.id}`)
-          : window.open(item.link)
-      }
+      onClick={() => {
+        if (state.itemPreview.openOnClick) {
+          // Show a preview
+          if (state.itemPreview.showInSplitScreen) {
+            // Show a preview in split screen
+            dispatch({ type: 'setPreview', payload: { type: 'preview', id: item.id } });
+          } else {
+            // Show a preview in new window
+            history.push(`/item/${item.id}`);
+          }
+        } else {
+          // Show the full site
+
+          if (state.itemPreview.showInSplitScreen) {
+            // Show the full site in split screen
+          } else {
+            // Show the full site in new window
+            window.open(item.link);
+          }
+        }
+      }}
     >
       <div className={classes.title}>{item.title}</div>
       <div className={classes.source}>{item.source}</div>

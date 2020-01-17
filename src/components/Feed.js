@@ -24,7 +24,14 @@ const useStyles = createUseStyles({
   doneBtn: state => ({
     ...button,
     display: state.subscriptions.length === 0 ? 'none' : 'block'
-  })
+  }),
+  welcomeMessage: {
+    padding: 10
+  },
+  button: {
+    ...button,
+    color: 'black'
+  }
 });
 
 function Feed() {
@@ -71,7 +78,7 @@ function Feed() {
     <Sheet page="Feed">
       {errorMessage ? errorMessage : null}
       {state.subscriptions.length === 0 ? (
-        <>
+        <div className={classes.welcomeMessage}>
           <p>
             Welcome! <br />
             Please choose your interestes / search for publishers to get started. You can
@@ -79,7 +86,8 @@ function Feed() {
           </p>
 
           <ChooseSources2 />
-        </>
+          <button className={classes.button}>Done</button>
+        </div>
       ) : (
         <>
           {state.feedItems.map(item => (

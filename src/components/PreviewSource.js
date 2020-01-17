@@ -9,6 +9,7 @@ import { dataFetch } from '../modules/dataFetch';
 //Components
 import Sheet from './Sheet';
 import ArticleBox from './ArticleBox';
+import GeneralFeed from './GeneralFeed';
 
 //Styles
 import { createUseStyles } from 'react-jss';
@@ -40,31 +41,24 @@ function PreviewSource(props) {
   let { state, dispatch } = React.useContext(Context);
   const classes = useStyles(state);
 
-  let [title, setTitle] = useState('Title is loading');
-  let [description, setDescription] = useState('Descriprion is loading');
-  let [feedItems, setFeedItems] = useState([]);
+  let [errorMessage, setErrorMessage] = useState(null);
 
   let { sourceName } = useParams();
-  console.log(`${sourceName} <= sourceName`);
   useEffect(() => {
     dataFetch('previewSource', { source: sourceName }).then(jsonRes => {
-      setTitle(jsonRes.title);
-      setDescription(jsonRes.about);
-      setFeedItems(jsonRes.items.data);
-      console.dir(jsonRes);
+      dispatch({
+        type: 'setCurrentFeed',
+        payload: { name: jsonRes.title, items: jsonRes.items.data }
+      });
+      if (jsonRes.items === 'ERROR') {
+        setErrorMessage(
+          `Couldn't load the preview for ${sourceName}. Sorry for the inconvinience`
+        );
+      }
     });
   }, []);
 
-  return (
-    <Sheet page={sourceName}>
-      <div className={classes.PreviewSource}>
-        <p>{description}</p>
-        {feedItems
-          ? feedItems.map(item => <ArticleBox key={item.id} {...item} />)
-          : feedItems}
-      </div>
-    </Sheet>
-  );
+  return <GeneralFeed />;
 }
 
 export default PreviewSource;

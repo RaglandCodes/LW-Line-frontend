@@ -2,8 +2,6 @@
 import React from 'react';
 import { Context } from '../Context';
 
-//import Logo from '../assets/Logo.png';
-
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
@@ -25,18 +23,6 @@ WebFont.load({
 const useStyles = createUseStyles({
   TopBox: {
     //textAlign: 'center',
-  },
-  logo: {
-    width: '100%',
-    textAlign: 'center',
-    backgroundColor: colours.blue,
-    padding: '4px 0',
-    color: 'white',
-    fontFamily: 'Playfair Display'
-  },
-  logoImg: {
-    width: 33,
-    height: 33
   },
 
   currentPage: {

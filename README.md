@@ -8,9 +8,8 @@
 ## What's new
 
 - UI
+  - Preview items in split screen
   - Nav bar must indicate current active screen
-- Local storage
-  - Save to Local Storage
 
 ## TODO
 
@@ -31,6 +30,6 @@
 - Organize files based on domain
 - Check out suspense
 - Analytics
-- Reduce number of network calls
+- Reduce number of network calls (Cache in Service Worker?)
 
 Icons may be from [FontAwesome](https://fontawesome.com/license)
