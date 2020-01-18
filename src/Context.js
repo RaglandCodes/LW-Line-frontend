@@ -25,6 +25,15 @@ function appReducer(state, action) {
       };
     }
 
+    case 'appendCurrentFeed': {
+      return {
+        ...state,
+        currentFeed: {
+          ...state.currentFeed,
+          items: [...state.currentFeed.items, ...action.payload]
+        }
+      };
+    }
     case 'setPreview': {
       return {
         ...state,
@@ -148,12 +157,23 @@ function ContextProvider(props) {
   useEffect(() => {
     localStorage.setItem('theme', state.theme);
     localStorage.setItem('mutePhrases', state.mutePhrases.join('AnNdDd'));
-  }, [state]);
+  }, [state.theme, state.mutePhrases]);
+
+  useEffect(() => {
+    localStorage.setItem('showInSplitScreen', state.itemPreview.showInSplitScreen);
+  }, [state.itemPreview.showInSplitScreen]);
+
+  useEffect(() => {
+    localStorage.setItem('showPreview', state.itemPreview.openOnClick);
+  }, [state.itemPreview.openOnClick]);
 
   useEffect(() => {
     localStorage.setItem('subscriptions', state.subscriptions.join('AnNdDd'));
   }, [state.subscriptions]);
 
+  useEffect(() => {
+    console.log(`${JSON.stringify(state.after, null, 2)} <= state.after`);
+  }, [state.after]);
   return (
     <Context.Provider value={{ state, dispatch }}>{props.children}</Context.Provider>
   );

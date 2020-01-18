@@ -7,6 +7,9 @@
 
 ## What's new
 
+- Handle case for new user
+  - Don't fetch items
+  - Don't show the "You're subscribed to" when there're no subscriptions
 - UI
   - Preview items in split screen
   - Nav bar must indicate current active screen
@@ -16,15 +19,13 @@
 - UI
   - Choose fonts, colours
   - Dark Theme
-  - Add Bookmark icon for preview
+  - Show embeded site in split screen
+  - Improve previewItem UI
   - [Sound](https://material.io/design/sound/applying-sound-to-ui.html)
   - [Accessibility](https://material.io/design/usability/accessibility.html#)
 - Handle failed server response when
   - fetching feed
   - searching for sources
-- Handle case for new user
-  - Don't fetch items
-  - Don't show the "You're subscribed to" when there're no subscriptions
 - Settings
 - [Readuce Bundle size](https://material-ui.com/guides/minimizing-bundle-size/#option-2)
 - Organize files based on domain

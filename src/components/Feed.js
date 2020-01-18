@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 import ArticleBox from './ArticleBox';
 import Sheet from './Sheet';
 import ChooseSources from './ChooseSources';
-import ChooseSources2 from './ChooseSources2';
 
 //Styles
 import { createUseStyles } from 'react-jss';
@@ -85,7 +84,7 @@ function Feed() {
             also link to any feed in the future
           </p>
 
-          <ChooseSources2 />
+          <ChooseSources />
           <button className={classes.button}>Done</button>
         </div>
       ) : (
@@ -94,7 +93,7 @@ function Feed() {
             <ArticleBox key={item.id} {...item} />
           ))}
           <button className={classes.getMoreItemsBtn} onClick={() => getMoreItems()}>
-            Load more stories
+            Load more storiesjsonRes
           </button>
         </>
       )}

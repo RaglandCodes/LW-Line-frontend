@@ -1,11 +1,10 @@
 //React
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Context } from './Context';
-import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
-import ScrollMemory from 'react-router-scroll-memory';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 //Components
-import Feed from './components/Feed';
+import Home from './components/Home';
 import Settings from './components/Settings';
 import PreviewSource from './components/PreviewSource';
 import PreviewItem from './components/PreviewItem';
@@ -25,6 +24,7 @@ const useStyles = createUseStyles({
 
 function App() {
   let { state, dispatch } = React.useContext(Context);
+  let [newUser, setNewUser] = useState(true);
   const classes = useStyles(state);
 
   useEffect(() => {
@@ -32,7 +32,10 @@ function App() {
 
     if (localStorage.getItem('theme')) {
       console.log('come back');
+      setNewUser(false);
+      // ** local storage => React state **
 
+      // * subscriptions *
       let subscriptions = localStorage.getItem('subscriptions').split('AnNdDd');
       console.log(`${subscriptions} <== subscriptions\n\n`);
 
@@ -41,8 +44,20 @@ function App() {
           dispatch({ type: 'appendSubscription', payload: subscription });
         }
       });
+
+      // * display preferences *
+      if (localStorage.getItem('showPreview') === 'false') {
+        // state.itemPreview.openOnClick is initialised to be true. So dispatch only iff localStorage is false
+        dispatch({ type: 'toggleShowPreview', action: '' });
+      }
+
+      if ('false' === localStorage.getItem('showInSplitScreen')) {
+        // state.itemPreview.showInSplitScreen is initialised to be true. So dispatch only iff localStorage is false
+        dispatch({ type: 'toggleSplitScreen', action: '' });
+      }
     } else {
       console.log('new');
+      setNewUser(true);
     }
 
     dispatch({
@@ -74,8 +89,7 @@ function App() {
   return (
     <div className={`App ${classes.App}`}>
       <Router>
-        {/* <ScrollMemory /> */}
-        <Route exact path="/" render={props => <Feed />}></Route>
+        <Route exact path="/" render={props => <Home newUser={newUser} />}></Route>
         <Route exact path="/settings" render={props => <Settings />}></Route>
         <Route
           exact
