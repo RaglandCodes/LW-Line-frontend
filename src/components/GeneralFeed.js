@@ -28,41 +28,40 @@ function GeneralFeed(props) {
       }).then(res => {
         dispatch({ type: 'appendCurrentFeed', payload: res.data });
         dispatch({ type: 'setAfter', payload: res.after });
-        console.log(`${JSON.stringify(res.after, null, 2)} <= res.after`);
       });
     } else {
     }
   };
-  useEffect(() => {
-    return () => {
-      dispatch({ type: 'setCurrentFeed', payload: { name: '', items: [] } });
-    };
-  }, []);
 
   useEffect(() => {
     if (state.currentFeed.name === 'Feed') {
-      dataFetch('getItems', { subscriptions: state.subscriptions.join('AaNnDd') }).then(
-        items => {
-          dispatch({
-            type: 'setCurrentFeed',
-            payload: { name: 'Feed', items: items.data }
-          });
-          dispatch({ type: 'setAfter', payload: items.after });
-        }
-      );
+      if (!state.currentFeed.items.length) {
+        // Add items automatically only if it's empty
+        dataFetch('getItems', { subscriptions: state.subscriptions.join('AaNnDd') }).then(
+          items => {
+            // dispatch({
+            //   type: 'setCurrentFeed',
+            //   payload: { name: 'Feed', items: items.data }
+            // });
+            dispatch({ type: 'appendCurrentFeed', payload: items.data });
+            dispatch({ type: 'setAfter', payload: items.after });
+          }
+        );
+      }
     } else if (state.currentFeed.name !== '') {
-      console.log('HH');
       dataFetch('previewSource', { source: state.currentFeed.name }).then(jsonRes => {
-        dispatch({
-          type: 'setCurrentFeed',
-          payload: { name: jsonRes.title, items: jsonRes.items.data }
-        });
+        // dispatch({
+        //   type: 'setCurrentFeed',
+        //   payload: { name: jsonRes.title, items: jsonRes.items.data }
+        // });
+        dispatch({ type: 'appendCurrentFeed', payload: jsonRes.items.data });
         if (jsonRes.items === 'ERROR') {
           // TODO
         }
       });
     }
   }, [state.currentFeed.name]);
+
   return (
     <Sheet page={state.currentFeed.name} containsPreviewableContent>
       <div className={classes.Feed}>

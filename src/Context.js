@@ -169,11 +169,14 @@ function ContextProvider(props) {
 
   useEffect(() => {
     localStorage.setItem('subscriptions', state.subscriptions.join('AnNdDd'));
+
+    // Remove items from feed when subscriptions chage to trigger fetch to get items for the new subscriptions
+    dispatch({
+      type: 'setCurrentFeed',
+      payload: { name: state.currentFeed.name, items: [] }
+    });
   }, [state.subscriptions]);
 
-  useEffect(() => {
-    console.log(`${JSON.stringify(state.after, null, 2)} <= state.after`);
-  }, [state.after]);
   return (
     <Context.Provider value={{ state, dispatch }}>{props.children}</Context.Provider>
   );

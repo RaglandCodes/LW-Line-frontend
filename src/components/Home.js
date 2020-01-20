@@ -25,7 +25,7 @@ function Home(props) {
   const classes = useStyles();
   let history = useHistory();
   useEffect(() => {
-    if (showFeed && state.subscriptions.length) {
+    if (showFeed && state.subscriptions.length && state.currentFeed.name !== 'Feed') {
       dispatch({
         type: 'setCurrentFeed',
         payload: { name: 'Feed', items: [] }
@@ -34,13 +34,14 @@ function Home(props) {
   }, [showFeed, state.subscriptions]);
 
   useEffect(() => {
-    console.log(`${props.newUser} <= props.newUser`);
     if (!props.newUser && state.subscriptions.length) {
       setShowFeed(true);
     }
   }, [props.newUser]);
   return showFeed ? (
-    <GeneralFeed />
+    state.currentFeed.name === 'Feed' ? (
+      <GeneralFeed />
+    ) : null
   ) : (
     <Sheet>
       <div className={classes.welcomeMessage}>

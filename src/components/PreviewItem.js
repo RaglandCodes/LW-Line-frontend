@@ -76,7 +76,6 @@ function PreviewItem() {
     id = state.itemPreview.currentPreview.id;
   }
 
-  console.log(`${id} <= id in PReview Item`);
   let [title, setTitle] = useState('Title is loading');
   let [metaDescription, setMetaDescription] = useState('Description is loading');
   let [metaImage, setMetaImage] = useState('');

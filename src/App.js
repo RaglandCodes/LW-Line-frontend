@@ -37,7 +37,6 @@ function App() {
 
       // * subscriptions *
       let subscriptions = localStorage.getItem('subscriptions').split('AnNdDd');
-      console.log(`${subscriptions} <== subscriptions\n\n`);
 
       subscriptions.forEach(subscription => {
         if (subscription !== '') {
