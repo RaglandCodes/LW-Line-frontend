@@ -6,31 +6,31 @@ import { Link, useHistory } from 'react-router-dom';
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
-import { box, button } from '../styles';
+import { box, button, colours, fonts } from '../styles';
 
 WebFont.load({
   google: {
-    families: ['Roboto']
+    families: [fonts.secondary]
   }
 });
 
 const useStyles = createUseStyles({
   SourceBox: {
-    // backgroundColor: '#CFD8DC',
     ...box,
     //display: 'inline-block',
     width: '100%',
     boxSizing: 'border-box',
     display: 'flex',
-
+    backgroundColor: colours.surface,
     //flexDirection: 'column',
     width: '100%',
     padding: 5,
     margin: '5px auto',
-    fontFamily: 'Roboto'
+    fontFamily: fonts.secondary
   },
   followButton: {
     backgroundColor: '#263238',
+    color: 'white',
     ...button
   },
   removeButton: {
@@ -40,6 +40,7 @@ const useStyles = createUseStyles({
   },
   previewButton: {
     backgroundColor: '#37474F',
+    color: 'white',
     ...button
   },
   sourceName: {

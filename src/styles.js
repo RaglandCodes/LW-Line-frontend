@@ -2,12 +2,21 @@
 
 const colours = {
   blue: '#1565C0',
-  blue900: '#0D47A1'
+  blue900: '#0D47A1',
+  background: '#f5f5f5',
+  //surface: '#ECEFF1'
+  surface: 'white',
+  surface2: 'white'
 };
 
+const fonts = {
+  //primary: 'PT Serif',
+  primary: 'Merriweather',
+  secondary: 'Lato'
+};
 const header1 = {
   fontSize: 25,
-  fontFamily: 'Merriweather',
+  fontFamily: fonts.primary,
   fontWeight: 400,
   margin: {
     top: 18
@@ -16,7 +25,7 @@ const header1 = {
 
 const header2 = {
   fontSize: 23,
-  fontFamily: 'Merriweather',
+  fontFamily: fonts.primary,
   fontWeight: 400,
   margin: {
     top: 18
@@ -25,7 +34,7 @@ const header2 = {
 
 const header3 = {
   fontSize: 17,
-  fontFamily: 'Merriweather',
+  fontFamily: fonts.primary,
   fontWeight: 300,
   margin: {
     top: 11
@@ -34,7 +43,7 @@ const header3 = {
 
 const header4 = {
   fontSize: 16,
-  fontFamily: 'Merriweather',
+  fontFamily: fonts.primary,
   fontWeight: 300,
   margin: {
     top: 11
@@ -42,16 +51,25 @@ const header4 = {
 };
 
 const box = {
-  borderBottom: '1px solid #455A64',
-  backgroundColor: '#F5F5F5'
+  borderBottom: '1px solid #455A64'
+  //backgroundColor: '#F5F5F5'
 };
 
 const button = {
-  color: '#FAFAFA',
+  //color: '#FAFAFA',
   borderRadius: 3,
   border: 0,
   padding: 5,
   margin: 3,
   fontSize: 14
 };
-module.exports = { colours, header1, header2, header3, header4, box, button };
+module.exports = {
+  colours,
+  header1,
+  header2,
+  header3,
+  header4,
+  box,
+  button,
+  fonts
+};

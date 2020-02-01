@@ -4,14 +4,14 @@ import { ContextProvider } from './Context';
 import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
 import ScrollMemory from 'react-router-scroll-memory';
 
-import './index.css';
+// import './index.css';
 import App from './App';
 
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <ContextProvider>
-    <App />
+    <App style={{ backgroundColor: 'yellow' }} />
   </ContextProvider>,
   document.getElementById('root')
 );

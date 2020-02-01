@@ -1,17 +1,7 @@
 //React
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Context } from '../Context';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-
-//Assets
-import settingIcon from '../assets/material_settings.png';
-import searchIcon from '../assets/material_search.png';
-import bookmarkIcon from '../assets/material_bookmarks.png';
-import homeIcon from '../assets/material_home.png';
-
-import homeLineIcon from '../assets/line_home.png';
-import bookmarksLineIcon from '../assets/line_bookmarks.png';
-import settingsLineIcon from '../assets/line_settings.png';
 
 //Styles
 import { createUseStyles } from 'react-jss';
@@ -19,25 +9,28 @@ import {
   Bookmark,
   BookmarkOutlined,
   Search,
+  OpenInNew,
   SearchOutlined,
   SettingsApplications,
   SettingsApplicationsOutlined,
   Home,
-  HomeOutlined
+  HomeOutlined,
+  Share
 } from '@material-ui/icons';
-import { colours } from '../styles';
+import { colours, fonts } from '../styles';
 
 import WebFont from 'webfontloader';
 WebFont.load({
   google: {
-    families: ['Lato']
+    families: [fonts.secondary]
   }
 });
 
 const useStyles = createUseStyles({
   Navigation: state => ({
     //backgroundColor: '#263238',
-    backgroundColor: '#ECEFF1',
+    //backgroundColor: '#ECEFF1',
+    backgroundColor: colours.surface2,
     color: 'white',
     display: 'flex',
     justifyContent: 'spaceEvenly',
@@ -61,9 +54,9 @@ const useStyles = createUseStyles({
   }),
 
   navIconActive: { color: '#1A237E' },
-  navLabel: { fontFamily: 'Lato', fontSize: 15, display: 'block' },
+  navLabel: { fontFamily: fonts.secondary, fontSize: 15, display: 'block' },
   navLabelActive: {
-    fontFamily: 'Lato',
+    fontFamily: fonts.secondary,
     fontSize: 16,
     display: 'block',
     color: '#1A237E'
@@ -74,7 +67,18 @@ function Navigation(props) {
   let { state, dispatch } = React.useContext(Context);
   const history = useHistory();
   const classes = useStyles(state);
+  const [showPreviewNavigation, setshowPreviewNavigation] = useState(false);
+  useEffect(() => {
+    if (props.fromPreviewItem && state.orientation === 'potrait') {
+      setshowPreviewNavigation(true);
+    } else {
+      setshowPreviewNavigation(false);
+    }
+  }, [state.orientation]);
 
+  useEffect(() => {
+    console.log(`${showPreviewNavigation} <= showPreviewNavigation`);
+  }, [showPreviewNavigation]);
   return (
     <div className={classes.Navigation}>
       <div className={classes.navIconContainer} onClick={() => history.push('/')}>
@@ -89,30 +93,47 @@ function Navigation(props) {
           Home
         </span>
       </div>
-      <div className={classes.navIconContainer} onClick={() => history.push('/')}>
-        <SearchOutlined className={classes.navIcon} />
-        <span className={classes.navLabel}>Search</span>
-      </div>
+      {showPreviewNavigation ? (
+        <div className={classes.navIconContainer}>
+          <Share className={classes.navIcon} />
+          <span className={classes.navLabel}>Share</span>
+        </div>
+      ) : (
+        <div className={classes.navIconContainer} onClick={() => history.push('/')}>
+          <SearchOutlined className={classes.navIcon} />
+          <span className={classes.navLabel}>Search</span>
+        </div>
+      )}
 
       <div className={classes.navIconContainer} onClick={() => history.push('/')}>
         <BookmarkOutlined className={classes.navIcon} />
         <span className={classes.navLabel}>Saved</span>
       </div>
 
-      <div className={classes.navIconContainer} onClick={() => history.push('/settings')}>
-        {props.page === 'Settings' ? (
-          <SettingsApplications className={classes.navIconActive} />
-        ) : (
-          <SettingsApplicationsOutlined className={classes.navIcon} />
-        )}
-        <span
-          className={
-            props.page === 'Settings' ? classes.navLabelActive : classes.navLabel
-          }
+      {showPreviewNavigation ? (
+        <div className={classes.navIconContainer} onClick={() => window.open(props.link)}>
+          <OpenInNew className={classes.navIcon} />
+          <span className={classes.navLabel}>Read story</span>
+        </div>
+      ) : (
+        <div
+          className={classes.navIconContainer}
+          onClick={() => history.push('/settings')}
         >
-          Settings
-        </span>
-      </div>
+          {props.page === 'Settings' ? (
+            <SettingsApplications className={classes.navIconActive} />
+          ) : (
+            <SettingsApplicationsOutlined className={classes.navIcon} />
+          )}
+          <span
+            className={
+              props.page === 'Settings' ? classes.navLabelActive : classes.navLabel
+            }
+          >
+            Settings
+          </span>
+        </div>
+      )}
     </div>
   );
 }

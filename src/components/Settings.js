@@ -13,7 +13,7 @@ import ChooseSources from './ChooseSources';
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
-import { header2, header3, header4, button } from '../styles';
+import { header2, header3, header4, button, fonts } from '../styles';
 
 WebFont.load({
   google: {
@@ -21,7 +21,7 @@ WebFont.load({
       `${header2.fontFamily}:${header2.fontWeight}`,
       `${header3.fontFamily}:${header3.fontWeight}`,
       `${header4.fontFamily}:${header4.fontWeight}`,
-      'Merriweather'
+      fonts.primary
     ]
   }
 });
@@ -57,7 +57,7 @@ const useStyles = createUseStyles({
     display: 'flex'
   },
   settingsExplanation: {
-    fontFamily: 'Merriweather',
+    fontFamily: fonts.primary,
     fontSize: 11,
     fontWeight: 300
   },

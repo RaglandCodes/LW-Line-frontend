@@ -10,7 +10,7 @@ import PreviewSource from './components/PreviewSource';
 import PreviewItem from './components/PreviewItem';
 
 //Styles
-import './App.css';
+//import './App.css';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
@@ -57,6 +57,12 @@ function App() {
     } else {
       console.log('new');
       setNewUser(true);
+
+      // Set default settings based on device
+      if (window.innerWidth < 1000) {
+        dispatch({ type: 'toggleSplitScreen', action: '' });
+        // default split screen is true. So toggling will make it false on smaller screens
+      }
     }
 
     dispatch({
@@ -85,10 +91,18 @@ function App() {
       });
     });
   }, []);
+
+  useEffect(() => {
+    console.log(`${newUser} <= newUser`);
+  }, [newUser]);
   return (
     <div className={`App ${classes.App}`}>
       <Router>
-        <Route exact path="/" render={props => <Home newUser={newUser} />}></Route>
+        <Route
+          exact
+          path="/"
+          render={props => <Home newUser={newUser} setNewUser={setNewUser} />}
+        ></Route>
         <Route exact path="/settings" render={props => <Settings />}></Route>
         <Route
           exact

@@ -13,7 +13,13 @@ import { dataFetch } from '../modules/dataFetch';
 
 //Styles
 import { createUseStyles } from 'react-jss';
+import { button } from '../styles';
+
 const useStyles = createUseStyles({
+  doneButton: {
+    ...button,
+    width: '100%'
+  },
   welcomeMessage: {
     padding: 10
   }
@@ -48,7 +54,7 @@ function Home(props) {
         <p>
           Welcome! <br />
           Please choose your interestes / search for publishers to get started. <br />
-          You can customise{' '}
+          You can customise
           <u>
             <span onClick={() => history.push('/settings')}>more in the settings</span>
           </u>
@@ -57,10 +63,11 @@ function Home(props) {
 
         <ChooseSources />
         <button
-          className={classes.button}
+          className={classes.doneButton}
           onClick={() => {
             if (state.subscriptions.length) {
               setShowFeed(true);
+              props.setNewUser(false);
             }
           }}
         >

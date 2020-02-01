@@ -15,11 +15,11 @@ import { OpenInNew, Share, Bookmark } from '@material-ui/icons';
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
-import { header1, header2 } from '../styles';
+import { header1, header2, fonts } from '../styles';
 
 WebFont.load({
   google: {
-    families: [`${header1.fontFamily}:${header1.fontWeight}`, 'Merriweather']
+    families: [`${header1.fontFamily}:${header1.fontWeight}`]
   }
 });
 
@@ -46,12 +46,12 @@ const useStyles = createUseStyles({
   metaDescription: {
     padding: { left: pagePadding, right: pagePadding },
     fontSize: 17,
-    fontFamily: 'Merriweather'
+    fontFamily: fonts.primary
   },
   metaImage: { width: ' 100%' },
   description: {
     padding: { left: pagePadding, right: pagePadding },
-    fontFamily: 'Merriweather',
+    fontFamily: fonts.primary,
     fontSize: 14
   },
   previewActions: {
@@ -119,10 +119,11 @@ function PreviewItem() {
         {metaImage ? (
           <img src={metaImage} alt={title} className={classes.metaImage} />
         ) : null}
-
         <h1 className={classes.header1}>{title}</h1>
         <p className={classes.metaDescription}>{metaDescription}</p>
+        {/* <p className={classes.description}>{description}</p> */}
         <p className={classes.description}>{description}</p>
+
         <div className={classes.previewActions}>
           <div className={classes.actionIconContainer} onClick={() => window.open(link)}>
             <OpenInNew />
@@ -139,7 +140,9 @@ function PreviewItem() {
         </div>
       </div>
 
-      {state.itemPreview.showInSplitScreen ? null : <Navigation />}
+      {state.itemPreview.showInSplitScreen ? null : (
+        <Navigation fromPreviewItem story={link} />
+      )}
     </>
   );
 }

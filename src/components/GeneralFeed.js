@@ -1,5 +1,5 @@
 //React
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Context } from '../Context';
 
 //Components
@@ -12,13 +12,19 @@ import { dataFetch } from '../modules/dataFetch';
 
 //Styles
 import { createUseStyles } from 'react-jss';
+import { button } from '../styles';
 const useStyles = createUseStyles({
-  Feed: {}
+  Feed: {},
+  showMoreButton: {
+    ...button
+  }
 });
 
 function GeneralFeed(props) {
   let { state, dispatch } = React.useContext(Context);
   const classes = useStyles();
+
+  let [errorMessage, setErrorMessage] = useState(null);
   const showMore = () => {
     if (state.currentFeed.name === 'Feed') {
       dataFetch('getItems', {
@@ -39,24 +45,21 @@ function GeneralFeed(props) {
         // Add items automatically only if it's empty
         dataFetch('getItems', { subscriptions: state.subscriptions.join('AaNnDd') }).then(
           items => {
-            // dispatch({
-            //   type: 'setCurrentFeed',
-            //   payload: { name: 'Feed', items: items.data }
-            // });
             dispatch({ type: 'appendCurrentFeed', payload: items.data });
             dispatch({ type: 'setAfter', payload: items.after });
           }
         );
       }
     } else if (state.currentFeed.name !== '') {
+      console.log('Fetchinh for' + state.currentFeed.name);
+
       dataFetch('previewSource', { source: state.currentFeed.name }).then(jsonRes => {
-        // dispatch({
-        //   type: 'setCurrentFeed',
-        //   payload: { name: jsonRes.title, items: jsonRes.items.data }
-        // });
-        dispatch({ type: 'appendCurrentFeed', payload: jsonRes.items.data });
         if (jsonRes.items === 'ERROR') {
-          // TODO
+          setErrorMessage(
+            `An error occured when getting information for ${state.currentFeed.name}`
+          );
+        } else {
+          dispatch({ type: 'appendCurrentFeed', payload: jsonRes.items.data });
         }
       });
     }
@@ -64,14 +67,26 @@ function GeneralFeed(props) {
 
   return (
     <Sheet page={state.currentFeed.name} containsPreviewableContent>
-      <div className={classes.Feed}>
-        {state.currentFeed.items.length === 0 ? (
-          <>Loading Please wait</>
-        ) : (
-          state.currentFeed.items.map(item => <ArticleBox key={item.id} {...item} />)
-        )}
-      </div>
-      <button onClick={() => showMore()}>Show more </button>
+      {errorMessage ? (
+        errorMessage
+      ) : (
+        <>
+          <div className={classes.Feed}>
+            {state.currentFeed.items.length === 0 ? (
+              <>
+                Getting items for your feed
+                <br />
+                Please wait ...
+              </>
+            ) : (
+              state.currentFeed.items.map(item => <ArticleBox key={item.id} {...item} />)
+            )}
+          </div>
+          <button onClick={() => showMore()} className={classes.showMoreButton}>
+            Show more{' '}
+          </button>
+        </>
+      )}
     </Sheet>
   );
 }

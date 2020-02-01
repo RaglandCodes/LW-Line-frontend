@@ -6,10 +6,11 @@ import { useHistory } from 'react-router-dom';
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
+import { fonts, colours } from '../styles';
 
 WebFont.load({
   google: {
-    families: ['Merriweather:300', 'Lato', 'serif', 'Playfair Display']
+    families: [fonts.primary, fonts.secondary]
   }
 });
 
@@ -17,20 +18,21 @@ const useStyles = createUseStyles({
   ArticleBox: {
     //borderBottom: '1px solid #1565C0',263238
     borderBottom: '1px solid #455A64',
-    backgroundColor: '#F5F5F5',
+    //backgroundColor: '#F5F5F5',
+    backgroundColor: colours.surface,
     width: '95%',
     margin: '5px auto',
     padding: 4
   },
-  title: { fontFamily: 'Merriweather', fontSize: 15, padding: { top: 3 } },
+  title: { fontFamily: fonts.primary, fontSize: 15, padding: { top: 3 } },
   source: {
-    fontFamily: 'Lato',
+    fontFamily: fonts.secondary,
     fontSize: 12,
     padding: { top: 2, bottom: 3 },
     color: '#424242'
   },
   description: {
-    fontFamily: 'Merriweather',
+    fontFamily: fonts.primary,
     fontSize: 13,
     margin: { top: 0 },
     color: '#263238'
@@ -51,6 +53,7 @@ function ArticleBox(item) {
             dispatch({ type: 'setPreview', payload: { type: 'preview', id: item.id } });
           } else {
             // Show a preview in new window
+            dispatch({ type: 'setPreview', payload: { type: 'preview', id: item.id } });
             history.push(`/item/${item.id}`);
           }
         } else {

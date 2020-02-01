@@ -10,7 +10,6 @@ import ChooseSources from './ChooseSources';
 
 //Styles
 import { createUseStyles } from 'react-jss';
-import WebFont from 'webfontloader';
 import { button } from '../styles';
 
 const useStyles = createUseStyles({

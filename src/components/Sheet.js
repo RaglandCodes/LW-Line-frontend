@@ -9,9 +9,11 @@ import SplitScreenPreview from './SplitScreenPreview';
 
 //Styles
 import { createUseStyles } from 'react-jss';
+import { colours } from '../styles';
 
 const useStyles = createUseStyles({
   Sheet: state => ({
+    backgroundColor: colours.background,
     overflow: 'scroll',
 
     gridColumnStart: state.orientation === 'potrait' ? 1 : 2,

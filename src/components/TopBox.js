@@ -5,18 +5,11 @@ import { Context } from '../Context';
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
-import { colours } from '../styles';
+import { colours, fonts } from '../styles';
 
 WebFont.load({
   google: {
-    families: [
-      'Merriweather',
-      'Lato:700',
-      'Playfair Display:400 ',
-      'Lora',
-      'PT Serif',
-      'serif'
-    ]
+    families: [fonts.primary]
   }
 });
 
@@ -30,7 +23,7 @@ const useStyles = createUseStyles({
     fontSize: 39,
     width: '90%',
     margin: 'auto',
-    fontFamily: 'Merriweather',
+    fontFamily: fonts.primary,
     fontWeight: 400
   }
 });

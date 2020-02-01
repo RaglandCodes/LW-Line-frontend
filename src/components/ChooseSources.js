@@ -9,14 +9,14 @@ import SourceBox from './SourceBox';
 
 //Styles
 import { createUseStyles } from 'react-jss';
-import { header4, button } from '../styles';
+import { header4, button, fonts, colours } from '../styles';
 
 const SourceTopicStyles = {
   display: 'inline-block',
   padding: 3,
   margin: 3,
-  backgroundColor: '#F5F5F5',
-  fontFamily: 'Merriweather',
+  backgroundColor: colours.surface,
+  fontFamily: fonts.primary,
   fontSize: 14
 };
 const useStyles = createUseStyles({
@@ -44,7 +44,7 @@ function ChooseSources() {
   let { state, dispatch } = React.useContext(Context);
   let [topics, setTopics] = useState([]);
   let [sources, setSources] = useState([]);
-  let [showing, setShowing] = useState(3);
+  let [showing, setShowing] = useState(5);
 
   const toggleChosenState = topic => {
     let i = topics.indexOf(topic);
@@ -71,7 +71,6 @@ function ChooseSources() {
   }, []);
 
   useEffect(() => {
-    //let chosenTopics = topics.filter(topic => topic.chosen).map(topic => topic.topic);
     if (state.chosenTopics.length) {
       dataFetch('getSources', { searchTopics: state.chosenTopics.join('AaNnDd') }).then(
         gs => {
@@ -83,15 +82,21 @@ function ChooseSources() {
 
   return (
     <div className={classes.ChooseSources}>
-      {topics.map(topic => (
-        <div
-          className={!topic.chosen ? classes.SourceTopic : classes.chosenSourceTopic}
-          key={topic.topic}
-          onClick={() => toggleChosenState(topic)}
-        >
-          {topic.topic}
-        </div>
-      ))}
+      {topics.length ? (
+        topics.map(topic => (
+          <div
+            className={!topic.chosen ? classes.SourceTopic : classes.chosenSourceTopic}
+            key={topic.topic}
+            onClick={() => toggleChosenState(topic)}
+          >
+            {topic.topic}
+          </div>
+        ))
+      ) : (
+        <>
+          Getting topics... <br /> Please wait ...
+        </>
+      )}
       {sources
         .filter(source => !state.subscriptions.includes(source.title))
         .slice(0, showing)
@@ -102,7 +107,7 @@ function ChooseSources() {
         <button
           className={classes.showMoreBtn}
           onClick={() => {
-            setShowing(showing + 3);
+            setShowing(showing + 4);
           }}
         >
           Show more

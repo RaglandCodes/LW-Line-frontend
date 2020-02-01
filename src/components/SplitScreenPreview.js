@@ -4,12 +4,16 @@ import { Context } from '../Context';
 
 //Components
 import PreviewItem from './PreviewItem';
+
 //Styles
 import { createUseStyles } from 'react-jss';
+import { colours } from '../styles';
+
 const useStyles = createUseStyles({
   SplitScreenPreview: {
     height: '100%',
-    overflowY: 'scroll'
+    overflowY: 'scroll',
+    backgroundColor: colours.background
   }
 });
 
