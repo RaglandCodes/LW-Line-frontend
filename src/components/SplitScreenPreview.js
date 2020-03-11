@@ -12,7 +12,9 @@ import { colours } from '../styles';
 const useStyles = createUseStyles({
   SplitScreenPreview: {
     height: '100%',
+
     overflowY: 'scroll',
+    //gridArea: `1/3/4/4`,
     backgroundColor: colours.background
   }
 });

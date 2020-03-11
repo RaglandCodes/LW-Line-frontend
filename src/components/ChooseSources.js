@@ -98,10 +98,10 @@ function ChooseSources() {
         </>
       )}
       {sources
-        .filter(source => !state.subscriptions.includes(source.title))
+        .filter(source => !state.subscriptions.includes(source.feed))
         .slice(0, showing)
         .map(source => (
-          <SourceBox key={source.title} name={source.title} />
+          <SourceBox key={source.feed} name={source.feed} />
         ))}
       {showing < sources.length ? (
         <button

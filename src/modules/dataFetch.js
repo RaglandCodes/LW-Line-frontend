@@ -1,4 +1,5 @@
-const HOST = 'https://lw-line.glitch.me';
+//const HOST = 'https://lw-line-backend.glitch.me';
+const HOST = 'http://localhost:5151';
 
 export function dataFetch(endpoint, params, options) {
   let stringifiedParams = '';

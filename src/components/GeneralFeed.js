@@ -45,23 +45,33 @@ function GeneralFeed(props) {
         // Add items automatically only if it's empty
         dataFetch('getItems', { subscriptions: state.subscriptions.join('AaNnDd') }).then(
           items => {
-            dispatch({ type: 'appendCurrentFeed', payload: items.data });
-            dispatch({ type: 'setAfter', payload: items.after });
+            if (items === 'ERROR') {
+              console.log('ERROR in fetching feed');
+            } else {
+              dispatch({ type: 'appendCurrentFeed', payload: items.data });
+              dispatch({ type: 'setAfter', payload: items.after });
+            }
           }
         );
       }
     } else if (state.currentFeed.name !== '') {
       console.log('Fetchinh for' + state.currentFeed.name);
 
-      dataFetch('previewSource', { source: state.currentFeed.name }).then(jsonRes => {
-        if (jsonRes.items === 'ERROR') {
+      dataFetch('previewSource', { source: state.currentFeed.name })
+        .then(jsonRes => {
+          if (jsonRes.items === 'ERROR') {
+            setErrorMessage(
+              `An error occured when getting information for ${state.currentFeed.name}`
+            );
+          } else {
+            dispatch({ type: 'appendCurrentFeed', payload: jsonRes.items.data });
+          }
+        })
+        .catch(e => {
           setErrorMessage(
             `An error occured when getting information for ${state.currentFeed.name}`
           );
-        } else {
-          dispatch({ type: 'appendCurrentFeed', payload: jsonRes.items.data });
-        }
-      });
+        });
     }
   }, [state.currentFeed.name]);
 

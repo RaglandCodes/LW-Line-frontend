@@ -80,15 +80,18 @@ function PreviewItem() {
   let [metaDescription, setMetaDescription] = useState('Description is loading');
   let [metaImage, setMetaImage] = useState('');
   let [description, setDescription] = useState('Description is loading');
+  // let [paragraphs, setParagraphs] = useState([]);
   let [link, setLink] = useState('');
 
   let getFromDatabase = () => {
     console.log('Getting from DB');
 
     dataFetch('singleItem', { id }).then(jsonRes => {
+      console.log(`${JSON.stringify(jsonRes, null, 2)} <= jsonRes`);
       setTitle(jsonRes.title);
       setMetaDescription(jsonRes.metaDescription);
       setDescription(jsonRes.description);
+      // setParagraphs(jsonRes.paragraphs);
       setLink(jsonRes.link);
       setMetaImage(jsonRes.image);
     });
@@ -98,10 +101,12 @@ function PreviewItem() {
     if (state.feedItems.length > 0) {
       let itemToShow = state.feedItems.filter(item => item.id === id)[0];
       if (itemToShow) {
+        console.log(`${JSON.stringify(itemToShow, null, 2)} <= itemToShow`);
         setTitle(itemToShow.title);
 
         setMetaDescription(itemToShow.metaDescription);
         setDescription(itemToShow.description);
+        // setParagraphs(itemToShow.paragraphs);
         setLink(itemToShow.link);
         setMetaImage(itemToShow.image);
       } else {
@@ -122,7 +127,7 @@ function PreviewItem() {
         <h1 className={classes.header1}>{title}</h1>
         <p className={classes.metaDescription}>{metaDescription}</p>
         {/* <p className={classes.description}>{description}</p> */}
-        <p className={classes.description}>{description}</p>
+        {/* <div>{paragraphs ? paragraphs.map(p => <p>{p}</p>) : null}</div> */}
 
         <div className={classes.previewActions}>
           <div className={classes.actionIconContainer} onClick={() => window.open(link)}>

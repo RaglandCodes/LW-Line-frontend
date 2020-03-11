@@ -108,9 +108,9 @@ function Settings() {
           <button onClick={() => searchSources()}>Search</button>
         </div>
         {sourceSearchResults
-          .filter(result => state.subscriptions.indexOf(result.title) === -1)
+          .filter(result => state.subscriptions.indexOf(result.feed) === -1)
           .map(result => (
-            <SourceBox name={result.title} subscribed={false} key={result.title} />
+            <SourceBox name={result.feed} subscribed={false} key={result.feed} />
           ))}
         <ChooseSources />
         {/* ------ ----- ----- Mute ----- ----- ----- */}

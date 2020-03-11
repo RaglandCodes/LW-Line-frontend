@@ -23,7 +23,6 @@ const useStyles = createUseStyles({
     display: 'flex',
     backgroundColor: colours.surface,
     //flexDirection: 'column',
-    width: '100%',
     padding: 5,
     margin: '5px auto',
     fontFamily: fonts.secondary
@@ -51,7 +50,6 @@ const useStyles = createUseStyles({
 
 function SourceBox(source) {
   const classes = useStyles();
-
   let { state, dispatch } = React.useContext(Context);
   let history = useHistory();
 
