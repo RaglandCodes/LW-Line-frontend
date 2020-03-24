@@ -92,7 +92,7 @@ function PreviewItem() {
       setMetaDescription(jsonRes.metaDescription);
       setDescription(jsonRes.description);
       // setParagraphs(jsonRes.paragraphs);
-      setLink(jsonRes.link);
+      setLink(jsonRes['link']);
       setMetaImage(jsonRes.image);
     });
   };

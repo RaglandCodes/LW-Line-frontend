@@ -26,9 +26,6 @@ function PreviewSource(props) {
         type: 'setCurrentFeed',
         payload: { name: sourceName, items: [] }
       });
-      console.log(`clearing items from the PreviewSource dispatch`);
-      console.log(`${state.currentFeed.items.length} <= state.currentFeed.items.length`);
-      console.log(`${state.currentFeed.name} <= state.currentFeed.nn`);
     }
   }, []);
 

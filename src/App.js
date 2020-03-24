@@ -46,12 +46,12 @@ function App() {
 
       // * display preferences *
       if (localStorage.getItem('showPreview') === 'false') {
-        // state.itemPreview.openOnClick is initialised to be true. So dispatch only iff localStorage is false
+        // state.itemPreview.openOnClick is initialised to be true. So dispatch iff localStorage is false
         dispatch({ type: 'toggleShowPreview', action: '' });
       }
 
       if ('false' === localStorage.getItem('showInSplitScreen')) {
-        // state.itemPreview.showInSplitScreen is initialised to be true. So dispatch only iff localStorage is false
+        // state.itemPreview.showInSplitScreen is initialised to be true. So dispatch iff localStorage is false
         dispatch({ type: 'toggleSplitScreen', action: '' });
       }
     } else {
