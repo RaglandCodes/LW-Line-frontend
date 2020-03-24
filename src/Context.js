@@ -171,8 +171,6 @@ function ContextProvider(props) {
     localStorage.setItem('subscriptions', state.subscriptions.join('AnNdDd'));
 
     // Remove items from feed when subscriptions chage to trigger fetch to get items for the new subscriptions
-    // console.log('Setting current feed as' + state.currentFeed.name);
-
     // dispatch({
     //   type: 'setCurrentFeed',
     //   payload: { name: state.currentFeed.name, items: [] }

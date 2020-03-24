@@ -43,6 +43,8 @@ function GeneralFeed(props) {
     if (state.currentFeed.name === 'Feed') {
       if (!state.currentFeed.items.length) {
         // Add items automatically only if it's empty
+        console.log('Fetching for feed');
+
         dataFetch('getItems', { subscriptions: state.subscriptions.join('AaNnDd') }).then(
           items => {
             if (items === 'ERROR') {
@@ -54,7 +56,7 @@ function GeneralFeed(props) {
           }
         );
       }
-    } else if (state.currentFeed.name !== '') {
+    } else if (state.currentFeed.name !== '' && !state.currentFeed.items.length) {
       console.log('Fetchinh for' + state.currentFeed.name);
 
       dataFetch('previewSource', { source: state.currentFeed.name })
