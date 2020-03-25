@@ -1,11 +1,10 @@
 //React
 import React from 'react';
-import { Context } from '../Context';
 
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
-import { colours, fonts } from '../styles';
+import { fonts } from '../styles';
 
 WebFont.load({
   google: {

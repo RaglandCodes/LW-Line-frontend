@@ -1,6 +1,6 @@
 {
   "name": "lw-line-frontend",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.8.2",
@@ -13,8 +13,7 @@
     "react-dom": "^16.12.0",
     "react-jss": "^10.0.0",
     "react-router-dom": "^5.1.2",
-    "react-router-scroll-memory": "^2.0.5",
-    "react-scripts": "3.3.0",
+    "react-scripts": "3.4.0",
     "source-map-explorer": "^2.2.1",
     "webfontloader": "^1.6.28"
   },

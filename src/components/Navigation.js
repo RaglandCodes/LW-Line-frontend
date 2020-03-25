@@ -69,7 +69,7 @@ function Navigation(props) {
   const classes = useStyles(state);
   const [showPreviewNavigation, setshowPreviewNavigation] = useState(false);
   useEffect(() => {
-    if (props.fromPreviewItem && state.orientation === 'potrait') {
+    if (props.fromPreviewItem) {
       setshowPreviewNavigation(true);
     } else {
       setshowPreviewNavigation(false);
@@ -111,7 +111,10 @@ function Navigation(props) {
       </div>
 
       {showPreviewNavigation ? (
-        <div className={classes.navIconContainer} onClick={() => window.open(props.link)}>
+        <div
+          className={classes.navIconContainer}
+          onClick={() => window.open(props.storyLink)}
+        >
           <OpenInNew className={classes.navIcon} />
           <span className={classes.navLabel}>Read story</span>
         </div>

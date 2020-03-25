@@ -79,7 +79,7 @@ function PreviewItem() {
   let [title, setTitle] = useState('Title is loading');
   let [metaDescription, setMetaDescription] = useState('Description is loading');
   let [metaImage, setMetaImage] = useState('');
-  let [description, setDescription] = useState('Description is loading');
+  let [contentSnippet, setContentSnippet] = useState('');
   // let [paragraphs, setParagraphs] = useState([]);
   let [link, setLink] = useState('');
 
@@ -90,7 +90,7 @@ function PreviewItem() {
       console.log(`${JSON.stringify(jsonRes, null, 2)} <= jsonRes`);
       setTitle(jsonRes.title);
       setMetaDescription(jsonRes.metaDescription);
-      setDescription(jsonRes.description);
+      setContentSnippet(jsonRes.contentSnippet);
       // setParagraphs(jsonRes.paragraphs);
       setLink(jsonRes['link']);
       setMetaImage(jsonRes.image);
@@ -105,7 +105,6 @@ function PreviewItem() {
         setTitle(itemToShow.title);
 
         setMetaDescription(itemToShow.metaDescription);
-        setDescription(itemToShow.description);
         // setParagraphs(itemToShow.paragraphs);
         setLink(itemToShow.link);
         setMetaImage(itemToShow.image);
@@ -128,25 +127,34 @@ function PreviewItem() {
         <p className={classes.metaDescription}>{metaDescription}</p>
         {/* <p className={classes.description}>{description}</p> */}
         {/* <div>{paragraphs ? paragraphs.map(p => <p>{p}</p>) : null}</div> */}
-
-        <div className={classes.previewActions}>
-          <div className={classes.actionIconContainer} onClick={() => window.open(link)}>
-            <OpenInNew />
-            <span className={classes.actionLabel}>Read story</span>
-          </div>
-          <div className={classes.actionIconContainer}>
-            <Share />
-            <span className={classes.actionLabel}>Share</span>
-          </div>
-          <div className={classes.actionIconContainer}>
-            <Bookmark />
-            <span className={classes.actionLabel}>Save</span>
-          </div>
+        <div>
+          {contentSnippet.split('\n').map(para => (
+            <p>{para}</p>
+          ))}
         </div>
+        {state.itemPreview.showInSplitScreen ? (
+          <div className={classes.previewActions}>
+            <div
+              className={classes.actionIconContainer}
+              onClick={() => window.open(link)}
+            >
+              <OpenInNew />
+              <span className={classes.actionLabel}>Read story</span>
+            </div>
+            <div className={classes.actionIconContainer}>
+              <Share />
+              <span className={classes.actionLabel}>Share</span>
+            </div>
+            <div className={classes.actionIconContainer}>
+              <Bookmark />
+              <span className={classes.actionLabel}>Save</span>
+            </div>
+          </div>
+        ) : null}
       </div>
 
       {state.itemPreview.showInSplitScreen ? null : (
-        <Navigation fromPreviewItem story={link} />
+        <Navigation fromPreviewItem storyLink={link} />
       )}
     </>
   );

@@ -13,7 +13,7 @@ import ChooseSources from './ChooseSources';
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
-import { header2, header3, header4, button, fonts } from '../styles';
+import { header2, header3, header4, button, fonts, settingContainer } from '../styles';
 
 WebFont.load({
   google: {
@@ -48,7 +48,7 @@ const useStyles = createUseStyles({
   checkboxSettingWrap: {
     display: 'flex',
     justifyContent: 'space-between',
-    backgroundColor: '#F5F5F5',
+    //backgroundColor: '#F5F5F5',
     margin: {
       top: 5
     }
@@ -74,7 +74,11 @@ const useStyles = createUseStyles({
     ...button,
     color: 'black',
     float: 'right'
-  }
+  },
+  settingContainer: {
+    ...settingContainer
+  },
+  version: {}
 });
 
 function Settings() {
@@ -105,46 +109,50 @@ function Settings() {
       <div className={classes.Settings}>
         <div className={classes.header2}>Content</div>
         {/* ------ ----- ----- Feeds ----- ----- ----- */}
-        <form onSubmit={e => searchSources(e)} className={classes.form}>
-          <label for="searchFeeds" className={classes.header3}>
-            Search for feeds
-          </label>
-          <div className={classes.inputButtonWrap}>
-            <input
-              type="text"
-              id="searchFeeds"
-              className={classes.inputField}
-              onChange={e => setsourceSearchInput(e.target.value)}
-            />
-            <input type="submit" value="Search" />
-          </div>
-        </form>
-        <div className={classes.header3}>Search by topic</div>
-        {sourceSearchResults
-          .filter(result => state.subscriptions.indexOf(result.feed) === -1)
-          .map(result => (
-            <SourceBox name={result.feed} subscribed={false} key={result.feed} />
-          ))}
+        <div className={classes.settingContainer}>
+          <form onSubmit={e => searchSources(e)} className={classes.form}>
+            <label for="searchFeeds" className={classes.header3}>
+              Search for feeds
+            </label>
+            <div className={classes.inputButtonWrap}>
+              <input
+                type="text"
+                id="searchFeeds"
+                className={classes.inputField}
+                onChange={e => setsourceSearchInput(e.target.value)}
+              />
+              <input type="submit" value="Search" />
+            </div>
+          </form>
+
+          {sourceSearchResults
+            .filter(result => state.subscriptions.indexOf(result.feed) === -1)
+            .map(result => (
+              <SourceBox name={result.feed} subscribed={false} key={result.feed} />
+            ))}
+        </div>
         <ChooseSources />
         {/* ------ ----- ----- Mute ----- ----- ----- */}
-        <label for="mutePhrases" className={classes.header3}>
-          Mute phrases
-        </label>
-        <form onSubmit={() => addNewMutePhrase()}>
-          <div className={classes.inputButtonWrap}>
-            <input
-              type="text"
-              id="mutePhrases"
-              className={classes.inputField}
-              onChange={e => setMuteInput(e.target.value)}
-            />
-            <input type="submit" value="Mute" />
-          </div>
-        </form>
-        <div className={classes.inputButtonWrap}></div>
-        <p className={classes.settingsExplanation}>
-          You will not be shown articles containing those phrases
-        </p>
+        <div className={classes.settingContainer}>
+          <label for="mutePhrases" className={classes.header3}>
+            Mute phrases
+          </label>
+          <form onSubmit={() => addNewMutePhrase()}>
+            <div className={classes.inputButtonWrap}>
+              <input
+                type="text"
+                id="mutePhrases"
+                className={classes.inputField}
+                onChange={e => setMuteInput(e.target.value)}
+              />
+              <input type="submit" value="Mute" />
+            </div>
+          </form>
+          <div className={classes.inputButtonWrap}></div>
+          <p className={classes.settingsExplanation}>
+            You will not be shown articles containing those phrases
+          </p>
+        </div>
         <hr />
         <div className={classes.header2}>Display</div>
         <div className={classes.checkboxSettingWrap}>
@@ -202,7 +210,8 @@ function Settings() {
         <br />
         <br />
         <br />
-        <br />v 3
+        <br />
+        <span className={classes.version}>Version 0.1.8</span>
       </div>
     </Sheet>
   );

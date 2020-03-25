@@ -9,7 +9,7 @@ import SourceBox from './SourceBox';
 
 //Styles
 import { createUseStyles } from 'react-jss';
-import { header4, button, fonts, colours } from '../styles';
+import { header4, button, fonts, colours, settingContainer } from '../styles';
 
 const SourceTopicStyles = {
   display: 'inline-block',
@@ -36,6 +36,9 @@ const useStyles = createUseStyles({
     ...button,
     color: 'black',
     float: 'right'
+  },
+  settingContainer: {
+    ...settingContainer
   }
 });
 
@@ -83,45 +86,50 @@ function ChooseSources() {
 
   return (
     <div className={classes.ChooseSources}>
-      {topics.length ? (
-        topics.map(topic => (
-          <div
-            className={!topic.chosen ? classes.SourceTopic : classes.chosenSourceTopic}
-            key={topic.topic}
-            onClick={() => toggleChosenState(topic)}
+      <div className={classes.settingContainer}>
+        <div className={classes.header3}>Search by topic</div>
+        {topics.length ? (
+          topics.map(topic => (
+            <div
+              className={!topic.chosen ? classes.SourceTopic : classes.chosenSourceTopic}
+              key={topic.topic}
+              onClick={() => toggleChosenState(topic)}
+            >
+              {topic.topic}
+            </div>
+          ))
+        ) : (
+          <>
+            Getting topics... <br /> Please wait ...
+          </>
+        )}
+        {sources
+          .filter(source => !state.subscriptions.includes(source.feed))
+          .slice(0, showing)
+          .map(source => (
+            <SourceBox key={source.feed} name={source.feed} />
+          ))}
+        {showing < sources.length ? (
+          <button
+            className={classes.showMoreBtn}
+            onClick={() => {
+              setShowing(showing + 4);
+            }}
           >
-            {topic.topic}
-          </div>
-        ))
-      ) : (
-        <>
-          Getting topics... <br /> Please wait ...
-        </>
-      )}
-      {sources
-        .filter(source => !state.subscriptions.includes(source.feed))
-        .slice(0, showing)
-        .map(source => (
-          <SourceBox key={source.feed} name={source.feed} />
-        ))}
-      {showing < sources.length ? (
-        <button
-          className={classes.showMoreBtn}
-          onClick={() => {
-            setShowing(showing + 4);
-          }}
-        >
-          Show more
-        </button>
-      ) : null}
-      <br />
-      <div className={classes.header4}>
-        You're subscribed to {state.subscriptions.length} feed
-        {state.subscriptions.length === 1 ? '' : 's'}
+            Show more
+          </button>
+        ) : null}
+        <br />
       </div>
-      {state.subscriptions.map(subscription => (
-        <SourceBox name={subscription} key={subscription} subscribed={true} />
-      ))}
+      <div className={classes.settingContainer}>
+        <div className={classes.header4}>
+          You're subscribed to {state.subscriptions.length} feed
+          {state.subscriptions.length === 1 ? '' : 's'}
+        </div>
+        {state.subscriptions.map(subscription => (
+          <SourceBox name={subscription} key={subscription} subscribed={true} />
+        ))}
+      </div>
     </div>
   );
 }

@@ -63,6 +63,21 @@ const button = {
   margin: 3,
   fontSize: 14
 };
+
+const settingContainer = {
+  margin: {
+    top: 13
+  },
+  borderBottom: '1px solid #B0BEC5',
+  backgroundColor: '#ECEFF1',
+  padding: {
+    top: 6,
+    bottom: 6,
+    left: 4,
+    right: 4
+  }
+};
+
 module.exports = {
   colours,
   header1,
@@ -71,5 +86,6 @@ module.exports = {
   header4,
   box,
   button,
-  fonts
+  fonts,
+  settingContainer
 };

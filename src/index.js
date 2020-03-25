@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ContextProvider } from './Context';
 import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
-import ScrollMemory from 'react-router-scroll-memory';
 
 // import './index.css';
 import App from './App';

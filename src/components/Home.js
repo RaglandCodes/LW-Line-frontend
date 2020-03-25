@@ -8,9 +8,6 @@ import GeneralFeed from './GeneralFeed';
 import ChooseSources from './ChooseSources';
 import Sheet from './Sheet';
 
-//utils
-import { dataFetch } from '../modules/dataFetch';
-
 //Styles
 import { createUseStyles } from 'react-jss';
 import { button } from '../styles';

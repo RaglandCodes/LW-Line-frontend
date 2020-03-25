@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 import GeneralFeed from './GeneralFeed';
 
 //Styles
-import { createUseStyles } from 'react-jss';
 
 function PreviewSource(props) {
   let { state, dispatch } = React.useContext(Context);
