@@ -10,8 +10,6 @@ import GeneralFeed from './GeneralFeed';
 import { createUseStyles } from 'react-jss';
 
 function PreviewSource(props) {
-  console.log('in preview source');
-
   let { state, dispatch } = React.useContext(Context);
 
   let { sourceName } = useParams();

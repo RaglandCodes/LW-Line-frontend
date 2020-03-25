@@ -61,6 +61,7 @@ function ChooseSources() {
   useEffect(() => {
     // TODO handle error in datafetch
     dataFetch('sourceTopics').then(topics => {
+      // TODO error handling
       setTopics(
         topics.map(topic => ({
           topic: topic,
@@ -115,7 +116,7 @@ function ChooseSources() {
       ) : null}
       <br />
       <div className={classes.header4}>
-        You're subscribed to {state.subscriptions.length} source
+        You're subscribed to {state.subscriptions.length} feed
         {state.subscriptions.length === 1 ? '' : 's'}
       </div>
       {state.subscriptions.map(subscription => (

@@ -54,7 +54,7 @@ function Home(props) {
         <p>
           Welcome! <br />
           Please choose your interestes / search for publishers to get started. <br />
-          You can customise
+          You can customise{' '}
           <u>
             <span onClick={() => history.push('/settings')}>more in the settings</span>
           </u>

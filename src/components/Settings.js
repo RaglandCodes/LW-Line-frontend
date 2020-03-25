@@ -58,8 +58,11 @@ const useStyles = createUseStyles({
   },
   settingsExplanation: {
     fontFamily: fonts.primary,
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: 300
+  },
+  form: {
+    flexGrow: 1
   },
   inputField: {
     flexGrow: 1
@@ -80,8 +83,10 @@ function Settings() {
 
   let [sourceSearchResults, setSourceSearchResults] = useState([]);
   let [sourceSearchInput, setsourceSearchInput] = useState('');
+  const [muteInput, setMuteInput] = useState('');
+  let searchSources = e => {
+    e.preventDefault();
 
-  let searchSources = () => {
     // Call server with  sourceSearchInput and setSourceSearchResults
 
     dataFetch('getSources', { searchTerm: sourceSearchInput })
@@ -92,21 +97,29 @@ function Settings() {
         console.log(`${searchError} <== searchError\n\n`);
       });
   };
+
+  let addNewMutePhrase = () => {};
+
   return (
     <Sheet page="Settings" className={classes.Settings}>
       <div className={classes.Settings}>
         <div className={classes.header2}>Content</div>
-        {/* ------ ----- ----- Sources ----- ----- ----- */}
-        <div className={classes.header3}>Sources</div>
-
-        <div className={classes.inputButtonWrap}>
-          <input
-            type="text"
-            className={classes.inputField}
-            onChange={e => setsourceSearchInput(e.target.value)}
-          />
-          <button onClick={() => searchSources()}>Search</button>
-        </div>
+        {/* ------ ----- ----- Feeds ----- ----- ----- */}
+        <form onSubmit={e => searchSources(e)} className={classes.form}>
+          <label for="searchFeeds" className={classes.header3}>
+            Search for feeds
+          </label>
+          <div className={classes.inputButtonWrap}>
+            <input
+              type="text"
+              id="searchFeeds"
+              className={classes.inputField}
+              onChange={e => setsourceSearchInput(e.target.value)}
+            />
+            <input type="submit" value="Search" />
+          </div>
+        </form>
+        <div className={classes.header3}>Search by topic</div>
         {sourceSearchResults
           .filter(result => state.subscriptions.indexOf(result.feed) === -1)
           .map(result => (
@@ -114,23 +127,26 @@ function Settings() {
           ))}
         <ChooseSources />
         {/* ------ ----- ----- Mute ----- ----- ----- */}
-
-        <div className={classes.header3}>Mute phrases</div>
-
-        <div className={classes.inputButtonWrap}>
-          <input type="text" className={classes.inputField} />
-
-          <button>Mute</button>
-        </div>
-
+        <label for="mutePhrases" className={classes.header3}>
+          Mute phrases
+        </label>
+        <form onSubmit={() => addNewMutePhrase()}>
+          <div className={classes.inputButtonWrap}>
+            <input
+              type="text"
+              id="mutePhrases"
+              className={classes.inputField}
+              onChange={e => setMuteInput(e.target.value)}
+            />
+            <input type="submit" value="Mute" />
+          </div>
+        </form>
         <div className={classes.inputButtonWrap}></div>
         <p className={classes.settingsExplanation}>
           You will not be shown articles containing those phrases
         </p>
-
         <hr />
         <div className={classes.header2}>Display</div>
-
         <div className={classes.checkboxSettingWrap}>
           <div className={classes.header3}>Dark Theme</div>
           <input
@@ -145,7 +161,6 @@ function Settings() {
           <a href="https://github.com/RaglandCodes/LW-Line-frontend">fork this project</a>{' '}
           and make your own theme.
         </p>
-
         <div className={classes.checkboxSettingWrap}>
           <div className={classes.header3}>Show preview</div>
           <input
@@ -159,7 +174,6 @@ function Settings() {
           Check this to see just a part of the story before choosing to view the entire
           site
         </p>
-
         <div className={classes.checkboxSettingWrap}>
           <div className={classes.header3}>Split screen</div>
           <input
@@ -173,7 +187,6 @@ function Settings() {
           Read the story without leaving the page. Recomended to use only on larger
           screens
         </p>
-
         <div className={classes.checkboxSettingWrap}>
           <div className={classes.header3}>Show descriptions</div>{' '}
           <input type="checkbox" className={classes.checkBoxInput} />
@@ -189,7 +202,7 @@ function Settings() {
         <br />
         <br />
         <br />
-        <br />
+        <br />v 3
       </div>
     </Sheet>
   );

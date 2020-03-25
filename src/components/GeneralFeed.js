@@ -25,28 +25,52 @@ function GeneralFeed(props) {
   const classes = useStyles();
 
   let [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const showMore = () => {
+    console.log('show more clicked');
+
+    setLoading(true);
     if (state.currentFeed.name === 'Feed') {
+      // This happens when user clicks the "Show more" button when reading from HOME feed
       dataFetch('getItems', {
         subscriptions: state.subscriptions.join('AaNnDd'),
         afterRef: state.after.ref,
         afterTs: state.after.ts
       }).then(res => {
+        setLoading(false);
+        // TODO error handling
         dispatch({ type: 'appendCurrentFeed', payload: res.data });
         dispatch({ type: 'setAfter', payload: res.after });
       });
     } else {
+      // This happens when user clicks the "Show more" button when reading from 1 feed
+      dataFetch('previewSource', {
+        source: state.currentFeed.name,
+        afterRef: state.currentFeed.after.ref,
+        afterTs: state.currentFeed.after.ts
+      }).then(res => {
+        setLoading(false);
+        if (res === 'ERROR') {
+          setErrorMessage(
+            `An error occured when getting more items for ${state.currentFeed.name}`
+          );
+        } else {
+          console.log(`${JSON.stringify(res, null, 2)} <== res`);
+          dispatch({ type: 'appendCurrentFeed', payload: res.items.data });
+          dispatch({ type: 'setCurrentFeedAfter', payload: res.items.after });
+        }
+      });
     }
   };
 
   useEffect(() => {
     if (state.currentFeed.name === 'Feed') {
       if (!state.currentFeed.items.length) {
+        setLoading(true);
         // Add items automatically only if it's empty
-        console.log('Fetching for feed');
-
         dataFetch('getItems', { subscriptions: state.subscriptions.join('AaNnDd') }).then(
           items => {
+            setLoading(false);
             if (items === 'ERROR') {
               console.log('ERROR in fetching feed');
             } else {
@@ -57,16 +81,17 @@ function GeneralFeed(props) {
         );
       }
     } else if (state.currentFeed.name !== '' && !state.currentFeed.items.length) {
-      console.log('Fetchinh for' + state.currentFeed.name);
-
+      setLoading(true);
       dataFetch('previewSource', { source: state.currentFeed.name })
         .then(jsonRes => {
+          setLoading(false);
           if (jsonRes.items === 'ERROR') {
             setErrorMessage(
               `An error occured when getting information for ${state.currentFeed.name}`
             );
           } else {
             dispatch({ type: 'appendCurrentFeed', payload: jsonRes.items.data });
+            dispatch({ type: 'setCurrentFeedAfter', payload: jsonRes.items.after });
           }
         })
         .catch(e => {
@@ -94,8 +119,12 @@ function GeneralFeed(props) {
               state.currentFeed.items.map(item => <ArticleBox key={item.id} {...item} />)
             )}
           </div>
-          <button onClick={() => showMore()} className={classes.showMoreButton}>
-            Show more{' '}
+          <button
+            onClick={() => showMore()}
+            className={classes.showMoreButton}
+            disabled={loading} //disable button when loading
+          >
+            Show more
           </button>
         </>
       )}

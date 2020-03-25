@@ -59,6 +59,16 @@ function appReducer(state, action) {
         after: action.payload
       };
     }
+
+    case 'setCurrentFeedAfter': {
+      return {
+        ...state,
+        currentFeed: {
+          ...state.currentFeed,
+          after: action.payload
+        }
+      };
+    }
     case 'appendSubscription': {
       return {
         ...state,
