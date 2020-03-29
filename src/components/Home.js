@@ -49,8 +49,9 @@ function Home(props) {
     <Sheet>
       <div className={classes.welcomeMessage}>
         <p>
-          Welcome! <br />
-          Please choose your interestes / search for publishers to get started. <br />
+          Welcome to <b>LW Line.</b> <br />
+          <br />
+          Get started by choosing your interestes and subscribing to feeds. <br />
           You can customise{' '}
           <u>
             <span onClick={() => history.push('/settings')}>more in the settings</span>

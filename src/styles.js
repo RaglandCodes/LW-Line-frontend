@@ -69,7 +69,7 @@ const settingContainer = {
     top: 13
   },
   borderBottom: '1px solid #B0BEC5',
-  backgroundColor: '#ECEFF1',
+  //backgroundColor: '#FAFAFA',
   padding: {
     top: 6,
     bottom: 6,

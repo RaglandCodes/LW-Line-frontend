@@ -73,6 +73,11 @@ function appReducer(state, action) {
       return {
         ...state,
         feedItems: [],
+        currentFeed: {
+          ...state.currentFeed,
+          items: []
+          // Remove items from feed when subscriptions chage to trigger fetch to get items for the new subscriptions
+        },
         subscriptions: [...state.subscriptions, action.payload]
       };
     }
@@ -82,6 +87,11 @@ function appReducer(state, action) {
       return {
         ...state,
         feedItems: [],
+        currentFeed: {
+          ...state.currentFeed,
+          items: []
+          // Remove items from feed when subscriptions chage to trigger fetch to get items for the new subscriptions
+        },
         subscriptions: [...oldSubscriptions]
       };
     }
@@ -180,7 +190,6 @@ function ContextProvider(props) {
   useEffect(() => {
     localStorage.setItem('subscriptions', state.subscriptions.join('AnNdDd'));
 
-    // Remove items from feed when subscriptions chage to trigger fetch to get items for the new subscriptions
     // dispatch({
     //   type: 'setCurrentFeed',
     //   payload: { name: state.currentFeed.name, items: [] }

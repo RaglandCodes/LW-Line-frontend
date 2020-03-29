@@ -9,6 +9,7 @@ import { dataFetch } from '../modules/dataFetch';
 import SourceBox from './SourceBox';
 import Sheet from './Sheet';
 import ChooseSources from './ChooseSources';
+import AddYourOwnFeed from './AddYourOwnFeed';
 
 //Styles
 import { createUseStyles } from 'react-jss';
@@ -111,7 +112,7 @@ function Settings() {
         {/* ------ ----- ----- Feeds ----- ----- ----- */}
         <div className={classes.settingContainer}>
           <form onSubmit={e => searchSources(e)} className={classes.form}>
-            <label for="searchFeeds" className={classes.header3}>
+            <label htmlFor="searchFeeds" className={classes.header3}>
               Search for feeds
             </label>
             <div className={classes.inputButtonWrap}>
@@ -132,9 +133,12 @@ function Settings() {
             ))}
         </div>
         <ChooseSources />
+
+        {/* <AddYourOwnFeed /> */}
+
         {/* ------ ----- ----- Mute ----- ----- ----- */}
         <div className={classes.settingContainer}>
-          <label for="mutePhrases" className={classes.header3}>
+          <label htmlFor="mutePhrases" className={classes.header3}>
             Mute phrases
           </label>
           <form onSubmit={() => addNewMutePhrase()}>
@@ -153,49 +157,68 @@ function Settings() {
             You will not be shown articles containing those phrases
           </p>
         </div>
-        <hr />
+        {/* <hr /> */}
         <div className={classes.header2}>Display</div>
-        <div className={classes.checkboxSettingWrap}>
-          <div className={classes.header3}>Dark Theme</div>
-          <input
-            type="checkbox"
-            checked={state.theme === 'dark'}
-            onChange={() => dispatch({ type: 'toggleTheme', action: '' })}
-            className={classes.checkBoxInput}
-          />
+
+        <div className={classes.settingContainer}>
+          <div className={classes.checkboxSettingWrap}>
+            <label htmlFor="darkThemecb" className={classes.header3}>
+              Dark Theme
+            </label>
+            <input
+              type="checkbox"
+              id="darkThemecb"
+              checked={state.theme === 'dark'}
+              onChange={() => dispatch({ type: 'toggleTheme', action: '' })}
+              className={classes.checkBoxInput}
+            />
+          </div>
+          <p className={classes.settingsExplanation}>
+            Only light theme is available for now. You can{' '}
+            <a href="https://github.com/RaglandCodes/LW-Line-frontend">
+              fork this project
+            </a>{' '}
+            and make your own theme.
+          </p>
         </div>
-        <p className={classes.settingsExplanation}>
-          Only light theme is available for now. You can{' '}
-          <a href="https://github.com/RaglandCodes/LW-Line-frontend">fork this project</a>{' '}
-          and make your own theme.
-        </p>
-        <div className={classes.checkboxSettingWrap}>
-          <div className={classes.header3}>Show preview</div>
-          <input
-            type="checkbox"
-            className={classes.checkBoxInput}
-            onChange={() => dispatch({ type: 'toggleShowPreview', action: '' })}
-            checked={state.itemPreview.openOnClick}
-          />
+        <div className={classes.settingContainer}>
+          <div className={classes.checkboxSettingWrap}>
+            <label htmlFor="show-preview-cb" className={classes.header3}>
+              Show preview
+            </label>
+            <input
+              type="checkbox"
+              id="show-preview-cb"
+              className={classes.checkBoxInput}
+              onChange={() => dispatch({ type: 'toggleShowPreview', action: '' })}
+              checked={state.itemPreview.openOnClick}
+            />
+          </div>
+          <p className={classes.settingsExplanation}>
+            Check this to see just a part of the story before choosing to view the entire
+            site
+          </p>
         </div>
-        <p className={classes.settingsExplanation}>
-          Check this to see just a part of the story before choosing to view the entire
-          site
-        </p>
-        <div className={classes.checkboxSettingWrap}>
-          <div className={classes.header3}>Split screen</div>
-          <input
-            type="checkbox"
-            className={classes.checkBoxInput}
-            onChange={() => dispatch({ type: 'toggleSplitScreen', action: '' })}
-            checked={state.itemPreview.showInSplitScreen}
-          />
+        <div className={classes.settingContainer}>
+          <div className={classes.checkboxSettingWrap}>
+            <label htmlFor="split-screen-cb" className={classes.header3}>
+              Split screen
+            </label>
+            <input
+              type="checkbox"
+              id="split-screen-cb"
+              className={classes.checkBoxInput}
+              onChange={() => dispatch({ type: 'toggleSplitScreen', action: '' })}
+              checked={state.itemPreview.showInSplitScreen}
+            />
+          </div>
+          <p className={classes.settingsExplanation}>
+            Read the story without leaving the page. Recomended to use only on larger
+            screens.
+          </p>
         </div>
-        <p className={classes.settingsExplanation}>
-          Read the story without leaving the page. Recomended to use only on larger
-          screens
-        </p>
-        <div className={classes.checkboxSettingWrap}>
+
+        {/* <div className={classes.checkboxSettingWrap}>
           <div className={classes.header3}>Show descriptions</div>{' '}
           <input type="checkbox" className={classes.checkBoxInput} />
         </div>
@@ -206,12 +229,13 @@ function Settings() {
         <div className={classes.checkboxSettingWrap}>
           <div className={classes.header3}>Show image</div>
           <input type="checkbox" className={classes.checkBoxInput} />
-        </div>
+        </div> */}
+
         <br />
         <br />
         <br />
         <br />
-        <span className={classes.version}>Version 0.1.8</span>
+        <span className={classes.version}>Version 0.1.10</span>
       </div>
     </Sheet>
   );

@@ -54,7 +54,12 @@ const useStyles = createUseStyles({
   }),
 
   navIconActive: { color: '#1A237E' },
-  navLabel: { fontFamily: fonts.secondary, fontSize: 15, display: 'block' },
+  navLabel: {
+    fontFamily: fonts.secondary,
+    fontSize: 15,
+    display: 'block',
+    textAlign: 'center'
+  },
   navLabelActive: {
     fontFamily: fonts.secondary,
     fontSize: 16,

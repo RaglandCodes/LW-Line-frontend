@@ -80,21 +80,34 @@ function PreviewItem() {
   let [metaDescription, setMetaDescription] = useState('Description is loading');
   let [metaImage, setMetaImage] = useState('');
   let [contentSnippet, setContentSnippet] = useState('');
+  let [errorMessage, setErrorMessage] = useState(null);
   // let [paragraphs, setParagraphs] = useState([]);
   let [link, setLink] = useState('');
 
   let getFromDatabase = () => {
     console.log('Getting from DB');
+    if (id === '') {
+      // This is to not do an unnecessar data
+      return;
+    }
+    dataFetch('singleItem', { id })
+      .then(jsonRes => {
+        if (jsonRes === 'ERROR') {
+          setErrorMessage('Error in retriving item');
+          return;
+        }
 
-    dataFetch('singleItem', { id }).then(jsonRes => {
-      console.log(`${JSON.stringify(jsonRes, null, 2)} <= jsonRes`);
-      setTitle(jsonRes.title);
-      setMetaDescription(jsonRes.metaDescription);
-      setContentSnippet(jsonRes.contentSnippet);
-      // setParagraphs(jsonRes.paragraphs);
-      setLink(jsonRes['link']);
-      setMetaImage(jsonRes.image);
-    });
+        console.log(`${JSON.stringify(jsonRes, null, 2)} <= jsonRes`);
+        setTitle(jsonRes.title);
+        setMetaDescription(jsonRes.metaDescription);
+        setContentSnippet(jsonRes.contentSnippet);
+        // setParagraphs(jsonRes.paragraphs);
+        setLink(jsonRes['link']);
+        setMetaImage(jsonRes.image);
+      })
+      .catch(error => {
+        console.log(`${error} <== error in previewItem`);
+      });
   };
 
   useEffect(() => {
@@ -128,10 +141,9 @@ function PreviewItem() {
         {/* <p className={classes.description}>{description}</p> */}
         {/* <div>{paragraphs ? paragraphs.map(p => <p>{p}</p>) : null}</div> */}
         <div>
-          {contentSnippet.split('\n').map(para => (
-            <p>{para}</p>
-          ))}
+          {contentSnippet ? contentSnippet.split('\n').map(para => <p>{para}</p>) : null}
         </div>
+        {errorMessage}
         {state.itemPreview.showInSplitScreen ? (
           <div className={classes.previewActions}>
             <div

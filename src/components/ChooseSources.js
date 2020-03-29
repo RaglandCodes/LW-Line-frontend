@@ -13,11 +13,11 @@ import { header4, button, fonts, colours, settingContainer } from '../styles';
 
 const SourceTopicStyles = {
   display: 'inline-block',
-  padding: 3,
+  padding: 4,
   margin: 3,
   backgroundColor: colours.surface,
   fontFamily: fonts.primary,
-  fontSize: 14
+  fontSize: 15
 };
 const useStyles = createUseStyles({
   ChooseSources: { overflow: 'auto' },
