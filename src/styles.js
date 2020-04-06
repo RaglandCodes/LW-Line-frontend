@@ -15,7 +15,7 @@ const fonts = {
   secondary: 'Lato'
 };
 const header1 = {
-  fontSize: 25,
+  fontSize: 29,
   fontFamily: fonts.primary,
   fontWeight: 400,
   margin: {
@@ -24,7 +24,7 @@ const header1 = {
 };
 
 const header2 = {
-  fontSize: 23,
+  fontSize: 24,
   fontFamily: fonts.primary,
   fontWeight: 400,
   margin: {
@@ -33,7 +33,7 @@ const header2 = {
 };
 
 const header3 = {
-  fontSize: 17,
+  fontSize: 20,
   fontFamily: fonts.primary,
   fontWeight: 300,
   margin: {

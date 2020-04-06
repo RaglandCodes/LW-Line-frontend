@@ -37,9 +37,13 @@ const useStyles = createUseStyles({
     ...padded
   },
   header2: {
-    ...header2
+    ...header2,
+    ...padded
   },
-  header3: { ...header3 },
+  header3: {
+    ...header3
+    //...padded
+  },
   header4: {
     ...header4,
     margin: {
@@ -59,8 +63,10 @@ const useStyles = createUseStyles({
   },
   settingsExplanation: {
     fontFamily: fonts.primary,
-    fontSize: 13,
+    fontSize: 15,
+
     fontWeight: 300
+    //...padded
   },
   form: {
     flexGrow: 1
@@ -133,9 +139,8 @@ function Settings() {
             ))}
         </div>
         <ChooseSources />
-
-        {/* <AddYourOwnFeed /> */}
-
+        <AddYourOwnFeed />
+        {/* ))} */}
         {/* ------ ----- ----- Mute ----- ----- ----- */}
         <div className={classes.settingContainer}>
           <label htmlFor="mutePhrases" className={classes.header3}>
@@ -159,7 +164,6 @@ function Settings() {
         </div>
         {/* <hr /> */}
         <div className={classes.header2}>Display</div>
-
         <div className={classes.settingContainer}>
           <div className={classes.checkboxSettingWrap}>
             <label htmlFor="darkThemecb" className={classes.header3}>
@@ -175,10 +179,8 @@ function Settings() {
           </div>
           <p className={classes.settingsExplanation}>
             Only light theme is available for now. You can{' '}
-            <a href="https://github.com/RaglandCodes/LW-Line-frontend">
-              fork this project
-            </a>{' '}
-            and make your own theme.
+            <a href="https://github.com/RaglandCodes/LW-Line-frontend">fork this project</a> and
+            make your own theme.
           </p>
         </div>
         <div className={classes.settingContainer}>
@@ -195,8 +197,7 @@ function Settings() {
             />
           </div>
           <p className={classes.settingsExplanation}>
-            Check this to see just a part of the story before choosing to view the entire
-            site
+            Check this to see just a part of the story before choosing to view the entire site
           </p>
         </div>
         <div className={classes.settingContainer}>
@@ -213,11 +214,9 @@ function Settings() {
             />
           </div>
           <p className={classes.settingsExplanation}>
-            Read the story without leaving the page. Recomended to use only on larger
-            screens.
+            Read the story without leaving the page. Recomended to use only on larger screens.
           </p>
         </div>
-
         {/* <div className={classes.checkboxSettingWrap}>
           <div className={classes.header3}>Show descriptions</div>{' '}
           <input type="checkbox" className={classes.checkBoxInput} />
@@ -230,7 +229,6 @@ function Settings() {
           <div className={classes.header3}>Show image</div>
           <input type="checkbox" className={classes.checkBoxInput} />
         </div> */}
-
         <br />
         <br />
         <br />

@@ -6,8 +6,6 @@ import { useParams } from 'react-router-dom';
 //Components
 import GeneralFeed from './GeneralFeed';
 
-//Styles
-
 function PreviewSource(props) {
   let { state, dispatch } = React.useContext(Context);
 
@@ -21,7 +19,7 @@ function PreviewSource(props) {
     ) {
       dispatch({
         type: 'setCurrentFeed',
-        payload: { name: sourceName, items: [] }
+        payload: { name: sourceName, items: [] },
       });
     }
   }, []);
@@ -31,9 +29,6 @@ function PreviewSource(props) {
     state.currentFeed.name === sourceName ? (
     <GeneralFeed />
   ) : null;
-  // return state.currentFeed.name !== '' && state.currentFeed.name !== 'Feed' ? (
-  //   <GeneralFeed />
-  // ) : null;
 }
 
 export default PreviewSource;

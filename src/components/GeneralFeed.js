@@ -43,7 +43,7 @@ function GeneralFeed(props) {
         dispatch({ type: 'setAfter', payload: res.after });
       });
     } else {
-      // This happens when user clicks the "Show more" button when reading from 1 feed
+      // This happens when user clicks the "Show more" button when reading from 1 feed (preview item)
       dataFetch('previewSource', {
         source: state.currentFeed.name,
         afterRef: state.currentFeed.after.ref,
@@ -68,20 +68,27 @@ function GeneralFeed(props) {
       if (!state.currentFeed.items.length) {
         setLoading(true);
         // Add items automatically only if it's empty
-        dataFetch('getItems', { subscriptions: state.subscriptions.join('AaNnDd') }).then(
-          items => {
-            setLoading(false);
-            if (items === 'ERROR') {
-              console.log('ERROR in fetching feed');
-            } else {
-              dispatch({ type: 'appendCurrentFeed', payload: items.data });
-              dispatch({ type: 'setAfter', payload: items.after });
-            }
+        dataFetch('getItems', {
+          subscriptions: state.subscriptions.join('AaNnDd')
+        }).then(items => {
+          setLoading(false);
+          if (items === 'ERROR') {
+            console.log('ERROR in fetching feed');
+          } else {
+            dispatch({ type: 'appendCurrentFeed', payload: items.data });
+            dispatch({ type: 'setAfter', payload: items.after });
           }
-        );
+        });
       }
-    } else if (state.currentFeed.name !== '' && !state.currentFeed.items.length) {
+    } else if (
+      state.currentFeed.name !== '' &&
+      !state.currentFeed.items.length
+    ) {
       setLoading(true);
+
+      // TODO
+      //Check if it is there in custom feed
+
       dataFetch('previewSource', { source: state.currentFeed.name })
         .then(jsonRes => {
           setLoading(false);
@@ -90,8 +97,14 @@ function GeneralFeed(props) {
               `An error occured when getting information for ${state.currentFeed.name}`
             );
           } else {
-            dispatch({ type: 'appendCurrentFeed', payload: jsonRes.items.data });
-            dispatch({ type: 'setCurrentFeedAfter', payload: jsonRes.items.after });
+            dispatch({
+              type: 'appendCurrentFeed',
+              payload: jsonRes.items.data
+            });
+            dispatch({
+              type: 'setCurrentFeedAfter',
+              payload: jsonRes.items.after
+            });
           }
         })
         .catch(e => {
@@ -116,13 +129,16 @@ function GeneralFeed(props) {
                 Please wait ...
               </>
             ) : (
-              state.currentFeed.items.map(item => <ArticleBox key={item.id} {...item} />)
+              state.currentFeed.items.map(item => (
+                <ArticleBox key={item.id} {...item} />
+              ))
             )}
           </div>
           <button
             onClick={() => showMore()}
             className={classes.showMoreButton}
-            disabled={loading} //disable button when loading
+            disabled={loading}
+            //disable button when loading to prevent fetching same thing more than once
           >
             Show more
           </button>

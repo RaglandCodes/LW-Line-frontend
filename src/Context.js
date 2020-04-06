@@ -37,7 +37,10 @@ function appReducer(state, action) {
     case 'setPreview': {
       return {
         ...state,
-        itemPreview: { ...state.itemPreview, currentPreview: { ...action.payload } }
+        itemPreview: {
+          ...state.itemPreview,
+          currentPreview: { ...action.payload }
+        }
       };
     }
 
@@ -128,6 +131,12 @@ function appReducer(state, action) {
         }
       };
     }
+    case 'addCustomFeed': {
+      return {
+        ...state,
+        customFeeds: [...state.customFeeds, action.payload]
+      };
+    }
     // case 'togglePreview': {
     //   return {
     //     ...state,
@@ -166,7 +175,8 @@ function ContextProvider(props) {
         type: '', // 'preview' | 'fullSite'
         id: '' // item id | URL
       }
-    }
+    },
+    customFeeds: [] // [{name, link, items}]
   });
 
   useEffect(() => {
@@ -180,7 +190,10 @@ function ContextProvider(props) {
   }, [state.theme, state.mutePhrases]);
 
   useEffect(() => {
-    localStorage.setItem('showInSplitScreen', state.itemPreview.showInSplitScreen);
+    localStorage.setItem(
+      'showInSplitScreen',
+      state.itemPreview.showInSplitScreen
+    );
   }, [state.itemPreview.showInSplitScreen]);
 
   useEffect(() => {
@@ -197,7 +210,9 @@ function ContextProvider(props) {
   }, [state.subscriptions]);
 
   return (
-    <Context.Provider value={{ state, dispatch }}>{props.children}</Context.Provider>
+    <Context.Provider value={{ state, dispatch }}>
+      {props.children}
+    </Context.Provider>
   );
 }
 
