@@ -1,6 +1,6 @@
 {
   "name": "lw-line-frontend",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.8.2",
@@ -28,6 +28,10 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raglandcodes/lw-line-frontend.gitt"
   },
   "browserslist": {
     "production": [

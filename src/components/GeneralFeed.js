@@ -51,9 +51,7 @@ function GeneralFeed(props) {
       }).then(res => {
         setLoading(false);
         if (res === 'ERROR') {
-          setErrorMessage(
-            `An error occured when getting more items for ${state.currentFeed.name}`
-          );
+          setErrorMessage(`An error occured when getting more items for ${state.currentFeed.name}`);
         } else {
           console.log(`${JSON.stringify(res, null, 2)} <== res`);
           dispatch({ type: 'appendCurrentFeed', payload: res.items.data });
@@ -80,15 +78,19 @@ function GeneralFeed(props) {
           }
         });
       }
-    } else if (
-      state.currentFeed.name !== '' &&
-      !state.currentFeed.items.length
-    ) {
+    } else if (state.currentFeed.name !== '' && !state.currentFeed.items.length) {
       setLoading(true);
 
       // TODO
       //Check if it is there in custom feed
+      let feedInCustomFeed = state.customFeeds.filter(feed => feed.name === state.currentFeed.name);
 
+      if (feedInCustomFeed.length) {
+        dispatch({
+          type: 'appendCurrentFeed',
+          payload: feedInCustomFeed[0].items
+        });
+      }
       dataFetch('previewSource', { source: state.currentFeed.name })
         .then(jsonRes => {
           setLoading(false);
@@ -129,9 +131,7 @@ function GeneralFeed(props) {
                 Please wait ...
               </>
             ) : (
-              state.currentFeed.items.map(item => (
-                <ArticleBox key={item.id} {...item} />
-              ))
+              state.currentFeed.items.map(item => <ArticleBox key={item.id} {...item} />)
             )}
           </div>
           <button

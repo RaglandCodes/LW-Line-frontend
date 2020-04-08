@@ -17,7 +17,10 @@ const useStyles = createUseStyles({
   App: state => ({
     display: 'grid',
     height: state.innerHeight,
-    gridTemplateColumns: '[nav-start] 60px [nav-end] 1fr 1fr',
+    gridTemplateColumns:
+      state.inputFocused && state.recentHeigtJank
+        ? '[nav-start] 0px [nav-end] 1fr 1fr'
+        : '[nav-start] 60px [nav-end] 1fr 1fr',
     gridTemplateRows: 'auto 50px'
   })
 });
@@ -33,7 +36,7 @@ function App() {
     if (localStorage.getItem('theme')) {
       console.log('come back');
       setNewUser(false);
-      // ** local storage => React state **
+      // ** from local storage to React state **
 
       // * subscriptions *
       let subscriptions = localStorage.getItem('subscriptions').split('AnNdDd');
@@ -78,13 +81,11 @@ function App() {
     // window.scr\n\n`);
 
     window.addEventListener('resize', () => {
-      console.log(`${window.innerHeight} <== window.innerHeight\n\n`);
-      console.log(`${window.innerWidth} <== window.innerWidth\n\n`);
-
       dispatch({
         type: 'setOrientation',
         payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait'
       });
+
       dispatch({
         type: 'setInnerHeight',
         payload: window.innerHeight
@@ -104,11 +105,7 @@ function App() {
           render={props => <Home newUser={newUser} setNewUser={setNewUser} />}
         ></Route>
         <Route exact path="/settings" render={props => <Settings />}></Route>
-        <Route
-          exact
-          path="/source/:sourceName"
-          render={props => <PreviewSource />}
-        ></Route>
+        <Route exact path="/source/:sourceName" render={props => <PreviewSource />}></Route>
         <Route
           path="/item/:id"
           render={props => <PreviewItem sheetType="tag" {...props} />}

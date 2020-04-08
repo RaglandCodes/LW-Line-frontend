@@ -14,7 +14,15 @@ import AddYourOwnFeed from './AddYourOwnFeed';
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
-import { header2, header3, header4, button, fonts, settingContainer } from '../styles';
+import {
+  header2,
+  header3,
+  header4,
+  button,
+  fonts,
+  settingContainer,
+  settingsExplanation
+} from '../styles';
 
 WebFont.load({
   google: {
@@ -62,11 +70,7 @@ const useStyles = createUseStyles({
     display: 'flex'
   },
   settingsExplanation: {
-    fontFamily: fonts.primary,
-    fontSize: 15,
-
-    fontWeight: 300
-    //...padded
+    ...settingsExplanation
   },
   form: {
     flexGrow: 1
@@ -109,7 +113,9 @@ function Settings() {
       });
   };
 
-  let addNewMutePhrase = () => {};
+  let addNewMutePhrase = e => {
+    e.preventDefault();
+  };
 
   return (
     <Sheet page="Settings" className={classes.Settings}>
@@ -127,6 +133,8 @@ function Settings() {
                 id="searchFeeds"
                 className={classes.inputField}
                 onChange={e => setsourceSearchInput(e.target.value)}
+                onFocus={() => dispatch({ type: 'setInputFocused', payload: true })}
+                onBlur={() => dispatch({ type: 'setInputFocused', payload: false })}
               />
               <input type="submit" value="Search" />
             </div>
@@ -146,20 +154,23 @@ function Settings() {
           <label htmlFor="mutePhrases" className={classes.header3}>
             Mute phrases
           </label>
-          <form onSubmit={() => addNewMutePhrase()}>
+          <form onSubmit={e => addNewMutePhrase(e)}>
             <div className={classes.inputButtonWrap}>
               <input
                 type="text"
                 id="mutePhrases"
                 className={classes.inputField}
                 onChange={e => setMuteInput(e.target.value)}
+                onFocus={() => dispatch({ type: 'setInputFocused', payload: true })}
+                onBlur={() => dispatch({ type: 'setInputFocused', payload: false })}
               />
               <input type="submit" value="Mute" />
             </div>
           </form>
           <div className={classes.inputButtonWrap}></div>
           <p className={classes.settingsExplanation}>
-            You will not be shown articles containing those phrases
+            You will not be shown articles containing those phrases. (This setting is still in{' '}
+            <a href="https://github.com/raglandcodes/lw-line-frontend">development</a>)
           </p>
         </div>
         {/* <hr /> */}
@@ -233,7 +244,7 @@ function Settings() {
         <br />
         <br />
         <br />
-        <span className={classes.version}>Version 0.1.10</span>
+        <span className={classes.version}>Version 0.1.12</span>
       </div>
     </Sheet>
   );

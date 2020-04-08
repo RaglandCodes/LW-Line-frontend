@@ -1,7 +1,7 @@
 //React
 import React, { useEffect, useState } from 'react';
 import { Context } from '../Context';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 //Styles
 import { createUseStyles } from 'react-jss';
@@ -32,7 +32,12 @@ const useStyles = createUseStyles({
     //backgroundColor: '#ECEFF1',
     backgroundColor: colours.surface2,
     color: 'white',
-    display: 'flex',
+
+    // animation: '0.8s ease-in',
+    // animationName: state.inputFocused ? '$fadeIn' : '$fadeOut',
+    // animationFillMode: 'forwards',
+
+    display: state.inputFocused && state.recentHeigtJank ? 'none' : 'flex',
     justifyContent: 'spaceEvenly',
     boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.85)',
     flexDirection: state.orientation === 'potrait' ? 'row' : 'column',
@@ -43,6 +48,15 @@ const useStyles = createUseStyles({
     gridRowStart: state.orientation === 'landscape' ? 1 : 2,
     gridRowEnd: 3
   }),
+  // '@keyframes fadeIn': {
+  //   from: { opacity: 1 },
+  //   to: { opacity: 0 }
+  // },
+  // '@keyframes fadeOut': {
+  //   from: { opacity: 0 },
+  //   to: { opacity: 1 }
+  // },
+
   navIconContainer: state => ({
     flexGrow: 1,
     display: 'flex',
@@ -92,9 +106,7 @@ function Navigation(props) {
         ) : (
           <HomeOutlined className={classes.navIcon} />
         )}
-        <span
-          className={props.page === 'Feed' ? classes.navLabelActive : classes.navLabel}
-        >
+        <span className={props.page === 'Feed' ? classes.navLabelActive : classes.navLabel}>
           Home
         </span>
       </div>
@@ -116,28 +128,18 @@ function Navigation(props) {
       </div>
 
       {showPreviewNavigation ? (
-        <div
-          className={classes.navIconContainer}
-          onClick={() => window.open(props.storyLink)}
-        >
+        <div className={classes.navIconContainer} onClick={() => window.open(props.storyLink)}>
           <OpenInNew className={classes.navIcon} />
           <span className={classes.navLabel}>Read story</span>
         </div>
       ) : (
-        <div
-          className={classes.navIconContainer}
-          onClick={() => history.push('/settings')}
-        >
+        <div className={classes.navIconContainer} onClick={() => history.push('/settings')}>
           {props.page === 'Settings' ? (
             <SettingsApplications className={classes.navIconActive} />
           ) : (
             <SettingsApplicationsOutlined className={classes.navIcon} />
           )}
-          <span
-            className={
-              props.page === 'Settings' ? classes.navLabelActive : classes.navLabel
-            }
-          >
+          <span className={props.page === 'Settings' ? classes.navLabelActive : classes.navLabel}>
             Settings
           </span>
         </div>

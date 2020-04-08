@@ -78,6 +78,14 @@ const settingContainer = {
   }
 };
 
+const settingsExplanation = {
+  fontFamily: fonts.primary,
+  fontSize: 15,
+
+  fontWeight: 300
+  //...padded
+};
+
 module.exports = {
   colours,
   header1,
@@ -87,5 +95,6 @@ module.exports = {
   box,
   button,
   fonts,
-  settingContainer
+  settingContainer,
+  settingsExplanation
 };

@@ -53,6 +53,7 @@ function appReducer(state, action) {
     case 'setInnerHeight': {
       return {
         ...state,
+        recentHeigtJank: Math.abs(state.innerHeight - action.payload) > 111, // used along with inputFocused to guess if mobile keyboard was opened
         innerHeight: action.payload
       };
     }
@@ -137,6 +138,13 @@ function appReducer(state, action) {
         customFeeds: [...state.customFeeds, action.payload]
       };
     }
+    case 'setInputFocused': {
+      console.log(`${action.payload} <== action.payload`);
+      return {
+        ...state,
+        inputFocused: action.payload
+      };
+    }
     // case 'togglePreview': {
     //   return {
     //     ...state,
@@ -166,6 +174,8 @@ function ContextProvider(props) {
       name: '',
       items: []
     },
+    inputFocused: false, // when an inputFocused  && recentHeigtJan, don't show the navigation menu.
+    // That's to prevent ugly vertical navigation when typing on phones with the on screen keyboard.
     mutePhrases: [],
     chosenTopics: [],
     itemPreview: {
@@ -190,10 +200,7 @@ function ContextProvider(props) {
   }, [state.theme, state.mutePhrases]);
 
   useEffect(() => {
-    localStorage.setItem(
-      'showInSplitScreen',
-      state.itemPreview.showInSplitScreen
-    );
+    localStorage.setItem('showInSplitScreen', state.itemPreview.showInSplitScreen);
   }, [state.itemPreview.showInSplitScreen]);
 
   useEffect(() => {
@@ -209,11 +216,7 @@ function ContextProvider(props) {
     // });
   }, [state.subscriptions]);
 
-  return (
-    <Context.Provider value={{ state, dispatch }}>
-      {props.children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={{ state, dispatch }}>{props.children}</Context.Provider>;
 }
 
 let ContextConsumer = Context.Consumer;

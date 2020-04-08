@@ -76,11 +76,9 @@ function ChooseSources() {
 
   useEffect(() => {
     if (state.chosenTopics.length) {
-      dataFetch('getSources', { searchTopics: state.chosenTopics.join('AaNnDd') }).then(
-        gs => {
-          setSources(gs);
-        }
-      );
+      dataFetch('getSources', { searchTopics: state.chosenTopics.join('AaNnDd') }).then(gs => {
+        setSources(gs);
+      });
     }
   }, [topics]);
 
