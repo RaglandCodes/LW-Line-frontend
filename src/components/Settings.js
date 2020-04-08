@@ -21,7 +21,9 @@ import {
   button,
   fonts,
   settingContainer,
-  settingsExplanation
+  settingsExplanation,
+  input,
+  inputSubmitButton
 } from '../styles';
 
 WebFont.load({
@@ -36,8 +38,8 @@ WebFont.load({
 });
 const padded = {
   padding: {
-    left: 10,
-    right: 10
+    left: 15,
+    right: 15
   }
 };
 const useStyles = createUseStyles({
@@ -45,8 +47,8 @@ const useStyles = createUseStyles({
     ...padded
   },
   header2: {
-    ...header2,
-    ...padded
+    ...header2
+    //...padded
   },
   header3: {
     ...header3
@@ -67,7 +69,11 @@ const useStyles = createUseStyles({
     }
   },
   inputButtonWrap: {
-    display: 'flex'
+    display: 'flex',
+    flexDirection: 'row',
+    margin: {
+      top: 3
+    }
   },
   settingsExplanation: {
     ...settingsExplanation
@@ -76,7 +82,12 @@ const useStyles = createUseStyles({
     flexGrow: 1
   },
   inputField: {
-    flexGrow: 1
+    flexGrow: 1,
+
+    ...input
+  },
+  inputSubmitButton: {
+    ...inputSubmitButton
   },
   checkBoxInput: {
     flexShrink: 1
@@ -136,7 +147,7 @@ function Settings() {
                 onFocus={() => dispatch({ type: 'setInputFocused', payload: true })}
                 onBlur={() => dispatch({ type: 'setInputFocused', payload: false })}
               />
-              <input type="submit" value="Search" />
+              <input type="submit" value="Search" className={classes.inputSubmitButton} />
             </div>
           </form>
 
@@ -164,7 +175,7 @@ function Settings() {
                 onFocus={() => dispatch({ type: 'setInputFocused', payload: true })}
                 onBlur={() => dispatch({ type: 'setInputFocused', payload: false })}
               />
-              <input type="submit" value="Mute" />
+              <input type="submit" value="Mute" className={classes.inputSubmitButton} />
             </div>
           </form>
           <div className={classes.inputButtonWrap}></div>
@@ -244,7 +255,7 @@ function Settings() {
         <br />
         <br />
         <br />
-        <span className={classes.version}>Version 0.1.12</span>
+        <span className={classes.version}>Version 0.1.14</span>
       </div>
     </Sheet>
   );

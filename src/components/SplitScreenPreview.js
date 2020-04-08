@@ -30,7 +30,7 @@ function SplitScreenPreview(props) {
   return (
     <div className={classes.SplitScreenPreview}>
       {state.itemPreview.currentPreview.id === '' ? (
-        <p>Please choose an item to view it aahere</p>
+        <p>Please choose an item to view it here</p>
       ) : (
         <PreviewItem />
       )}

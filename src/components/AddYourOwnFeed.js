@@ -6,7 +6,13 @@ import { Context } from '../Context';
 import SourceBox from './SourceBox';
 
 //Styles
-import { settingContainer, settingsExplanation, header3 } from '../styles';
+import {
+  settingContainer,
+  settingsExplanation,
+  input,
+  inputSubmitButton,
+  header3
+} from '../styles';
 import { createUseStyles } from 'react-jss';
 
 import { dataFetch } from '../modules/dataFetch';
@@ -28,10 +34,14 @@ const useStyles = createUseStyles({
     flexGrow: 1
   },
   inputField: {
-    flexGrow: 1
+    flexGrow: 1,
+    ...input
   },
   inputButtonWrap: {
     display: 'flex'
+  },
+  inputSubmitButton: {
+    ...inputSubmitButton
   }
 });
 
@@ -98,7 +108,7 @@ function AddYourOwnFeed(props) {
             className={classes.inputField}
             onChange={e => setFeedLinkInput(e.target.value)}
           />
-          <input type="submit" value="Add" />
+          <input type="submit" value="Add" className={classes.inputSubmitButton} />
         </div>
         <p className={classes.message}>{message}</p>
         <div>

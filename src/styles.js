@@ -6,7 +6,8 @@ const colours = {
   background: '#f5f5f5',
   //surface: '#ECEFF1'
   surface: 'white',
-  surface2: 'white'
+  surface2: 'white',
+  dark: '#37474F'
 };
 
 const fonts = {
@@ -35,10 +36,10 @@ const header2 = {
 const header3 = {
   fontSize: 20,
   fontFamily: fonts.primary,
-  fontWeight: 300,
-  margin: {
-    top: 11
-  }
+  fontWeight: 300
+  // margin: {
+  //   top: 11
+  // }
 };
 
 const header4 = {
@@ -73,8 +74,8 @@ const settingContainer = {
   padding: {
     top: 6,
     bottom: 6,
-    left: 4,
-    right: 4
+    left: 0,
+    right: 0
   }
 };
 
@@ -84,6 +85,26 @@ const settingsExplanation = {
 
   fontWeight: 300
   //...padded
+};
+const input = {
+  fontSize: 14,
+  padding: 2,
+  borderRadius: '4px 0 0 4px',
+  //border: 0,
+  border: `1px solid ${colours.dark}`,
+  '&:focus': {
+    outline: 'none',
+    border: `2px solid ${colours.dark}`
+  }
+};
+const inputSubmitButton = {
+  borderRadius: '0 4px 4px 0 ',
+  border: 0,
+  padding: 7,
+  fontSize: 14,
+  margin: 0,
+  backgroundColor: colours.dark,
+  color: 'white'
 };
 
 module.exports = {
@@ -96,5 +117,7 @@ module.exports = {
   button,
   fonts,
   settingContainer,
-  settingsExplanation
+  settingsExplanation,
+  input,
+  inputSubmitButton
 };
