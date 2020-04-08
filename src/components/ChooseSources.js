@@ -6,7 +6,7 @@ import { dataFetch } from '../modules/dataFetch';
 
 //Components
 import SourceBox from './SourceBox';
-
+import Paginator from './Paginator';
 //Styles
 import { createUseStyles } from 'react-jss';
 import { header4, button, fonts, colours, settingContainer } from '../styles';
@@ -47,8 +47,8 @@ function ChooseSources() {
   let { state, dispatch } = React.useContext(Context);
   let [topics, setTopics] = useState([]);
   let [sources, setSources] = useState([]);
-  let [showing, setShowing] = useState(5);
-
+  //let [showing, setShowing] = useState(5);
+  let [errorMessage, setErrorMessage] = useState(null);
   const toggleChosenState = topic => {
     let i = topics.indexOf(topic);
     let newTopics = topics;
@@ -62,16 +62,19 @@ function ChooseSources() {
   };
 
   useEffect(() => {
-    // TODO handle error in datafetch
-    dataFetch('sourceTopics').then(topics => {
-      // TODO error handling
-      setTopics(
-        topics.map(topic => ({
-          topic: topic,
-          chosen: state.chosenTopics.includes(topic)
-        }))
-      );
-    });
+    dataFetch('sourceTopics')
+      .then(topics => {
+        setErrorMessage(null);
+        setTopics(
+          topics.map(topic => ({
+            topic: topic,
+            chosen: state.chosenTopics.includes(topic)
+          }))
+        );
+      })
+      .catch(sourceTopicsDataFetchError => {
+        setErrorMessage("Couldn't get topics");
+      });
   }, []);
 
   useEffect(() => {
@@ -97,11 +100,17 @@ function ChooseSources() {
             </div>
           ))
         ) : (
-          <>
-            Getting topics... <br /> Please wait ...
-          </>
+          <>{errorMessage ? errorMessage : `Getting topics...  Please wait ...`}</>
         )}
-        {sources
+
+        <Paginator
+          items={sources
+            .filter(source => !state.subscriptions.includes(source.feed))
+            .map(source => (
+              <SourceBox key={source.feed} name={source.feed} />
+            ))}
+        />
+        {/* {sources
           .filter(source => !state.subscriptions.includes(source.feed))
           .slice(0, showing)
           .map(source => (
@@ -116,7 +125,7 @@ function ChooseSources() {
           >
             Show more
           </button>
-        ) : null}
+        ) : null} */}
         <br />
       </div>
       <div className={classes.settingContainer}>

@@ -57,12 +57,16 @@ const box = {
 };
 
 const button = {
-  //color: '#FAFAFA',
+  color: '#FAFAFA',
   borderRadius: 3,
   border: 0,
   padding: 5,
   margin: 3,
-  fontSize: 14
+  fontSize: 14,
+  backgroundColor: '#37474F',
+  '&:disabled': {
+    backgroundColor: '#78909C'
+  }
 };
 
 const settingContainer = {

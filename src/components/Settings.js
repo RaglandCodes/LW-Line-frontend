@@ -8,6 +8,7 @@ import { dataFetch } from '../modules/dataFetch';
 //Components
 import SourceBox from './SourceBox';
 import Sheet from './Sheet';
+import Paginator from './Paginator';
 import ChooseSources from './ChooseSources';
 import AddYourOwnFeed from './AddYourOwnFeed';
 
@@ -110,17 +111,28 @@ function Settings() {
   let [sourceSearchResults, setSourceSearchResults] = useState([]);
   let [sourceSearchInput, setsourceSearchInput] = useState('');
   const [muteInput, setMuteInput] = useState('');
+  const [fetchingFeeds, setFetchingFeeds] = useState(false);
+
   let searchSources = e => {
     e.preventDefault();
 
     // Call server with  sourceSearchInput and setSourceSearchResults
 
+    if (!sourceSearchInput.length) {
+      return;
+    }
+    if (fetchingFeeds) {
+      return;
+    }
+    setFetchingFeeds(true);
     dataFetch('getSources', { searchTerm: sourceSearchInput })
       .then(jsonRes => {
         setSourceSearchResults(jsonRes);
+        setFetchingFeeds(false);
       })
       .catch(searchError => {
         console.log(`${searchError} <== searchError\n\n`);
+        setFetchingFeeds(false);
       });
   };
 
@@ -147,15 +159,22 @@ function Settings() {
                 onFocus={() => dispatch({ type: 'setInputFocused', payload: true })}
                 onBlur={() => dispatch({ type: 'setInputFocused', payload: false })}
               />
-              <input type="submit" value="Search" className={classes.inputSubmitButton} />
+              <input
+                type="submit"
+                value="Search"
+                className={classes.inputSubmitButton}
+                disabled={fetchingFeeds}
+              />
             </div>
           </form>
-
-          {sourceSearchResults
-            .filter(result => state.subscriptions.indexOf(result.feed) === -1)
-            .map(result => (
-              <SourceBox name={result.feed} subscribed={false} key={result.feed} />
-            ))}
+          <Paginator
+            items={sourceSearchResults
+              .filter(result => state.subscriptions.indexOf(result.feed) === -1)
+              .map(result => (
+                <SourceBox name={result.feed} subscribed={false} key={result.feed} />
+              ))}
+            showMoreMessage="More feeds"
+          />
         </div>
         <ChooseSources />
         <AddYourOwnFeed />
@@ -255,7 +274,7 @@ function Settings() {
         <br />
         <br />
         <br />
-        <span className={classes.version}>Version 0.1.14</span>
+        <span className={classes.version}>Version 0.1.15</span>
       </div>
     </Sheet>
   );

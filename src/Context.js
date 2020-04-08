@@ -139,7 +139,6 @@ function appReducer(state, action) {
       };
     }
     case 'setInputFocused': {
-      console.log(`${action.payload} <== action.payload`);
       return {
         ...state,
         inputFocused: action.payload

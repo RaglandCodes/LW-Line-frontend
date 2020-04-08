@@ -28,19 +28,19 @@ const useStyles = createUseStyles({
     fontFamily: fonts.secondary
   },
   followButton: {
+    ...button,
     backgroundColor: '#263238',
-    color: 'white',
-    ...button
+    color: 'white'
   },
   removeButton: {
-    backgroundColor: '#455A64',
     ...button,
+    backgroundColor: '#455A64',
     color: '#FAFAFA'
   },
   previewButton: {
-    backgroundColor: '#37474F',
+    ...button,
     color: 'white',
-    ...button
+    backgroundColor: '#37474F'
   },
   sourceName: {
     flexGrow: 1,
