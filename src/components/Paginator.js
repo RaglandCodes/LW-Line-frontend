@@ -22,7 +22,7 @@ const useStyles = createUseStyles({
     display: 'inline-block',
     padding: 1,
     margin: {
-      right: 2
+      left: 4
     },
     borderRadius: 2
   }
@@ -65,6 +65,7 @@ function NewComponent(props) {
         <div style={{ flexGrow: 1 }}></div>
         <button className={classes.showMoreBtn} onClick={() => increaseLength()}>
           {props.showMoreMessage || 'Show More'}
+
           <span className={classes.moreCount}>{length - itemsToShow}</span>
         </button>
       </div>

@@ -54,6 +54,9 @@ const useStyles = createUseStyles({
     fontFamily: fonts.primary,
     fontSize: 14
   },
+  contentSnippet: {
+    padding: { left: pagePadding, right: pagePadding }
+  },
   previewActions: {
     display: 'flex',
     fontSize: 20
@@ -133,23 +136,18 @@ function PreviewItem() {
   return (
     <>
       <div className={classes.Preview}>
-        {metaImage ? (
-          <img src={metaImage} alt={title} className={classes.metaImage} />
-        ) : null}
+        {metaImage ? <img src={metaImage} alt={title} className={classes.metaImage} /> : null}
         <h1 className={classes.header1}>{title}</h1>
         <p className={classes.metaDescription}>{metaDescription}</p>
         {/* <p className={classes.description}>{description}</p> */}
         {/* <div>{paragraphs ? paragraphs.map(p => <p>{p}</p>) : null}</div> */}
-        <div>
+        <div className={classes.contentSnippet}>
           {contentSnippet ? contentSnippet.split('\n').map(para => <p>{para}</p>) : null}
         </div>
         {errorMessage}
         {state.itemPreview.showInSplitScreen ? (
           <div className={classes.previewActions}>
-            <div
-              className={classes.actionIconContainer}
-              onClick={() => window.open(link)}
-            >
+            <div className={classes.actionIconContainer} onClick={() => window.open(link)}>
               <OpenInNew />
               <span className={classes.actionLabel}>Read story</span>
             </div>
@@ -165,9 +163,7 @@ function PreviewItem() {
         ) : null}
       </div>
 
-      {state.itemPreview.showInSplitScreen ? null : (
-        <Navigation fromPreviewItem storyLink={link} />
-      )}
+      {state.itemPreview.showInSplitScreen ? null : <Navigation fromPreviewItem storyLink={link} />}
     </>
   );
 }

@@ -16,13 +16,22 @@ WebFont.load({
 
 const useStyles = createUseStyles({
   ArticleBox: {
-    //borderBottom: '1px solid #1565C0',263238
     borderBottom: '1px solid #455A64',
-    //backgroundColor: '#F5F5F5',
     backgroundColor: colours.surface,
-    width: '95%',
-    margin: '5px auto',
-    padding: 4
+    //width: '95%',
+    padding: {
+      top: 6,
+      bottom: 6,
+      left: 8,
+      right: 8
+    },
+    display: 'flex',
+    flexDirection: 'column'
+
+    // maxHeight: 88,
+    // overflowY: 'hidden',
+    // textOverflow: 'ellipsis'
+    // whiteSpace: 'nowrap'
   },
   title: { fontFamily: fonts.primary, fontSize: 15, padding: { top: 3 } },
   source: {

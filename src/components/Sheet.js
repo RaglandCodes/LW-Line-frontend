@@ -17,8 +17,7 @@ const useStyles = createUseStyles({
     overflow: 'scroll',
 
     gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
-    gridColumnEnd:
-      state.containsPreviewableContent && state.itemPreview.showInSplitScreen ? 3 : 4,
+    gridColumnEnd: state.containsPreviewableContent && state.itemPreview.showInSplitScreen ? 3 : 4,
     gridRowStart: 1,
     gridRowEnd: state.orientation === 'potrait' ? 2 : 3
 

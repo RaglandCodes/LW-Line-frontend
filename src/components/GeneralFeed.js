@@ -15,6 +15,11 @@ import { createUseStyles } from 'react-jss';
 import { button } from '../styles';
 const useStyles = createUseStyles({
   Feed: {},
+  ArticleBoxGrid: {
+    display: 'grid',
+    gridTemplateColumns: `repeat(auto-fill, minmax(480px, 1fr))`,
+    gridGap: 6
+  },
   showMoreButton: {
     ...button
   }
@@ -131,7 +136,11 @@ function GeneralFeed(props) {
                 Please wait ...
               </>
             ) : (
-              state.currentFeed.items.map(item => <ArticleBox key={item.id} {...item} />)
+              <div className={classes.ArticleBoxGrid}>
+                {state.currentFeed.items.map(item => (
+                  <ArticleBox key={item.id} {...item} />
+                ))}
+              </div>
             )}
           </div>
           <button

@@ -146,7 +146,7 @@ function Settings() {
         <div className={classes.header2}>Content</div>
         {/* ------ ----- ----- Feeds ----- ----- ----- */}
         <div className={classes.settingContainer}>
-          <form onSubmit={e => searchSources(e)} className={classes.form}>
+          <form onSubmit={e => searchSources(e)} className={classes.form} role="search">
             <label htmlFor="searchFeeds" className={classes.header3}>
               Search for feeds
             </label>
@@ -213,12 +213,13 @@ function Settings() {
             <input
               type="checkbox"
               id="darkThemecb"
+              aria-describedby="darktheme-instructions"
               checked={state.theme === 'dark'}
               onChange={() => dispatch({ type: 'toggleTheme', action: '' })}
               className={classes.checkBoxInput}
             />
           </div>
-          <p className={classes.settingsExplanation}>
+          <p className={classes.settingsExplanation} id="darktheme-instructions">
             Only light theme is available for now. You can{' '}
             <a href="https://github.com/RaglandCodes/LW-Line-frontend">fork this project</a> and
             make your own theme.
@@ -232,13 +233,14 @@ function Settings() {
             <input
               type="checkbox"
               id="show-preview-cb"
+              aria-describedby="show-preview-instructions"
               className={classes.checkBoxInput}
               onChange={() => dispatch({ type: 'toggleShowPreview', action: '' })}
               checked={state.itemPreview.openOnClick}
             />
           </div>
-          <p className={classes.settingsExplanation}>
-            Check this to see just a part of the story before choosing to view the entire site
+          <p className={classes.settingsExplanation} id="show-preview-instructions">
+            Check this to see just a part of the story before choosing to view the entire site.
           </p>
         </div>
         <div className={classes.settingContainer}>
@@ -249,12 +251,13 @@ function Settings() {
             <input
               type="checkbox"
               id="split-screen-cb"
+              aria-describedby="split-screen-instructions"
               className={classes.checkBoxInput}
               onChange={() => dispatch({ type: 'toggleSplitScreen', action: '' })}
               checked={state.itemPreview.showInSplitScreen}
             />
           </div>
-          <p className={classes.settingsExplanation}>
+          <p className={classes.settingsExplanation} id="split-screen-instructions">
             Read the story without leaving the page. Recomended to use only on larger screens.
           </p>
         </div>
@@ -274,7 +277,7 @@ function Settings() {
         <br />
         <br />
         <br />
-        <span className={classes.version}>Version 0.1.15</span>
+        <span className={classes.version}>Version 0.1.16</span>
       </div>
     </Sheet>
   );
