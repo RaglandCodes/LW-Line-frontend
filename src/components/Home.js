@@ -25,6 +25,7 @@ const useStyles = createUseStyles({
 function Home(props) {
   let { state, dispatch } = React.useContext(Context);
   let [showFeed, setShowFeed] = useState(false);
+  let [showSettings, setShowSettings] = useState(false);
   const classes = useStyles();
   let history = useHistory();
   useEffect(() => {
@@ -34,25 +35,44 @@ function Home(props) {
         payload: { name: 'Feed', items: [] }
       });
     }
-  }, [showFeed, state.subscriptions]);
+  }, [showFeed, state.subscriptions, state.currentFeed.name]);
 
   useEffect(() => {
     if (!props.newUser && state.subscriptions.length) {
       setShowFeed(true);
     }
-  }, [props.newUser]);
+
+    if (state.innerHeight && (props.newUser || state.subscriptions.length === 0)) {
+      /*
+        This is to prevent the jarring effect of the settings usually shown to new users
+        being shown to returning users for a few moments
+
+        The understanding is that if state.innerHeight is not undefined, 
+        the value of props.newUser is correct
+      */
+
+      // Even if returing user, show settings if no subscriptions
+      setShowSettings(true);
+    } else {
+      setShowSettings(false);
+    }
+    console.log(`${state.innerHeight} <== state.innerHeight`);
+    console.log(`${props.newUser} <== props.newUser`);
+  }, [props.newUser, state.innerHeight]);
+
+  // TODO remove multiple complex ternary operators
   return showFeed ? (
     state.currentFeed.name === 'Feed' ? (
       <GeneralFeed />
     ) : null
-  ) : (
+  ) : showSettings ? (
     <Sheet>
       <div className={classes.welcomeMessage}>
         <p>
           Welcome to <b>LW Line.</b> <br />
           <br />
           Get started by choosing your interestes and subscribing to feeds. <br />
-          You can customise{' '}
+          You can customise
           <u>
             <span onClick={() => history.push('/settings')}>more in the settings</span>
           </u>
@@ -73,7 +93,7 @@ function Home(props) {
         </button>
       </div>
     </Sheet>
-  );
+  ) : null;
 }
 
 export default Home;

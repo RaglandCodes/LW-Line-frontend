@@ -173,8 +173,8 @@ function ContextProvider(props) {
       name: '',
       items: []
     },
-    inputFocused: false, // when an inputFocused  && recentHeigtJan, don't show the navigation menu.
-    // That's to prevent ugly vertical navigation when typing on phones with the on screen keyboard.
+    inputFocused: false, // when an inputFocused  && recentHeigtJank, don't show the navigation menu.
+    // That's to try to prevent ugly vertical navigation when typing on phones with the on screen keyboard.
     mutePhrases: [],
     chosenTopics: [],
     itemPreview: {

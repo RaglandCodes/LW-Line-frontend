@@ -16,9 +16,9 @@ import { button } from '../styles';
 const useStyles = createUseStyles({
   Feed: {},
   ArticleBoxGrid: {
-    display: 'grid',
-    gridTemplateColumns: `repeat(auto-fill, minmax(480px, 1fr))`,
-    gridGap: 6
+    // display: 'grid',
+    // gridTemplateColumns: `repeat(auto-fill, minmax(480px, 1fr))`,
+    // gridGap: 6
   },
   showMoreButton: {
     ...button

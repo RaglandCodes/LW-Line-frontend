@@ -62,7 +62,7 @@ function ChooseSources() {
   };
 
   useEffect(() => {
-    dataFetch('sourceTopics')
+    dataFetch('feedTopics')
       .then(topics => {
         setErrorMessage(null);
         setTopics(

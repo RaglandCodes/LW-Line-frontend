@@ -43,12 +43,6 @@ function NewComponent(props) {
     // The Math.min is to keep itemsToShow < length at all times
   }, [props]);
 
-  useEffect(() => {
-    console.log(`${length} <== length`);
-    console.log(`${itemsToShow} <== itemsToShow`);
-    console.log(`${increment} <== increment`);
-  }, [itemsToShow, length, increment]);
-
   const classes = useStyles({ length, itemsToShow });
   function increaseLength() {
     if (itemsToShow + increment <= length) {

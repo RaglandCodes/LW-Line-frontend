@@ -77,9 +77,6 @@ function App() {
       payload: window.innerHeight
     });
 
-    //     console.log(`${window.scrollY} <==
-    // window.scr\n\n`);
-
     window.addEventListener('resize', () => {
       dispatch({
         type: 'setOrientation',
@@ -93,9 +90,6 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(`${newUser} <= newUser`);
-  }, [newUser]);
   return (
     <div className={`App ${classes.App}`}>
       <Router>
