@@ -28,7 +28,7 @@ const useStyles = createUseStyles({
   }
 });
 
-function NewComponent(props) {
+function Paginator(props) {
   //let { state, dispatch } = React.useContext(Context);
 
   const [items, setItems] = useState([]);
@@ -67,4 +67,4 @@ function NewComponent(props) {
   );
 }
 
-export default NewComponent;
+export default Paginator;

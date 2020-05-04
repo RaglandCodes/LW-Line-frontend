@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import GeneralFeed from './GeneralFeed';
 import ChooseSources from './ChooseSources';
 import Sheet from './Sheet';
+// import SplitFeeds from './SplitFeeds';
 
 //Styles
 import { createUseStyles } from 'react-jss';

@@ -10,8 +10,8 @@ import { fonts, colours } from '../styles';
 
 WebFont.load({
   google: {
-    families: [fonts.primary, fonts.secondary]
-  }
+    families: [fonts.primary, fonts.secondary],
+  },
 });
 
 const useStyles = createUseStyles({
@@ -23,11 +23,11 @@ const useStyles = createUseStyles({
       top: 6,
       bottom: 6,
       left: 8,
-      right: 8
+      right: 8,
     },
     display: 'flex',
-    flexDirection: 'column'
-
+    flexDirection: 'column',
+    // margin: 6
     // maxHeight: 88,
     // overflowY: 'hidden',
     // textOverflow: 'ellipsis'
@@ -38,19 +38,30 @@ const useStyles = createUseStyles({
     fontFamily: fonts.secondary,
     fontSize: 12,
     padding: { top: 2, bottom: 3 },
-    color: '#424242'
+    color: '#424242',
   },
   description: {
     fontFamily: fonts.primary,
     fontSize: 13,
     margin: { top: 0 },
-    color: '#263238'
-  }
+    color: '#263238',
+  },
 });
 function ArticleBox(item) {
   let { state, dispatch } = React.useContext(Context);
   const classes = useStyles();
   let history = useHistory();
+
+  function trimmedMetaDescription(metaDescription) {
+    const metaDescMaxLen = 150;
+    if (!metaDescription) {
+      return '';
+    }
+    if (metaDescription.length < metaDescMaxLen) {
+      return metaDescription;
+    }
+    return metaDescription.slice(0, metaDescMaxLen) + '...';
+  }
   return (
     <div
       className={classes.ArticleBox}
@@ -70,6 +81,7 @@ function ArticleBox(item) {
 
           if (state.itemPreview.showInSplitScreen) {
             // Show the full site in split screen
+            // TODO
           } else {
             // Show the full site in new window
             window.open(item.link);
@@ -79,7 +91,7 @@ function ArticleBox(item) {
     >
       <div className={classes.title}>{item.title}</div>
       <div className={classes.source}>{item.source}</div>
-      <div className={classes.description}>{item.metaDescription}</div>
+      <div className={classes.description}>{trimmedMetaDescription(item.metaDescription)}</div>
     </div>
   );
 }

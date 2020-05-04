@@ -10,7 +10,6 @@ import PreviewSource from './components/PreviewSource';
 import PreviewItem from './components/PreviewItem';
 
 //Styles
-//import './App.css';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
@@ -21,8 +20,8 @@ const useStyles = createUseStyles({
       state.inputFocused && state.recentHeigtJank
         ? '[nav-start] 0px [nav-end] 1fr 1fr'
         : '[nav-start] 60px [nav-end] 1fr 1fr',
-    gridTemplateRows: 'auto 50px'
-  })
+    gridTemplateRows: 'auto 50px',
+  }),
 });
 
 function App() {
@@ -70,22 +69,23 @@ function App() {
 
     dispatch({
       type: 'setOrientation',
-      payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait'
+      payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait',
     });
+
     dispatch({
       type: 'setInnerHeight',
-      payload: window.innerHeight
+      payload: window.innerHeight,
     });
 
     window.addEventListener('resize', () => {
       dispatch({
         type: 'setOrientation',
-        payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait'
+        payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait',
       });
 
       dispatch({
         type: 'setInnerHeight',
-        payload: window.innerHeight
+        payload: window.innerHeight,
       });
     });
   }, []);

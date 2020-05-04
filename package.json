@@ -1,6 +1,6 @@
 {
   "name": "lw-line-frontend",
-  "version": "0.1.17",
+  "version": "0.1.20",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.8.2",
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/raglandcodes/lw-line-frontend.gitt"
+    "url": "https://github.com/raglandcodes/lw-line-frontend.git"
   },
   "browserslist": {
     "production": [

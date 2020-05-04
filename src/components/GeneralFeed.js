@@ -5,7 +5,6 @@ import { Context } from '../Context';
 //Components
 import Sheet from './Sheet';
 import ArticleBox from './ArticleBox';
-import SplitScreenPreview from './SplitScreenPreview';
 
 //utils
 import { dataFetch } from '../modules/dataFetch';
@@ -16,13 +15,15 @@ import { button } from '../styles';
 const useStyles = createUseStyles({
   Feed: {},
   ArticleBoxGrid: {
-    // display: 'grid',
-    // gridTemplateColumns: `repeat(auto-fill, minmax(480px, 1fr))`,
-    // gridGap: 6
+    padding: 0,
+    maring: 0,
+    display: 'grid',
+    gridTemplateColumns: `repeat(auto-fill, minmax(300px, 1fr))`,
+    gridGap: 4,
   },
   showMoreButton: {
-    ...button
-  }
+    ...button,
+  },
 });
 
 function GeneralFeed(props) {
@@ -40,7 +41,7 @@ function GeneralFeed(props) {
       dataFetch('getItems', {
         subscriptions: state.subscriptions.join('AaNnDd'),
         afterRef: state.after.ref,
-        afterTs: state.after.ts
+        afterTs: state.after.ts,
       }).then(res => {
         setLoading(false);
         // TODO error handling
@@ -52,7 +53,7 @@ function GeneralFeed(props) {
       dataFetch('previewSource', {
         source: state.currentFeed.name,
         afterRef: state.currentFeed.after.ref,
-        afterTs: state.currentFeed.after.ts
+        afterTs: state.currentFeed.after.ts,
       }).then(res => {
         setLoading(false);
         if (res === 'ERROR') {
@@ -72,7 +73,7 @@ function GeneralFeed(props) {
         setLoading(true);
         // Add items automatically only if it's empty
         dataFetch('getItems', {
-          subscriptions: state.subscriptions.join('AaNnDd')
+          subscriptions: state.subscriptions.join('AaNnDd'),
         }).then(items => {
           setLoading(false);
           if (items === 'ERROR') {
@@ -93,7 +94,7 @@ function GeneralFeed(props) {
       if (feedInCustomFeed.length) {
         dispatch({
           type: 'appendCurrentFeed',
-          payload: feedInCustomFeed[0].items
+          payload: feedInCustomFeed[0].items,
         });
       }
       dataFetch('previewSource', { source: state.currentFeed.name })
@@ -101,22 +102,22 @@ function GeneralFeed(props) {
           setLoading(false);
           if (jsonRes.items === 'ERROR') {
             setErrorMessage(
-              `An error occured when getting information for ${state.currentFeed.name}`
+              `An error occured when getting information for ${state.currentFeed.name}`,
             );
           } else {
             dispatch({
               type: 'appendCurrentFeed',
-              payload: jsonRes.items.data
+              payload: jsonRes.items.data,
             });
             dispatch({
               type: 'setCurrentFeedAfter',
-              payload: jsonRes.items.after
+              payload: jsonRes.items.after,
             });
           }
         })
         .catch(e => {
           setErrorMessage(
-            `An error occured when getting information for ${state.currentFeed.name}`
+            `An error occured when getting information for ${state.currentFeed.name}`,
           );
         });
     }

@@ -24,7 +24,7 @@ import {
   settingContainer,
   settingsExplanation,
   input,
-  inputSubmitButton
+  inputSubmitButton,
 } from '../styles';
 
 WebFont.load({
@@ -33,75 +33,75 @@ WebFont.load({
       `${header2.fontFamily}:${header2.fontWeight}`,
       `${header3.fontFamily}:${header3.fontWeight}`,
       `${header4.fontFamily}:${header4.fontWeight}`,
-      fonts.primary
-    ]
-  }
+      fonts.primary,
+    ],
+  },
 });
 const padded = {
   padding: {
     left: 15,
-    right: 15
-  }
+    right: 15,
+  },
 };
 const useStyles = createUseStyles({
   Settings: {
-    ...padded
+    ...padded,
   },
   header2: {
-    ...header2
+    ...header2,
     //...padded
   },
   header3: {
-    ...header3
+    ...header3,
     //...padded
   },
   header4: {
     ...header4,
     margin: {
-      top: 35
-    }
+      top: 35,
+    },
   },
   checkboxSettingWrap: {
     display: 'flex',
     justifyContent: 'space-between',
     //backgroundColor: '#F5F5F5',
     margin: {
-      top: 5
-    }
+      top: 5,
+    },
   },
   inputButtonWrap: {
     display: 'flex',
     flexDirection: 'row',
     margin: {
-      top: 3
-    }
+      top: 3,
+    },
   },
   settingsExplanation: {
-    ...settingsExplanation
+    ...settingsExplanation,
   },
   form: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   inputField: {
     flexGrow: 1,
 
-    ...input
+    ...input,
   },
   inputSubmitButton: {
-    ...inputSubmitButton
+    ...inputSubmitButton,
   },
   checkBoxInput: {
-    flexShrink: 1
+    flexShrink: 1,
   },
   showMoreBtn: {
     ...button,
     color: 'black',
-    float: 'right'
+    float: 'right',
   },
   settingContainer: {
-    ...settingContainer
+    ...settingContainer,
   },
-  version: {}
+  version: {},
 });
 
 function Settings() {
@@ -277,7 +277,7 @@ function Settings() {
         <br />
         <br />
         <br />
-        <span className={classes.version}>Version 0.1.17</span>
+        <span className={classes.version}>Version 0.1.20</span>
       </div>
     </Sheet>
   );

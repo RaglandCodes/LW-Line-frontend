@@ -19,62 +19,89 @@ import { header1, header2, fonts } from '../styles';
 
 WebFont.load({
   google: {
-    families: [`${header1.fontFamily}:${header1.fontWeight}`]
-  }
+    families: [`${header1.fontFamily}:${header1.fontWeight}`],
+  },
 });
 
 const pagePadding = 11;
+
+const getGridColumStart = (orientation, showInSplitScreen) => {
+  if (orientation === 'potrait') {
+    if (showInSplitScreen) {
+      return 2;
+    }
+    return 1;
+  }
+
+  //landscape in split screen
+  if (showInSplitScreen) {
+    return 3;
+  }
+
+  //landscape in full screen
+  return 2;
+};
 const useStyles = createUseStyles({
   Preview: state => ({
     overflow: 'scroll',
-    gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
+
+    gridColumnStart: getGridColumStart(state.orientation, state.itemPreview.showInSplitScreen),
     gridColumnEnd: 4,
-    gridRowStart: 1,
-    gridRowEnd: state.orientation === 'potrait' ? 2 : 3
+    // gridRowStart: 1,
+    // gridRowEnd: state.orientation === 'potrait' ? 2 : 3,
+
+    height: '100%',
+
+    display: 'flex',
+    flexDirection: 'column',
   }),
+  previewContent: {
+    flexGrow: 1,
+  },
   header1: {
     ...header1,
     padding: {
       left: pagePadding,
-      right: pagePadding
-    }
+      right: pagePadding,
+    },
   },
   header2: {
     ...header2,
-    padding: { left: pagePadding, right: pagePadding }
+    padding: { left: pagePadding, right: pagePadding },
   },
   metaDescription: {
     padding: { left: pagePadding, right: pagePadding },
     fontSize: 17,
-    fontFamily: fonts.primary
+    fontFamily: fonts.primary,
   },
   metaImage: { width: ' 100%' },
   description: {
     padding: { left: pagePadding, right: pagePadding },
     fontFamily: fonts.primary,
-    fontSize: 14
+    fontSize: 14,
   },
   contentSnippet: {
-    padding: { left: pagePadding, right: pagePadding }
+    padding: { left: pagePadding, right: pagePadding },
   },
   previewActions: {
     display: 'flex',
-    fontSize: 20
+    fontSize: 20,
   },
   actionIconContainer: {
     flexGrow: 1,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
-  actionLabel: { fontFamily: 'Lato', fontSize: 15 }
+  actionLabel: { fontFamily: 'Lato', fontSize: 15 },
 });
 
 function PreviewItem() {
   let { state, dispatch } = React.useContext(Context);
   const classes = useStyles(state);
   let { id } = useParams();
+
   if (state.itemPreview.showInSplitScreen) {
     id = state.itemPreview.currentPreview.id;
   }
@@ -84,13 +111,12 @@ function PreviewItem() {
   let [metaImage, setMetaImage] = useState('');
   let [contentSnippet, setContentSnippet] = useState('');
   let [errorMessage, setErrorMessage] = useState(null);
-  // let [paragraphs, setParagraphs] = useState([]);
   let [link, setLink] = useState('');
 
   let getFromDatabase = () => {
     console.log('Getting from DB');
     if (id === '') {
-      // This is to not do an unnecessar data
+      // This is to prevent an unnecessary data fetch
       return;
     }
     dataFetch('singleItem', { id })
@@ -99,12 +125,9 @@ function PreviewItem() {
           setErrorMessage('Error in retriving item');
           return;
         }
-
-        console.log(`${JSON.stringify(jsonRes, null, 2)} <= jsonRes`);
         setTitle(jsonRes.title);
         setMetaDescription(jsonRes.metaDescription);
         setContentSnippet(jsonRes.contentSnippet);
-        // setParagraphs(jsonRes.paragraphs);
         setLink(jsonRes['link']);
         setMetaImage(jsonRes.image);
       })
@@ -114,14 +137,12 @@ function PreviewItem() {
   };
 
   useEffect(() => {
-    if (state.feedItems.length > 0) {
-      let itemToShow = state.feedItems.filter(item => item.id === id)[0];
+    if (state.currentFeed.items.length > 0) {
+      let itemToShow = state.currentFeed.items.filter(item => item.id === id)[0];
       if (itemToShow) {
-        console.log(`${JSON.stringify(itemToShow, null, 2)} <= itemToShow`);
         setTitle(itemToShow.title);
 
         setMetaDescription(itemToShow.metaDescription);
-        // setParagraphs(itemToShow.paragraphs);
         setLink(itemToShow.link);
         setMetaImage(itemToShow.image);
       } else {
@@ -136,15 +157,15 @@ function PreviewItem() {
   return (
     <>
       <div className={classes.Preview}>
-        {metaImage ? <img src={metaImage} alt={title} className={classes.metaImage} /> : null}
-        <h1 className={classes.header1}>{title}</h1>
-        <p className={classes.metaDescription}>{metaDescription}</p>
-        {/* <p className={classes.description}>{description}</p> */}
-        {/* <div>{paragraphs ? paragraphs.map(p => <p>{p}</p>) : null}</div> */}
-        <div className={classes.contentSnippet}>
-          {contentSnippet ? contentSnippet.split('\n').map(para => <p>{para}</p>) : null}
+        <div className={classes.previewContent}>
+          {metaImage ? <img src={metaImage} alt={title} className={classes.metaImage} /> : null}
+          <h1 className={classes.header1}>{title}</h1>
+          <p className={classes.metaDescription}>{metaDescription}</p>
+          <div className={classes.contentSnippet}>
+            {contentSnippet ? contentSnippet.split('\n').map(para => <p>{para}</p>) : null}
+          </div>
+          {errorMessage}
         </div>
-        {errorMessage}
         {state.itemPreview.showInSplitScreen ? (
           <div className={classes.previewActions}>
             <div className={classes.actionIconContainer} onClick={() => window.open(link)}>

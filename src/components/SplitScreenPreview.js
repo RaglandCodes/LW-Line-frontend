@@ -10,18 +10,17 @@ import { createUseStyles } from 'react-jss';
 import { colours } from '../styles';
 
 const useStyles = createUseStyles({
-  SplitScreenPreview: {
-    height: '100%',
-
+  SplitScreenPreview: orientation => ({
     overflowY: 'scroll',
-    //gridArea: `1/3/4/4`,
-    backgroundColor: colours.background
-  }
+    backgroundColor: colours.background,
+    gridRowStart: 1,
+    gridRowEnd: orientation === 'potrait' ? 2 : 3,
+  }),
 });
 
 function SplitScreenPreview(props) {
   let { state, dispatch } = React.useContext(Context);
-  const classes = useStyles();
+  const classes = useStyles(state.orientation);
   useEffect(() => {
     return () => {
       dispatch({ type: 'setPreview', payload: { type: '', id: '' } });

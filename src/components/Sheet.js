@@ -15,14 +15,11 @@ const useStyles = createUseStyles({
   Sheet: state => ({
     backgroundColor: colours.background,
     overflow: 'scroll',
-
     gridColumnStart: state.orientation === 'potrait' ? 1 : 2,
     gridColumnEnd: state.containsPreviewableContent && state.itemPreview.showInSplitScreen ? 3 : 4,
     gridRowStart: 1,
-    gridRowEnd: state.orientation === 'potrait' ? 2 : 3
-
-    //padding: '0 10px'
-  })
+    gridRowEnd: state.orientation === 'potrait' ? 2 : 3,
+  }),
 });
 
 function Sheet(props) {
