@@ -1,5 +1,5 @@
 //React
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Context } from '../Context';
 import { useHistory } from 'react-router-dom';
 
@@ -16,14 +16,24 @@ WebFont.load({
 
 const useStyles = createUseStyles({
   ArticleBox: {
-    borderBottom: '1px solid #455A64',
+    borderBottomWidth: isActive => (isActive ? 2 : 1),
+    borderBottomStyle: 'solid',
+    borderBottomColor: isActive => (isActive ? colours.blue900 : '#455A64'),
     backgroundColor: colours.surface,
-    //width: '95%',
+    boxSizing: 'border-box',
     padding: {
       top: 6,
       bottom: 6,
       left: 8,
       right: 8,
+    },
+    '&:hover': {
+      borderBottom: `2px solid ${colours.blue900}`,
+      paddingBottom: 5, // prevenet jumping around caused by increased border-width,
+    },
+    '&:hover $title': {
+      //  color: colours.blue900,
+      textDecoration: 'underline',
     },
     display: 'flex',
     flexDirection: 'column',
@@ -33,7 +43,12 @@ const useStyles = createUseStyles({
     // textOverflow: 'ellipsis'
     // whiteSpace: 'nowrap'
   },
-  title: { fontFamily: fonts.primary, fontSize: 15, padding: { top: 3 } },
+  title: {
+    fontFamily: fonts.primary,
+    fontSize: 15,
+    padding: { top: 3 },
+    color: isActive => (isActive ? colours.blue900 : '#000'),
+  },
   source: {
     fontFamily: fonts.secondary,
     fontSize: 12,
@@ -49,7 +64,10 @@ const useStyles = createUseStyles({
 });
 function ArticleBox(item) {
   let { state, dispatch } = React.useContext(Context);
-  const classes = useStyles();
+  const [isActive, setIsActive] = useState(false);
+
+  const classes = useStyles(isActive);
+
   let history = useHistory();
 
   function trimmedMetaDescription(metaDescription) {
@@ -62,6 +80,15 @@ function ArticleBox(item) {
     }
     return metaDescription.slice(0, metaDescMaxLen) + '...';
   }
+
+  useEffect(() => {
+    if (state.itemPreview.currentPreview.id === item.id) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
+  }, [state.itemPreview.currentPreview.id, item.id]);
+
   return (
     <div
       className={classes.ArticleBox}
