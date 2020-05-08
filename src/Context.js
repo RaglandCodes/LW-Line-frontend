@@ -6,7 +6,7 @@ function appReducer(state, action) {
     case 'setFeed': {
       return {
         ...state,
-        feedItems: [...action.payload]
+        feedItems: [...action.payload],
       };
     }
 
@@ -14,14 +14,14 @@ function appReducer(state, action) {
       return {
         ...state,
         currentFeed: {
-          ...action.payload
-        }
+          ...action.payload,
+        },
       };
     }
     case 'appendFeed': {
       return {
         ...state,
-        feedItems: [...state.feedItems, ...action.payload]
+        feedItems: [...state.feedItems, ...action.payload],
       };
     }
 
@@ -30,8 +30,8 @@ function appReducer(state, action) {
         ...state,
         currentFeed: {
           ...state.currentFeed,
-          items: [...state.currentFeed.items, ...action.payload]
-        }
+          items: [...state.currentFeed.items, ...action.payload],
+        },
       };
     }
     case 'setPreview': {
@@ -39,28 +39,28 @@ function appReducer(state, action) {
         ...state,
         itemPreview: {
           ...state.itemPreview,
-          currentPreview: { ...action.payload }
-        }
+          currentPreview: { ...action.payload },
+        },
       };
     }
 
-    case 'setOrientation': {
-      return {
-        ...state,
-        orientation: action.payload
-      };
-    }
-    case 'setInnerHeight': {
-      return {
-        ...state,
-        recentHeigtJank: Math.abs(state.innerHeight - action.payload) > 111, // used along with inputFocused to guess if mobile keyboard was opened
-        innerHeight: action.payload
-      };
-    }
+    // case 'setOrientation': {
+    //   return {
+    //     ...state,
+    //     orientation: action.payload,
+    //   };
+    // }
+    // case 'setInnerHeight': {
+    //   return {
+    //     ...state,
+    //     recentHeigtJank: Math.abs(state.innerHeight - action.payload) > 111, // used along with inputFocused to guess if mobile keyboard was opened
+    //     innerHeight: action.payload,
+    //   };
+    // }
     case 'setAfter': {
       return {
         ...state,
-        after: action.payload
+        after: action.payload,
       };
     }
 
@@ -69,8 +69,8 @@ function appReducer(state, action) {
         ...state,
         currentFeed: {
           ...state.currentFeed,
-          after: action.payload
-        }
+          after: action.payload,
+        },
       };
     }
     case 'appendSubscription': {
@@ -79,12 +79,13 @@ function appReducer(state, action) {
         feedItems: [],
         currentFeed: {
           ...state.currentFeed,
-          items: []
+          items: [],
           // Remove items from feed when subscriptions chage to trigger fetch to get items for the new subscriptions
         },
-        subscriptions: [...state.subscriptions, action.payload]
+        subscriptions: [...state.subscriptions, action.payload],
       };
     }
+
     case 'removeSubscription': {
       let oldSubscriptions = state.subscriptions;
       oldSubscriptions.splice(oldSubscriptions.indexOf(action.payload), 1);
@@ -93,10 +94,16 @@ function appReducer(state, action) {
         feedItems: [],
         currentFeed: {
           ...state.currentFeed,
-          items: []
+          items: [],
           // Remove items from feed when subscriptions chage to trigger fetch to get items for the new subscriptions
         },
-        subscriptions: [...oldSubscriptions]
+        subscriptions: [...oldSubscriptions],
+      };
+    }
+    case 'appendMutePhrase': {
+      return {
+        ...state,
+        mutePhrases: [...state.mutePhrases, ...action.payload],
       };
     }
     case 'setChosenTopics': {
@@ -105,13 +112,13 @@ function appReducer(state, action) {
     case 'change_page': {
       return {
         ...state,
-        currentPage: action.payload
+        currentPage: action.payload,
       };
     }
     case 'toggleTheme': {
       return {
         ...state,
-        theme: state.theme === 'light' ? 'dark' : 'light'
+        theme: state.theme === 'light' ? 'dark' : 'light',
       };
     }
     case 'toggleShowPreview': {
@@ -119,8 +126,8 @@ function appReducer(state, action) {
         ...state,
         itemPreview: {
           ...state.itemPreview,
-          openOnClick: !state.itemPreview.openOnClick
-        }
+          openOnClick: !state.itemPreview.openOnClick,
+        },
       };
     }
     case 'toggleSplitScreen': {
@@ -128,22 +135,22 @@ function appReducer(state, action) {
         ...state,
         itemPreview: {
           ...state.itemPreview,
-          showInSplitScreen: !state.itemPreview.showInSplitScreen
-        }
+          showInSplitScreen: !state.itemPreview.showInSplitScreen,
+        },
       };
     }
     case 'addCustomFeed': {
       return {
         ...state,
-        customFeeds: [...state.customFeeds, action.payload]
+        customFeeds: [...state.customFeeds, action.payload],
       };
     }
-    case 'setInputFocused': {
-      return {
-        ...state,
-        inputFocused: action.payload
-      };
-    }
+    // case 'setInputFocused': {
+    //   return {
+    //     ...state,
+    //     inputFocused: action.payload,
+    //   };
+    // }
     // case 'togglePreview': {
     //   return {
     //     ...state,
@@ -154,6 +161,7 @@ function appReducer(state, action) {
     //   };
     // }
     default: {
+      console.log(`${action.type} <== unknown action.type in Context`);
       return state;
     }
   }
@@ -168,12 +176,12 @@ function ContextProvider(props) {
     fontSize: 'medium',
     subscriptions: [],
     feedItems: [],
-    orientation: 'potrait',
+    //orientation: 'potrait',
     currentFeed: {
       name: '',
-      items: []
+      items: [],
     },
-    inputFocused: false, // when an inputFocused  && recentHeigtJank, don't show the navigation menu.
+    //inputFocused: false, // when an inputFocused  && recentHeigtJank, don't show the navigation menu.
     // That's to try to prevent ugly vertical navigation when typing on phones with the on screen keyboard.
     mutePhrases: [],
     chosenTopics: [],
@@ -182,10 +190,10 @@ function ContextProvider(props) {
       showInSplitScreen: true,
       currentPreview: {
         type: '', // 'preview' | 'fullSite'
-        id: '' // item id | URL
-      }
+        id: '', // item id | URL
+      },
     },
-    customFeeds: [] // [{name, link, items}]
+    customFeeds: [], // [{name, link, items}]
   });
 
   useEffect(() => {
@@ -205,6 +213,10 @@ function ContextProvider(props) {
   useEffect(() => {
     localStorage.setItem('showPreview', state.itemPreview.openOnClick);
   }, [state.itemPreview.openOnClick]);
+
+  useEffect(() => {
+    localStorage.setItem('mutePhrases', JSON.stringify(state.mutePhrases));
+  }, [state.mutePhrases]);
 
   useEffect(() => {
     localStorage.setItem('subscriptions', state.subscriptions.join('AnNdDd'));

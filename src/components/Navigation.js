@@ -1,6 +1,7 @@
 //React
 import React, { useEffect, useState } from 'react';
 import { Context } from '../Context';
+import { DeviceContext } from '../Context/DeviceContext';
 import { useHistory } from 'react-router-dom';
 
 //Styles
@@ -15,15 +16,15 @@ import {
   SettingsApplicationsOutlined,
   Home,
   HomeOutlined,
-  Share
+  Share,
 } from '@material-ui/icons';
 import { colours, fonts } from '../styles';
 
 import WebFont from 'webfontloader';
 WebFont.load({
   google: {
-    families: [fonts.secondary]
-  }
+    families: [fonts.secondary],
+  },
 });
 
 const useStyles = createUseStyles({
@@ -44,9 +45,9 @@ const useStyles = createUseStyles({
     alignItems: 'center',
     zIndex: 2,
     gridColumnStart: 1,
-    gridColumnEnd: state.orientation === 'landscape' ? 2 : 4,
+    gridColumnEnd: state.orientation === 'landscape' ? 2 : 'preview-end',
     gridRowStart: state.orientation === 'landscape' ? 1 : 2,
-    gridRowEnd: 3
+    gridRowEnd: 3,
   }),
   // '@keyframes fadeIn': {
   //   from: { opacity: 1 },
@@ -64,7 +65,7 @@ const useStyles = createUseStyles({
     justifyContent: 'center',
     //flexDirection: state.orientation === 'potrait' ? 'column' : 'row'
     flexDirection: 'column',
-    color: '#263238'
+    color: '#263238',
   }),
 
   navIconActive: { color: '#1A237E' },
@@ -72,28 +73,30 @@ const useStyles = createUseStyles({
     fontFamily: fonts.secondary,
     fontSize: 15,
     display: 'block',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   navLabelActive: {
     fontFamily: fonts.secondary,
     fontSize: 16,
     display: 'block',
-    color: '#1A237E'
-  }
+    color: '#1A237E',
+  },
 });
 
 function Navigation(props) {
   let { state, dispatch } = React.useContext(Context);
+  let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
   const history = useHistory();
-  const classes = useStyles(state);
+  const classes = useStyles({ ...state, ...deviceState });
   const [showPreviewNavigation, setshowPreviewNavigation] = useState(false);
+
   useEffect(() => {
     if (props.fromPreviewItem) {
       setshowPreviewNavigation(true);
     } else {
       setshowPreviewNavigation(false);
     }
-  }, [state.orientation]);
+  }, [deviceState.orientation]);
 
   useEffect(() => {
     console.log(`${showPreviewNavigation} <= showPreviewNavigation`);

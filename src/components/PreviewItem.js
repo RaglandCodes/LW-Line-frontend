@@ -1,6 +1,7 @@
 //React
 import React, { useState, useEffect } from 'react';
 import { Context } from '../Context';
+import { DeviceContext } from '../Context/DeviceContext';
 import { useParams } from 'react-router-dom';
 
 //utils
@@ -45,12 +46,15 @@ const useStyles = createUseStyles({
   Preview: state => ({
     overflow: 'scroll',
 
-    gridColumnStart: getGridColumStart(state.orientation, state.itemPreview.showInSplitScreen),
-    gridColumnEnd: 4,
-    // gridRowStart: 1,
-    // gridRowEnd: state.orientation === 'potrait' ? 2 : 3,
+    //gridColumnStart: getGridColumStart(state.orientation, state.itemPreview.showInSplitScreen),
+    //gridColumnStart: 'preview-start',
+    gridColumnStart: 'nav-end', // this may not be good
+    gridColumnEnd: 'preview-end',
+    gridRowStart: 1,
+    gridRowEnd: 2,
 
     height: '100%',
+    //width: '100%',
 
     display: 'flex',
     flexDirection: 'column',
@@ -99,7 +103,9 @@ const useStyles = createUseStyles({
 
 function PreviewItem() {
   let { state, dispatch } = React.useContext(Context);
-  const classes = useStyles(state);
+  let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
+
+  const classes = useStyles({ ...state, ...deviceState });
   let { id } = useParams();
 
   if (state.itemPreview.showInSplitScreen) {

@@ -1,18 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ContextProvider } from './Context';
+import { DeviceContextProvider } from './Context/DeviceContext.js';
 import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
 
-// import './index.css';
 import App from './App';
 
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <ContextProvider>
-    <App style={{ backgroundColor: 'yellow' }} />
+    <DeviceContextProvider>
+      <App style={{ backgroundColor: 'yellow' }} />
+    </DeviceContextProvider>
   </ContextProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

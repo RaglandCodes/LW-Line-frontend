@@ -1,6 +1,7 @@
 //React
 import React, { useEffect, useState } from 'react';
 import { Context } from '../Context';
+import { DeviceContext } from '../Context/DeviceContext';
 import { useHistory } from 'react-router-dom';
 
 //Components
@@ -16,15 +17,17 @@ import { button } from '../styles';
 const useStyles = createUseStyles({
   doneButton: {
     ...button,
-    width: '100%'
+    width: '100%',
   },
   welcomeMessage: {
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 function Home(props) {
   let { state, dispatch } = React.useContext(Context);
+  let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
+
   let [showFeed, setShowFeed] = useState(false);
   let [showSettings, setShowSettings] = useState(false);
   const classes = useStyles();
@@ -33,7 +36,7 @@ function Home(props) {
     if (showFeed && state.subscriptions.length && state.currentFeed.name !== 'Feed') {
       dispatch({
         type: 'setCurrentFeed',
-        payload: { name: 'Feed', items: [] }
+        payload: { name: 'Feed', items: [] },
       });
     }
   }, [showFeed, state.subscriptions, state.currentFeed.name]);
@@ -43,9 +46,9 @@ function Home(props) {
       setShowFeed(true);
     }
 
-    if (state.innerHeight && (props.newUser || state.subscriptions.length === 0)) {
+    if (deviceState.innerHeight && (props.newUser || state.subscriptions.length === 0)) {
       /*
-        This is to prevent the jarring effect of the settings usually shown to new users
+        This is to prevent the jarring effect of the settings (usually shown to new users)
         being shown to returning users for a few moments
 
         The understanding is that if state.innerHeight is not undefined, 
@@ -57,9 +60,7 @@ function Home(props) {
     } else {
       setShowSettings(false);
     }
-    console.log(`${state.innerHeight} <== state.innerHeight`);
-    console.log(`${props.newUser} <== props.newUser`);
-  }, [props.newUser, state.innerHeight]);
+  }, [props.newUser, deviceState.innerHeight]);
 
   // TODO remove multiple complex ternary operators
   return showFeed ? (

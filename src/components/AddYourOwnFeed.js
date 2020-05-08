@@ -1,6 +1,7 @@
 //React
 import React, { useState, useEffect } from 'react';
 import { Context } from '../Context';
+import { DeviceContext } from '../Context/DeviceContext';
 
 //Components
 import SourceBox from './SourceBox';
@@ -11,7 +12,7 @@ import {
   settingsExplanation,
   input,
   inputSubmitButton,
-  header3
+  header3,
 } from '../styles';
 import { createUseStyles } from 'react-jss';
 
@@ -19,34 +20,36 @@ import { dataFetch } from '../modules/dataFetch';
 
 const useStyles = createUseStyles({
   settingContainer: {
-    ...settingContainer
+    ...settingContainer,
   },
   settingsExplanation: {
-    ...settingsExplanation
+    ...settingsExplanation,
   },
   message: {
-    ...settingsExplanation
+    ...settingsExplanation,
   },
   header3: {
-    ...header3
+    ...header3,
   },
   form: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   inputField: {
     flexGrow: 1,
-    ...input
+    ...input,
   },
   inputButtonWrap: {
-    display: 'flex'
+    display: 'flex',
   },
   inputSubmitButton: {
-    ...inputSubmitButton
-  }
+    ...inputSubmitButton,
+  },
 });
 
 function AddYourOwnFeed(props) {
   let { state, dispatch } = React.useContext(Context);
+  let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
+
   const classes = useStyles();
   const [feedLinkInput, setFeedLinkInput] = useState('');
   const [message, setMessage] = useState('');
@@ -103,8 +106,8 @@ function AddYourOwnFeed(props) {
           <input
             type="text"
             id="feedUrl"
-            onFocus={() => dispatch({ type: 'setInputFocused', payload: true })}
-            onBlur={() => dispatch({ type: 'setInputFocused', payload: false })}
+            onFocus={() => deviceDispatch({ type: 'setInputFocused', payload: true })}
+            onBlur={() => deviceDispatch({ type: 'setInputFocused', payload: false })}
             className={classes.inputField}
             onChange={e => setFeedLinkInput(e.target.value)}
           />

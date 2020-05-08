@@ -16,30 +16,30 @@ const SourceTopicStyles = {
   padding: 4,
   margin: 3,
   backgroundColor: colours.surface,
-  fontFamily: fonts.primary,
-  fontSize: 15
+  fontFamily: fonts.secondary,
+  fontSize: 16,
 };
 const useStyles = createUseStyles({
   ChooseSources: { overflow: 'auto' },
   SourceTopic: {
-    ...SourceTopicStyles
+    ...SourceTopicStyles,
   },
   chosenSourceTopic: {
     ...SourceTopicStyles,
     backgroundColor: '#1A237E',
-    color: 'white'
+    color: 'white',
   },
   header4: {
-    ...header4
+    ...header4,
   },
   showMoreBtn: {
     ...button,
     color: 'black',
-    float: 'right'
+    float: 'right',
   },
   settingContainer: {
-    ...settingContainer
-  }
+    ...settingContainer,
+  },
 });
 
 function ChooseSources() {
@@ -57,7 +57,7 @@ function ChooseSources() {
 
     dispatch({
       type: 'setChosenTopics',
-      payload: topics.filter(topic => topic.chosen).map(topic => topic.topic)
+      payload: topics.filter(topic => topic.chosen).map(topic => topic.topic),
     });
   };
 
@@ -68,8 +68,8 @@ function ChooseSources() {
         setTopics(
           topics.map(topic => ({
             topic: topic,
-            chosen: state.chosenTopics.includes(topic)
-          }))
+            chosen: state.chosenTopics.includes(topic),
+          })),
         );
       })
       .catch(sourceTopicsDataFetchError => {

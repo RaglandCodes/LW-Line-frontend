@@ -7,21 +7,21 @@ const colours = {
   //surface: '#ECEFF1'
   surface: 'white',
   surface2: 'white',
-  dark: '#37474F'
+  dark: '#37474F',
 };
 
 const fonts = {
   //primary: 'PT Serif',
   primary: 'Merriweather',
-  secondary: 'Lato'
+  secondary: 'Lato',
 };
 const header1 = {
   fontSize: 29,
   fontFamily: fonts.primary,
   fontWeight: 400,
   margin: {
-    top: 18
-  }
+    top: 18,
+  },
 };
 
 const header2 = {
@@ -29,14 +29,14 @@ const header2 = {
   fontFamily: fonts.primary,
   fontWeight: 400,
   margin: {
-    top: 18
-  }
+    top: 18,
+  },
 };
 
 const header3 = {
   fontSize: 20,
   fontFamily: fonts.primary,
-  fontWeight: 300
+  fontWeight: 300,
   // margin: {
   //   top: 11
   // }
@@ -47,12 +47,12 @@ const header4 = {
   fontFamily: fonts.primary,
   fontWeight: 300,
   margin: {
-    top: 11
-  }
+    top: 11,
+  },
 };
 
 const box = {
-  borderBottom: '1px solid #455A64'
+  borderBottom: '1px solid #455A64',
   //backgroundColor: '#F5F5F5'
 };
 
@@ -65,13 +65,13 @@ const button = {
   fontSize: 14,
   backgroundColor: '#37474F',
   '&:disabled': {
-    backgroundColor: '#78909C'
-  }
+    backgroundColor: '#78909C',
+  },
 };
 
 const settingContainer = {
   margin: {
-    top: 13
+    top: 13,
   },
   borderBottom: '1px solid #B0BEC5',
   //backgroundColor: '#FAFAFA',
@@ -79,15 +79,15 @@ const settingContainer = {
     top: 6,
     bottom: 6,
     left: 0,
-    right: 0
-  }
+    right: 0,
+  },
 };
 
 const settingsExplanation = {
   fontFamily: fonts.primary,
   fontSize: 15,
 
-  fontWeight: 300
+  fontWeight: 300,
   //...padded
 };
 const input = {
@@ -98,8 +98,8 @@ const input = {
   border: `1px solid ${colours.dark}`,
   '&:focus': {
     outline: 'none',
-    border: `2px solid ${colours.dark}`
-  }
+    border: `2px solid ${colours.dark}`,
+  },
 };
 const inputSubmitButton = {
   borderRadius: '0 4px 4px 0 ',
@@ -108,8 +108,11 @@ const inputSubmitButton = {
   fontSize: 14,
   margin: 0,
   backgroundColor: colours.dark,
-  color: 'white'
+  color: 'white',
 };
+
+const navigationWidth = 60;
+const draggerWidth = 17;
 
 module.exports = {
   colours,
@@ -123,5 +126,7 @@ module.exports = {
   settingContainer,
   settingsExplanation,
   input,
-  inputSubmitButton
+  inputSubmitButton,
+  navigationWidth,
+  draggerWidth,
 };

@@ -1,6 +1,7 @@
 //React
 import React, { useState } from 'react';
 import { Context } from '../Context';
+import { DeviceContext } from '../Context/DeviceContext';
 
 //utils
 import { dataFetch } from '../modules/dataFetch';
@@ -11,6 +12,7 @@ import Sheet from './Sheet';
 import Paginator from './Paginator';
 import ChooseSources from './ChooseSources';
 import AddYourOwnFeed from './AddYourOwnFeed';
+import MutePhraseChips from './Settings/MutePhraseChips/MutePhraseChips';
 
 //Styles
 import { createUseStyles } from 'react-jss';
@@ -106,6 +108,7 @@ const useStyles = createUseStyles({
 
 function Settings() {
   let { state, dispatch } = React.useContext(Context);
+  let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
   const classes = useStyles(state);
 
   let [sourceSearchResults, setSourceSearchResults] = useState([]);
@@ -138,6 +141,8 @@ function Settings() {
 
   let addNewMutePhrase = e => {
     e.preventDefault();
+    dispatch({ type: 'appendMutePhrase', payload: [muteInput] });
+    setMuteInput('');
   };
 
   return (
@@ -156,8 +161,8 @@ function Settings() {
                 id="searchFeeds"
                 className={classes.inputField}
                 onChange={e => setsourceSearchInput(e.target.value)}
-                onFocus={() => dispatch({ type: 'setInputFocused', payload: true })}
-                onBlur={() => dispatch({ type: 'setInputFocused', payload: false })}
+                onFocus={() => deviceDispatch({ type: 'setInputFocused', payload: true })}
+                onBlur={() => deviceDispatch({ type: 'setInputFocused', payload: false })}
               />
               <input
                 type="submit"
@@ -191,8 +196,8 @@ function Settings() {
                 id="mutePhrases"
                 className={classes.inputField}
                 onChange={e => setMuteInput(e.target.value)}
-                onFocus={() => dispatch({ type: 'setInputFocused', payload: true })}
-                onBlur={() => dispatch({ type: 'setInputFocused', payload: false })}
+                onFocus={() => deviceDispatch({ type: 'setInputFocused', payload: true })}
+                onBlur={() => deviceDispatch({ type: 'setInputFocused', payload: false })}
               />
               <input type="submit" value="Mute" className={classes.inputSubmitButton} />
             </div>
@@ -202,6 +207,7 @@ function Settings() {
             You will not be shown articles containing those phrases. (This setting is still in{' '}
             <a href="https://github.com/raglandcodes/lw-line-frontend">development</a>)
           </p>
+          <MutePhraseChips />
         </div>
         {/* <hr /> */}
         <div className={classes.header2}>Display</div>

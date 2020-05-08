@@ -1,6 +1,7 @@
 //React
 import React, { useEffect, useState } from 'react';
 import { Context } from './Context';
+import { DeviceContext } from './Context/DeviceContext';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 //Components
@@ -11,23 +12,38 @@ import PreviewItem from './components/PreviewItem';
 
 //Styles
 import { createUseStyles } from 'react-jss';
+import { navigationWidth, draggerWidth } from './styles';
 
 const useStyles = createUseStyles({
-  App: state => ({
-    display: 'grid',
-    height: state.innerHeight,
-    gridTemplateColumns:
-      state.inputFocused && state.recentHeigtJank
-        ? '[nav-start] 0px [nav-end] 1fr 1fr'
-        : '[nav-start] 60px [nav-end] 1fr 1fr',
-    gridTemplateRows: 'auto 50px',
-  }),
+  App: state => {
+    let navWidth = `${navigationWidth}px`;
+    if ((state.inputFocused && state.recentHeigtJank) || state.orientation === 'potrait') {
+      navWidth = '0';
+    }
+
+    return {
+      display: 'grid',
+      height: state.innerHeight,
+      gridTemplateColumns: `[nav-start] ${navWidth} [nav-end] 1fr [dragger-start] 17px [preview-start] 1fr [preview-end]`,
+
+      // state.inputFocused && state.recentHeigtJank
+      //   ? '[nav-start] 0px [nav-end] 1fr [dragger-start] 17px [preview-start] 1fr [preview-end]'
+      //   : `[nav-start] ${
+      //       state.orientation === 'potrait' ? '0' : '60px'
+      //     } [nav-end] 1fr [dragger-start] 17px [preview-start] 1fr [preview-end]`,
+
+      gridTemplateRows: `[screen-start] auto [nav-start] ${
+        state.orientation === 'potrait' ? '50px' : '0'
+      } [nav-end]`,
+    };
+  },
 });
 
 function App() {
   let { state, dispatch } = React.useContext(Context);
+  let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
   let [newUser, setNewUser] = useState(true);
-  const classes = useStyles(state);
+  const classes = useStyles({ ...state, ...deviceState });
 
   useEffect(() => {
     // Check if user is using for the first time
@@ -45,6 +61,11 @@ function App() {
           dispatch({ type: 'appendSubscription', payload: subscription });
         }
       });
+
+      let mutePhrases = JSON.parse(localStorage.getItem('mutePhrases'));
+      if (mutePhrases.length) {
+        dispatch({ type: 'appendMutePhrase', payload: mutePhrases });
+      }
 
       // * display preferences *
       if (localStorage.getItem('showPreview') === 'false') {
@@ -67,25 +88,65 @@ function App() {
       }
     }
 
-    dispatch({
+    // dispatch({
+    //   type: 'setOrientation',
+    //   payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait',
+    // });
+
+    // dispatch({
+    //   type: 'setInnerHeight',
+    //   payload: window.innerHeight,
+    // });
+
+    deviceDispatch({
       type: 'setOrientation',
       payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait',
     });
 
-    dispatch({
+    deviceDispatch({
       type: 'setInnerHeight',
       payload: window.innerHeight,
     });
 
-    window.addEventListener('resize', () => {
-      dispatch({
-        type: 'setOrientation',
-        payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait',
-      });
+    deviceDispatch({
+      type: 'setInnerWidth',
+      payload: window.innerWidth,
+    });
 
-      dispatch({
+    // deviceDispatch({
+    //   type: 'setFeedWidth',
+    //   payload: (window.innerWidth - navigationWidth) / 2 - draggerWidth,
+    // });
+
+    // deviceDispatch({
+    //   type: 'setPreviewWidth',
+    //   payload: (window.innerWidth - navigationWidth) / 2,
+    // });
+
+    window.addEventListener('resize', () => {
+      // dispatch({
+      //   type: 'setOrientation',
+      //   payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait',
+      // });
+
+      // dispatch({
+      //   type: 'setInnerHeight',
+      //   payload: window.innerHeight,
+      // });
+
+      deviceDispatch({
         type: 'setInnerHeight',
         payload: window.innerHeight,
+      });
+
+      deviceDispatch({
+        type: 'setInnerWidth',
+        payload: window.innerWidth,
+      });
+
+      deviceDispatch({
+        type: 'setOrientation',
+        payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait',
       });
     });
   }, []);
