@@ -1,5 +1,5 @@
 //React
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Context } from '../Context';
 import { DeviceContext } from '../Context/DeviceContext';
 
@@ -19,17 +19,8 @@ const useStyles = createUseStyles({
     gridColumnEnd: 'preview-end',
     gridRowEnd: orientation === 'potrait' ? 2 : 3,
 
-    display: 'flex',
+    // display: 'flex',
   }),
-
-  dragger: {
-    width: 15,
-    //height: 22,
-    backgroundColor: 'cyan',
-  },
-  previewContent: {
-    outline: '1px solid red',
-  },
 });
 
 function SplitScreenPreview(props) {
@@ -37,6 +28,16 @@ function SplitScreenPreview(props) {
   let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
 
   const classes = useStyles(deviceState.orientation);
+  const previewElement = useRef(null);
+
+  useEffect(() => {
+    if (!deviceState.previewWidth) {
+      deviceDispatch({
+        type: 'setPreviewWidth',
+        payload: previewElement.current.offsetWidth,
+      });
+    }
+  }, [deviceState.previewWidth]);
 
   useEffect(() => {
     return () => {
@@ -46,15 +47,12 @@ function SplitScreenPreview(props) {
   }, []);
 
   return (
-    <div className={classes.SplitScreenPreview}>
-      {/* <div className={classes.dragger}></div> */}
-      <div className={classes.previewContent}>
-        {state.itemPreview.currentPreview.id === '' ? (
-          <p>Please choose an item to view it here</p>
-        ) : (
-          <PreviewItem />
-        )}
-      </div>
+    <div className={classes.SplitScreenPreview} ref={previewElement}>
+      {state.itemPreview.currentPreview.id === '' ? (
+        <p>Please choose an item to view it here</p>
+      ) : (
+        <PreviewItem />
+      )}
     </div>
   );
 }

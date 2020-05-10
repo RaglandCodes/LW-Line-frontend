@@ -1,6 +1,7 @@
 //React
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Context } from '../Context';
+import { DeviceContext } from '../Context/DeviceContext';
 
 //Components
 import Sheet from './Sheet';
@@ -19,7 +20,7 @@ const useStyles = createUseStyles({
     maring: 0,
     display: 'grid',
     gridTemplateColumns: `repeat(auto-fill, minmax(300px, 1fr))`,
-    gridGap: 4,
+    gridGap: 6,
   },
   showMoreButton: {
     ...button,
@@ -28,10 +29,13 @@ const useStyles = createUseStyles({
 
 function GeneralFeed(props) {
   let { state, dispatch } = React.useContext(Context);
+  let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
   const classes = useStyles();
 
   let [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const feedElement = useRef(null);
   const showMore = () => {
     console.log('show more clicked');
 
@@ -123,13 +127,21 @@ function GeneralFeed(props) {
     }
   }, [state.currentFeed.name]);
 
+  useEffect(() => {
+    if (!deviceState.feedWidth) {
+      deviceDispatch({
+        type: 'setFeedWidth',
+        payload: feedElement.current.offsetWidth,
+      });
+    }
+  }, [deviceState]);
   return (
     <Sheet page={state.currentFeed.name} containsPreviewableContent>
       {errorMessage ? (
         errorMessage
       ) : (
         <>
-          <div className={classes.Feed}>
+          <div className={classes.Feed} ref={feedElement}>
             {state.currentFeed.items.length === 0 ? (
               <>
                 Getting items for your feed

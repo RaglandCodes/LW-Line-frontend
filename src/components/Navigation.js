@@ -98,9 +98,6 @@ function Navigation(props) {
     }
   }, [deviceState.orientation]);
 
-  useEffect(() => {
-    console.log(`${showPreviewNavigation} <= showPreviewNavigation`);
-  }, [showPreviewNavigation]);
   return (
     <div className={classes.Navigation}>
       <div className={classes.navIconContainer} onClick={() => history.push('/')}>

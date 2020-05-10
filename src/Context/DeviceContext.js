@@ -43,6 +43,20 @@ function deviceReducer(deviceState, action) {
       };
     }
 
+    case 'setReisezerX': {
+      if (!deviceState.resizerX) {
+        return { ...deviceState, resizerX: action.payload };
+      }
+      let delta = action.payload - deviceState.resizerX;
+      console.log(`${delta} <== delta   == ${action.payload} - ${deviceState.resizerX}`);
+      return {
+        ...deviceState,
+        feedWidth: deviceState.feedWidth + delta,
+        previewWidth: deviceState.previewWidth - delta,
+        resizerX: action.payload,
+      };
+    }
+
     case 'setInputFocused': {
       return {
         ...deviceState,

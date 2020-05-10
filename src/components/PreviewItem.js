@@ -44,7 +44,7 @@ const getGridColumStart = (orientation, showInSplitScreen) => {
 };
 const useStyles = createUseStyles({
   Preview: state => ({
-    overflow: 'scroll',
+    //overflow: 'scroll',
 
     //gridColumnStart: getGridColumStart(state.orientation, state.itemPreview.showInSplitScreen),
     //gridColumnStart: 'preview-start',

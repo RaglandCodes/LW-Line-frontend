@@ -17,14 +17,22 @@ import { navigationWidth, draggerWidth } from './styles';
 const useStyles = createUseStyles({
   App: state => {
     let navWidth = `${navigationWidth}px`;
+    let feedWidth = '1fr';
+    let previewWidth = '1fr';
+
     if ((state.inputFocused && state.recentHeigtJank) || state.orientation === 'potrait') {
       navWidth = '0';
+    }
+
+    if (state.feedWidth && state.previewWidth) {
+      feedWidth = `${state.feedWidth}px`;
+      previewWidth = `${state.previewWidth}px`;
     }
 
     return {
       display: 'grid',
       height: state.innerHeight,
-      gridTemplateColumns: `[nav-start] ${navWidth} [nav-end] 1fr [dragger-start] 17px [preview-start] 1fr [preview-end]`,
+      gridTemplateColumns: `[nav-start] ${navWidth} [nav-end] ${feedWidth} [dragger-start] ${draggerWidth}px [preview-start] ${previewWidth} [preview-end]`,
 
       // state.inputFocused && state.recentHeigtJank
       //   ? '[nav-start] 0px [nav-end] 1fr [dragger-start] 17px [preview-start] 1fr [preview-end]'

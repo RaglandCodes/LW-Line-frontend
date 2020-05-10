@@ -1,5 +1,5 @@
 //React
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Context } from '../../Context';
 import { DeviceContext } from '../../Context/DeviceContext';
 
@@ -22,33 +22,27 @@ const useStyles = createUseStyles({
 });
 
 function Resizer(props) {
-  let { state, dispatch } = React.useContext(Context);
-  let { deviceState, deviceDispatch } = React.useContext(Context);
-  const [dragging, setDragging] = useState(false);
+  let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
   const classes = useStyles();
-
-  const handleMouseDown = e => {
-    setDragging(true);
-    console.dir(e);
-    console.log('^md e');
-  };
-
-  const handleMouseUp = () => {
-    setDragging(false);
-  };
+  const resizerElement = useRef(null);
 
   const handleMouseMove = e => {
-    console.log(`${e.clientX} <== e.clientX`);
+    deviceDispatch({
+      type: 'setReisezerX',
+      payload: e.clientX,
+    });
   };
 
-  return (
-    <div
-      className={classes.Resizer}
-      onMouseDown={e => handleMouseDown(e)}
-      onMouseUp={() => handleMouseUp()}
-      onMouseMove={e => handleMouseMove(e)}
-    ></div>
-  );
+  useEffect(() => {
+    resizerElement.current.addEventListener('mousedown', () => {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+      });
+    });
+  }, []);
+
+  return <div className={classes.Resizer} ref={resizerElement}></div>;
 }
 
 export default Resizer;

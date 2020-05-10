@@ -207,7 +207,7 @@ function Settings() {
             You will not be shown articles containing those phrases. (This setting is still in{' '}
             <a href="https://github.com/raglandcodes/lw-line-frontend">development</a>)
           </p>
-          <MutePhraseChips />
+          {/* <MutePhraseChips /> */}
         </div>
         {/* <hr /> */}
         <div className={classes.header2}>Display</div>
