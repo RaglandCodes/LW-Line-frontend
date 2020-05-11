@@ -103,7 +103,17 @@ function appReducer(state, action) {
     case 'appendMutePhrase': {
       return {
         ...state,
-        mutePhrases: [...state.mutePhrases, ...action.payload],
+        mutePhrases: [...new Set([...state.mutePhrases, ...action.payload])].filter(
+          phrase => phrase.length > 2,
+        ),
+      };
+
+      // have only unique phrases with length > 2
+    }
+    case 'removeMutePhrase': {
+      return {
+        ...state,
+        mutePhrases: state.mutePhrases.filter(phrase => phrase !== action.payload),
       };
     }
     case 'setChosenTopics': {
@@ -203,8 +213,7 @@ function ContextProvider(props) {
 
   useEffect(() => {
     localStorage.setItem('theme', state.theme);
-    localStorage.setItem('mutePhrases', state.mutePhrases.join('AnNdDd'));
-  }, [state.theme, state.mutePhrases]);
+  }, [state.theme]);
 
   useEffect(() => {
     localStorage.setItem('showInSplitScreen', state.itemPreview.showInSplitScreen);
