@@ -122,10 +122,10 @@ function Navigation(props) {
         </div>
       )}
 
-      <div className={classes.navIconContainer} onClick={() => history.push('/')}>
+      {/* <div className={classes.navIconContainer} onClick={() => history.push('/')}>
         <BookmarkOutlined className={classes.navIcon} />
         <span className={classes.navLabel}>Saved</span>
-      </div>
+      </div> */}
 
       {showPreviewNavigation ? (
         <div className={classes.navIconContainer} onClick={() => window.open(props.storyLink)}>

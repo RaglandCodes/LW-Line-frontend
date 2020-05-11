@@ -4,6 +4,7 @@ const colours = {
   blue: '#1565C0',
   blue900: '#0D47A1',
   background: '#f5f5f5',
+  background2: '#E0E0E0',
   //surface: '#ECEFF1'
   surface: 'white',
   surface2: 'white',
@@ -112,7 +113,7 @@ const inputSubmitButton = {
 };
 
 const navigationWidth = 60;
-const draggerWidth = 17;
+const draggerWidth = 11;
 
 module.exports = {
   colours,

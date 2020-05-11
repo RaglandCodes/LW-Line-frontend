@@ -15,12 +15,20 @@ import { createUseStyles } from 'react-jss';
 import { button } from '../styles';
 const useStyles = createUseStyles({
   Feed: {},
-  ArticleBoxGrid: {
-    padding: 0,
-    maring: 0,
-    display: 'grid',
-    gridTemplateColumns: `repeat(auto-fill, minmax(300px, 1fr))`,
-    gridGap: 6,
+  ArticleBoxGrid: styleProps => {
+    console.dir(styleProps);
+    console.log('^styleProps');
+    let gridColWidth = 300;
+    if (styleProps.feedWidth < 333) {
+      gridColWidth = styleProps.feedWidth - 16;
+    }
+    return {
+      padding: 0,
+      maring: 0,
+      display: 'grid',
+      gridTemplateColumns: `repeat(auto-fill, minmax(${gridColWidth}px, 1fr))`,
+      gridGap: 6,
+    };
   },
   showMoreButton: {
     ...button,
@@ -30,7 +38,7 @@ const useStyles = createUseStyles({
 function GeneralFeed(props) {
   let { state, dispatch } = React.useContext(Context);
   let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
-  const classes = useStyles();
+  const classes = useStyles({ feedWidth: deviceState.feedWidth });
 
   let [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);

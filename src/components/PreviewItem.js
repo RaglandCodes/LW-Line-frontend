@@ -182,10 +182,10 @@ function PreviewItem() {
               <Share />
               <span className={classes.actionLabel}>Share</span>
             </div>
-            <div className={classes.actionIconContainer}>
+            {/* <div className={classes.actionIconContainer}>
               <Bookmark />
               <span className={classes.actionLabel}>Save</span>
-            </div>
+            </div> */}
           </div>
         ) : null}
       </div>

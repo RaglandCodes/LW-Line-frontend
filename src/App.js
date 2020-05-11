@@ -24,7 +24,7 @@ const useStyles = createUseStyles({
       navWidth = '0';
     }
 
-    if (state.feedWidth && state.previewWidth) {
+    if (state.feedWidth && state.previewWidth && state.itemPreview.showInSplitScreen) {
       feedWidth = `${state.feedWidth}px`;
       previewWidth = `${state.previewWidth}px`;
     }

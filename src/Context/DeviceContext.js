@@ -4,6 +4,7 @@
 
 //React
 import React, { useReducer, useEffect } from 'react';
+import { Context } from '../Context';
 
 function deviceReducer(deviceState, action) {
   switch (action.type) {
@@ -18,6 +19,8 @@ function deviceReducer(deviceState, action) {
       return {
         ...deviceState,
         innerWidth: action.payload,
+        feedWidth: 0, // this makes the component send updated width
+        previewWidth: 0,
       };
     }
 
@@ -73,6 +76,8 @@ function deviceReducer(deviceState, action) {
 let DeviceContext = React.createContext();
 
 function DeviceContextProvider(props) {
+  let { state, dispatch } = React.useContext(Context);
+
   const [deviceState, deviceDispatch] = useReducer(deviceReducer, {
     orientation: 'potrait',
     inputFocused: false, // when an inputFocused  && recentHeigtJank, don't show the navigation menu.
@@ -84,6 +89,11 @@ function DeviceContextProvider(props) {
     console.log('⬆ Latest global deviceState');
   }, [deviceState]);
 
+  useEffect(() => {
+    deviceDispatch({ type: 'setFeedWidth', payload: 0 });
+
+    deviceDispatch({ type: 'setPreviewWidth', payload: 0 });
+  }, [state.itemPreview.showInSplitScreen]);
   return (
     <DeviceContext.Provider value={{ deviceState, deviceDispatch }}>
       {props.children}
