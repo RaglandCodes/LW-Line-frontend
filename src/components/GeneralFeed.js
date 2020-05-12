@@ -4,7 +4,7 @@ import { Context } from '../Context';
 import { DeviceContext } from '../Context/DeviceContext';
 
 //Components
-import Sheet from './Sheet';
+import Sheet from './Layout/Sheet';
 import ArticleBox from './ArticleBox';
 
 //utils

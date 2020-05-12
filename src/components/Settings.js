@@ -8,7 +8,7 @@ import { dataFetch } from '../modules/dataFetch';
 
 //Components
 import SourceBox from './SourceBox';
-import Sheet from './Sheet';
+import Sheet from './Layout/Sheet';
 import Paginator from './Paginator';
 import ChooseSources from './ChooseSources';
 import AddYourOwnFeed from './AddYourOwnFeed';

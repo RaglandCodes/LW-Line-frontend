@@ -49,9 +49,13 @@ const useStyles = createUseStyles({
     padding: { top: 3 },
     color: isActive => (isActive ? colours.blue900 : '#000'),
   },
-  source: {
+  sourceDateRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
     fontFamily: fonts.secondary,
     fontSize: 12,
+  },
+  source: {
     padding: { top: 2, bottom: 3 },
     color: '#424242',
   },
@@ -69,6 +73,72 @@ function ArticleBox(item) {
   const classes = useStyles(isActive);
 
   let history = useHistory();
+
+  function naturalTime(targetTime) {
+    const timeNow = new Date();
+    console.log(`${targetTime} <== targetTime`);
+    targetTime = new Date(targetTime);
+    let timeAdverb = 'ago';
+
+    let timeDiffereneInSeconds = Math.floor((targetTime - timeNow) / 1000);
+
+    // we need only magnitude sice we used the sign to calculate adverb
+    timeDiffereneInSeconds = Math.abs(timeDiffereneInSeconds);
+
+    if (timeDiffereneInSeconds === 1) {
+      return `a second ${timeAdverb}`;
+    }
+    if (timeDiffereneInSeconds < 60) {
+      return `${timeDiffereneInSeconds} seconds ${timeAdverb}`;
+    }
+
+    let timeDiferenceInMinutes = Math.floor(timeDiffereneInSeconds / 60);
+    if (timeDiferenceInMinutes === 1) {
+      return `a minute ${timeAdverb}`;
+    }
+
+    if (timeDiferenceInMinutes === 60) {
+      return `an hour ${timeAdverb}`;
+    }
+    if (timeDiferenceInMinutes < 60) {
+      return `${timeDiferenceInMinutes} minutes ${timeAdverb}`;
+    }
+
+    let timeDiferenceInHours = Math.floor(timeDiferenceInMinutes / 60);
+    let hoursWord = timeDiferenceInHours === 1 ? 'hour' : 'hours';
+
+    if (timeDiferenceInHours < 24) {
+      return `${timeDiferenceInHours} ${hoursWord} ${timeAdverb}`;
+    }
+
+    let timeDiferenceInDays = Math.floor(timeDiferenceInHours / 24);
+    let daysWord = timeDiferenceInDays === 1 ? 'day' : 'days';
+
+    let remainingHours = timeDiferenceInHours - timeDiferenceInDays * 24;
+
+    if (timeDiferenceInDays < 7) {
+      if (remainingHours === 0) {
+        return `${timeDiferenceInDays} ${daysWord} ${timeAdverb}`;
+      }
+
+      let remainingHoursWord = remainingHours === 1 ? 'hour' : 'hours';
+      return `${timeDiferenceInDays} ${daysWord}, ${remainingHours} ${remainingHoursWord} ${timeAdverb}`;
+    }
+
+    if (timeDiferenceInDays === 7) {
+      return `a week ${timeAdverb}`;
+    }
+
+    let timeDiferenceInWeeks = Math.floor(timeDiferenceInDays / 7);
+    let weeksWords = timeDiferenceInWeeks === 1 ? 'week' : 'weeks';
+
+    let remainingDays = timeDiferenceInDays - timeDiferenceInWeeks * 7;
+    if (remainingDays === 0) {
+      return `${timeDiferenceInWeeks} ${weeksWords} ${timeAdverb}`;
+    }
+    let remainingDaysWord = remainingDays === 1 ? 'day' : 'days';
+    return `${timeDiferenceInWeeks} ${weeksWords}, ${remainingDays} ${remainingDaysWord} ${timeAdverb}`;
+  }
 
   function trimmedMetaDescription(metaDescription) {
     const metaDescMaxLen = 150;
@@ -117,7 +187,10 @@ function ArticleBox(item) {
       }}
     >
       <div className={classes.title}>{item.title}</div>
-      <div className={classes.source}>{item.source}</div>
+      <div className={classes.sourceDateRow}>
+        <div className={classes.source}>{item.source}</div>
+        <div className={classes.source}>{naturalTime(item.date)}</div>
+      </div>
       <div className={classes.description}>{trimmedMetaDescription(item.metaDescription)}</div>
     </div>
   );

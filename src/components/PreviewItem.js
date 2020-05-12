@@ -178,7 +178,23 @@ function PreviewItem() {
               <OpenInNew />
               <span className={classes.actionLabel}>Read story</span>
             </div>
-            <div className={classes.actionIconContainer}>
+            <div
+              className={classes.actionIconContainer}
+              onClick={() => {
+                if (navigator.share) {
+                  navigator
+                    .share({
+                      title: title,
+                      text: metaDescription,
+                      url: link,
+                    })
+                    .then(() => console.log('Successful share'))
+                    .catch(error => console.log('Error sharing', error));
+                } else {
+                  console.log("can't use native share");
+                }
+              }}
+            >
               <Share />
               <span className={classes.actionLabel}>Share</span>
             </div>

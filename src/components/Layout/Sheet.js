@@ -1,17 +1,17 @@
 //React
 import React from 'react';
-import { Context } from '../Context';
-import { DeviceContext } from '../Context/DeviceContext';
+import { Context } from '../../Context';
+import { DeviceContext } from '../../Context/DeviceContext';
 
 //Components
-import Navigation from './Navigation';
-import SplitScreenPreview from './SplitScreenPreview';
-import TopBox from './TopBox';
-import Resizer from './Layout/Resizer';
+import Navigation from '../Navigation';
+import SplitScreenPreview from '../SplitScreenPreview';
+import TopBox from '../TopBox';
+import Resizer from './Resizer';
 
 //Styles
 import { createUseStyles } from 'react-jss';
-import { colours } from '../styles';
+import { colours } from '../../styles';
 
 const useStyles = createUseStyles({
   Sheet: state => ({
