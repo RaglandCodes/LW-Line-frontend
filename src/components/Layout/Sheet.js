@@ -4,7 +4,7 @@ import { Context } from '../../Context';
 import { DeviceContext } from '../../Context/DeviceContext';
 
 //Components
-import Navigation from '../Navigation';
+import Navigation from '../Navigation/Navigation';
 import SplitScreenPreview from '../SplitScreenPreview';
 import TopBox from '../TopBox';
 import Resizer from './Resizer';

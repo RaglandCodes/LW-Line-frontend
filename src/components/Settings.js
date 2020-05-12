@@ -211,7 +211,7 @@ function Settings() {
         </div>
         {/* <hr /> */}
         <div className={classes.header2}>Display</div>
-        <div className={classes.settingContainer}>
+        {/* <div className={classes.settingContainer}>
           <div className={classes.checkboxSettingWrap}>
             <label htmlFor="darkThemecb" className={classes.header3}>
               Dark Theme
@@ -230,7 +230,7 @@ function Settings() {
             <a href="https://github.com/RaglandCodes/LW-Line-frontend">fork this project</a> and
             make your own theme.
           </p>
-        </div>
+        </div> */}
         <div className={classes.settingContainer}>
           <div className={classes.checkboxSettingWrap}>
             <label htmlFor="show-preview-cb" className={classes.header3}>
@@ -283,7 +283,7 @@ function Settings() {
         <br />
         <br />
         <br />
-        <span className={classes.version}>Version 0.1.21</span>
+        <span className={classes.version}>Version 0.1.22</span>
       </div>
     </Sheet>
   );

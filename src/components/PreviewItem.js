@@ -8,10 +8,11 @@ import { useParams } from 'react-router-dom';
 import { dataFetch } from '../modules/dataFetch';
 
 //Components
-import Navigation from './Navigation';
+import Navigation from './Navigation/Navigation';
 
 //icons
-import { OpenInNew, Share, Bookmark } from '@material-ui/icons';
+import { ReactComponent as OpenInNew } from './Navigation/icons/launch.svg';
+import { ReactComponent as Share } from './Navigation/icons/share.svg';
 
 //Styles
 import { createUseStyles } from 'react-jss';
@@ -44,7 +45,7 @@ const getGridColumStart = (orientation, showInSplitScreen) => {
 };
 const useStyles = createUseStyles({
   Preview: state => ({
-    //overflow: 'scroll',
+    overflowY: 'scroll',
 
     //gridColumnStart: getGridColumStart(state.orientation, state.itemPreview.showInSplitScreen),
     //gridColumnStart: 'preview-start',

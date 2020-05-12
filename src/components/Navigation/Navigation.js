@@ -1,24 +1,21 @@
 //React
 import React, { useEffect, useState } from 'react';
-import { Context } from '../Context';
-import { DeviceContext } from '../Context/DeviceContext';
+import { Context } from '../../Context';
+import { DeviceContext } from '../../Context/DeviceContext';
 import { useHistory } from 'react-router-dom';
+
+//icons
+import { ReactComponent as Home } from './icons/home.svg';
+import { ReactComponent as HomeOutlined } from './icons/home-outlined.svg';
+import { ReactComponent as OpenInNew } from './icons/launch.svg';
+import { ReactComponent as SearchOutlined } from './icons/search.svg';
+import { ReactComponent as SettingsApplications } from './icons/settings.svg';
+import { ReactComponent as SettingsApplicationsOutlined } from './icons/settings-outlined.svg';
+import { ReactComponent as Share } from './icons/share.svg';
 
 //Styles
 import { createUseStyles } from 'react-jss';
-import {
-  Bookmark,
-  BookmarkOutlined,
-  Search,
-  OpenInNew,
-  SearchOutlined,
-  SettingsApplications,
-  SettingsApplicationsOutlined,
-  Home,
-  HomeOutlined,
-  Share,
-} from '@material-ui/icons';
-import { colours, fonts } from '../styles';
+import { colours, fonts } from '../../styles';
 
 import WebFont from 'webfontloader';
 WebFont.load({
@@ -29,14 +26,8 @@ WebFont.load({
 
 const useStyles = createUseStyles({
   Navigation: state => ({
-    //backgroundColor: '#263238',
-    //backgroundColor: '#ECEFF1',
     backgroundColor: colours.surface2,
     color: 'white',
-
-    // animation: '0.8s ease-in',
-    // animationName: state.inputFocused ? '$fadeIn' : '$fadeOut',
-    // animationFillMode: 'forwards',
 
     display: state.inputFocused && state.recentHeigtJank ? 'none' : 'flex',
     justifyContent: 'spaceEvenly',
@@ -49,14 +40,6 @@ const useStyles = createUseStyles({
     gridRowStart: state.orientation === 'landscape' ? 1 : 2,
     gridRowEnd: 3,
   }),
-  // '@keyframes fadeIn': {
-  //   from: { opacity: 1 },
-  //   to: { opacity: 0 }
-  // },
-  // '@keyframes fadeOut': {
-  //   from: { opacity: 0 },
-  //   to: { opacity: 1 }
-  // },
 
   navIconContainer: state => ({
     flexGrow: 1,
@@ -67,8 +50,8 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
     color: '#263238',
   }),
-
-  navIconActive: { color: '#1A237E' },
+  navIcon: { alignSelf: 'center', width: 30, height: 30 },
+  navIconActive: { fill: '#1A237E', alignSelf: 'center', width: 30, height: 30 },
   navLabel: {
     fontFamily: fonts.secondary,
     fontSize: 15,
