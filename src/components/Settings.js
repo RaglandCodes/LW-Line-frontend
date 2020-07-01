@@ -176,7 +176,7 @@ function Settings() {
             items={sourceSearchResults
               .filter(result => state.subscriptions.indexOf(result.feed) === -1)
               .map(result => (
-                <SourceBox name={result.feed} subscribed={false} key={result.feed} />
+                <SourceBox name={result.feed} subscribed={false} key={result.feed} custom={false} />
               ))}
             showMoreMessage="More feeds"
           />

@@ -84,10 +84,10 @@ function DeviceContextProvider(props) {
     // That's to try to prevent ugly vertical navigation when typing on phones with the on screen keyboard.
   });
 
-  useEffect(() => {
-    console.dir(deviceState);
-    console.log('⬆ Latest global deviceState');
-  }, [deviceState]);
+  // useEffect(() => {
+  //   console.dir(deviceState);
+  //   console.log('⬆ Latest global deviceState');
+  // }, [deviceState]);
 
   useEffect(() => {
     deviceDispatch({ type: 'setFeedWidth', payload: 0 });

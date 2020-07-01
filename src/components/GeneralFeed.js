@@ -16,8 +16,6 @@ import { button } from '../styles';
 const useStyles = createUseStyles({
   Feed: {},
   ArticleBoxGrid: styleProps => {
-    console.dir(styleProps);
-    console.log('^styleProps');
     let gridColWidth = 300;
     if (styleProps.feedWidth < 333) {
       gridColWidth = styleProps.feedWidth - 16;
@@ -99,7 +97,7 @@ function GeneralFeed(props) {
     } else if (state.currentFeed.name !== '' && !state.currentFeed.items.length) {
       setLoading(true);
 
-      // TODO
+      // TODO ??
       //Check if it is there in custom feed
       let feedInCustomFeed = state.customFeeds.filter(feed => feed.name === state.currentFeed.name);
 
@@ -108,7 +106,21 @@ function GeneralFeed(props) {
           type: 'appendCurrentFeed',
           payload: feedInCustomFeed[0].items,
         });
+        console.log('Found in custom feed.. return ??');
+        // set loading False ??? TODO
       }
+      if (state.customPreview.name === state.currentFeed.name) {
+        dispatch({
+          type: 'appendCurrentFeed',
+          payload: state.customPreview.items,
+        });
+        console.log('CC');
+        setLoading(false);
+        return;
+      }
+
+      console.log('FF');
+
       dataFetch('previewSource', { source: state.currentFeed.name })
         .then(jsonRes => {
           setLoading(false);

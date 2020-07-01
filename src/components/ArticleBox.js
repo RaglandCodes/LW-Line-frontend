@@ -75,8 +75,11 @@ function ArticleBox(item) {
   let history = useHistory();
 
   function naturalTime(targetTime) {
+    if (!targetTime) {
+      return '';
+    }
     const timeNow = new Date();
-    console.log(`${targetTime} <== targetTime`);
+
     targetTime = new Date(targetTime);
     let timeAdverb = 'ago';
 

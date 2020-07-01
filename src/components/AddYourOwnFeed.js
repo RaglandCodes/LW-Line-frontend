@@ -13,6 +13,7 @@ import {
   input,
   inputSubmitButton,
   header3,
+  header4,
 } from '../styles';
 import { createUseStyles } from 'react-jss';
 
@@ -30,6 +31,9 @@ const useStyles = createUseStyles({
   },
   header3: {
     ...header3,
+  },
+  header4: {
+    ...header4,
   },
   form: {
     flexGrow: 1,
@@ -54,7 +58,6 @@ function AddYourOwnFeed(props) {
   const [feedLinkInput, setFeedLinkInput] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [searchedFeed, setSearchedFeed] = useState();
 
   // Get the feed items, and updtate states.
   async function addNewFeed(e) {
@@ -68,7 +71,6 @@ function AddYourOwnFeed(props) {
       setMessage('Invalid feed link.');
       return;
     }
-    console.log(`${feedLinkInput} <== feedLinkInput`);
     setLoading(true);
     dataFetch('feedFromLink', { feedLink: feedLinkInput })
       .then(feedData => {
@@ -82,9 +84,14 @@ function AddYourOwnFeed(props) {
           return;
         }
         setMessage('');
-        console.dir(feedData);
-        console.log('^feedData');
-        setSearchedFeed(feedData);
+        dispatch({
+          type: 'setCustomPreview',
+          payload: {
+            name: feedData.title,
+            link: feedData.link,
+            items: feedData.items,
+          },
+        });
       })
       .catch(feedFromLinkError => {
         setLoading(false);
@@ -115,7 +122,23 @@ function AddYourOwnFeed(props) {
         </div>
         <p className={classes.message}>{message}</p>
         <div>
-          {searchedFeed ? <SourceBox name={searchedFeed.title} subscribed={false} /> : null}
+          {state.customPreview.items ? (
+            <SourceBox name={state.customPreview.name} subscribed={false} custom={true} />
+          ) : null}
+        </div>
+        <div className={classes.settingContainer}>
+          <div className={classes.header4}>
+            You're subscribed to {state.customFeeds.length} custom feed
+            {state.subscriptions.length === 1 ? '' : 's'}
+          </div>
+          {state.customFeeds.map(subscription => (
+            <SourceBox
+              name={subscription.name}
+              key={subscription.name}
+              subscribed={true}
+              custom={true}
+            />
+          ))}
         </div>
       </form>
     </div>

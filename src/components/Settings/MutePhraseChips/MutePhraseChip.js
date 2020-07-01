@@ -31,7 +31,7 @@ const useStyles = createUseStyles({
   cancelIcon: {
     margin: {
       left: 3,
-      top: 3,
+      top: 2,
     },
   },
   '@keyframes fadeIn': {
@@ -46,7 +46,6 @@ function MutePhraseChip({ mutePhrase }) {
   const chipElement = useRef(null);
   const removeMutePhrase = () => {
     let currentWidth = chipElement.current.offsetWidth - 6;
-    console.log('Will remove');
     let fadeOut = chipElement.current.animate([{ width: `${currentWidth}px` }, { width: '0' }], {
       duration: 333,
       fill: 'forwards',

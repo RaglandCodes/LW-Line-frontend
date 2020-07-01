@@ -10,71 +10,80 @@ import { box, button, colours, fonts } from '../styles';
 
 WebFont.load({
   google: {
-    families: [fonts.secondary]
-  }
+    families: [fonts.secondary],
+  },
 });
 
 const useStyles = createUseStyles({
   SourceBox: {
     ...box,
-    //display: 'inline-block',
+
     width: '100%',
     boxSizing: 'border-box',
     display: 'flex',
     backgroundColor: colours.surface,
-    //flexDirection: 'column',
+
     padding: 5,
     margin: '5px auto',
-    fontFamily: fonts.secondary
+    fontFamily: fonts.secondary,
   },
   followButton: {
     ...button,
     backgroundColor: '#263238',
-    color: 'white'
+    color: 'white',
   },
   removeButton: {
     ...button,
     backgroundColor: '#455A64',
-    color: '#FAFAFA'
+    color: '#FAFAFA',
   },
   previewButton: {
     ...button,
     color: 'white',
-    backgroundColor: '#37474F'
+    backgroundColor: '#37474F',
   },
   sourceName: {
     flexGrow: 1,
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
 
 function SourceBox(source) {
   const classes = useStyles();
   let { state, dispatch } = React.useContext(Context);
   let history = useHistory();
-
   return (
     <div className={classes.SourceBox}>
       <div className={classes.sourceName}>{source.name}</div>
-      {/* <Link to={{ pathname: `/source/${source.name}` }}> */}
+
       <button
         className={classes.previewButton}
         onClick={() => history.push(`/source/${source.name}`)}
       >
         Preview
       </button>
-      {/* </Link> */}
+
       {source.subscribed ? (
         <button
           className={classes.removeButton}
-          onClick={() => dispatch({ type: 'removeSubscription', payload: source.name })}
+          onClick={() => {
+            dispatch({ type: 'removeSubscription', payload: source.name });
+          }}
         >
           Remove
         </button>
       ) : (
         <button
           className={classes.followButton}
-          onClick={() => dispatch({ type: 'appendSubscription', payload: source.name })}
+          onClick={() => {
+            if (source.custom) {
+              dispatch({ type: 'followCustomPreview', payload: {} });
+              dispatch({ type: 'setCustomPreview', payload: {} });
+            } else {
+              console.log('doing regular subscription');
+              dispatch({ type: 'appendSubscription', payload: source.name });
+            }
+          }}
         >
           Follow
         </button>

@@ -149,6 +149,20 @@ function appReducer(state, action) {
         },
       };
     }
+
+    // -- custom feeds --
+    case 'setCustomPreview': {
+      return {
+        ...state,
+        customPreview: action.payload,
+      };
+    }
+    case 'followCustomPreview': {
+      return {
+        ...state,
+        customFeeds: [...state.customFeeds, state.customPreview],
+      };
+    }
     case 'addCustomFeed': {
       return {
         ...state,
@@ -203,7 +217,8 @@ function ContextProvider(props) {
         id: '', // item id | URL
       },
     },
-    customFeeds: [], // [{name, link, items}]
+    customFeeds: [], // [{name, link, items}]  use this after user subscribes
+    customPreview: {}, //  {name, link, items} use this to save the searched info.
   });
 
   useEffect(() => {

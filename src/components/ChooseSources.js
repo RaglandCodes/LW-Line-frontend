@@ -107,25 +107,9 @@ function ChooseSources() {
           items={sources
             .filter(source => !state.subscriptions.includes(source.feed))
             .map(source => (
-              <SourceBox key={source.feed} name={source.feed} />
+              <SourceBox key={source.feed} name={source.feed} custom={false} />
             ))}
         />
-        {/* {sources
-          .filter(source => !state.subscriptions.includes(source.feed))
-          .slice(0, showing)
-          .map(source => (
-            <SourceBox key={source.feed} name={source.feed} />
-          ))}
-        {showing < sources.length ? (
-          <button
-            className={classes.showMoreBtn}
-            onClick={() => {
-              setShowing(showing + 4);
-            }}
-          >
-            Show more
-          </button>
-        ) : null} */}
         <br />
       </div>
       <div className={classes.settingContainer}>
@@ -134,7 +118,7 @@ function ChooseSources() {
           {state.subscriptions.length === 1 ? '' : 's'}
         </div>
         {state.subscriptions.map(subscription => (
-          <SourceBox name={subscription} key={subscription} subscribed={true} />
+          <SourceBox name={subscription} key={subscription} subscribed={true} custom={false} />
         ))}
       </div>
     </div>
