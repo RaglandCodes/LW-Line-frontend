@@ -1,5 +1,5 @@
-const HOST = 'https://lw-line-backend.glitch.me';
-//const HOST = 'http://localhost:5151';
+//const HOST = 'https://lw-line-backend.glitch.me';
+const HOST = 'http://localhost:5151';
 
 export function dataFetch(endpoint, params, options) {
   let stringifiedParams = '';
@@ -15,10 +15,15 @@ export function dataFetch(endpoint, params, options) {
     fetch(`${HOST}/${endpoint}/?${stringifiedParams}`)
       .then(res => res.json())
       .then(jsonRes => {
-        resolve(jsonRes);
+        if (jsonRes.status === 'ERROR') {
+          reject(new Error("Couldn't fetch"));
+          return;
+        }
+        resolve(jsonRes.data);
       })
       .catch(dataFetchError => {
-        resolve('ERROR');
+        console.log('Thorwing erro in catch');
+        reject(new Error("Couldn't fetch"));
         console.log(`${dataFetchError} <= dataFetchError \n ** ${endpoint}`);
       });
   });

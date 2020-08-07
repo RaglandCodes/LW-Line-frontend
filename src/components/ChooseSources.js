@@ -79,9 +79,19 @@ function ChooseSources() {
 
   useEffect(() => {
     if (state.chosenTopics.length) {
+      // TODO change to getFeeds
+      // TODO json.string instead of AaNnDd
       dataFetch('getSources', { searchTopics: state.chosenTopics.join('AaNnDd') }).then(gs => {
         setSources(gs);
       });
+
+      dataFetch('getFeeds', { searchTopics: JSON.stringify(state.chosenTopics) })
+        .then(gs => {
+          //setSources(gs);
+        })
+        .catch(getFeedsError => {
+          console.log(`${getFeedsError} <== getFeedsError\n\n`);
+        });
     }
   }, [topics]);
 
