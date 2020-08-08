@@ -49,31 +49,35 @@ function GeneralFeed(props) {
     if (state.currentFeed.name === 'Feed') {
       // This happens when user clicks the "Show more" button when reading from HOME feed
       dataFetch('getItems', {
-        subscriptions: state.subscriptions.join('AaNnDd'),
-        afterRef: state.after.ref,
-        afterTs: state.after.ts,
-      }).then(res => {
-        setLoading(false);
-        // TODO error handling
-        dispatch({ type: 'appendCurrentFeed', payload: res.data });
-        dispatch({ type: 'setAfter', payload: res.after });
-      });
+        subscriptions: JSON.stringify(state.subscriptions),
+        after: JSON.stringify(state.after),
+      })
+        .then(res => {
+          setLoading(false);
+          // TODO error handling
+          dispatch({ type: 'appendCurrentFeed', payload: res.data });
+          dispatch({ type: 'setAfter', payload: res.after });
+        })
+        .catch(e => {
+          setLoading(false);
+          console.log(`${e} <== e\n\n`);
+        });
     } else {
-      // This happens when user clicks the "Show more" button when reading from 1 feed (preview item)
-      dataFetch('previewSource', {
-        source: state.currentFeed.name,
-        afterRef: state.currentFeed.after.ref,
-        afterTs: state.currentFeed.after.ts,
-      }).then(res => {
-        setLoading(false);
-        if (res === 'ERROR') {
-          setErrorMessage(`An error occured when getting more items for ${state.currentFeed.name}`);
-        } else {
+      // This happens when user clicks the "Show more" button when reading from 1 feed (preview Feed)
+      dataFetch('getItems', {
+        subscriptions: JSON.stringify([state.currentFeed.name]),
+        after: JSON.stringify(state.currentFeed.after),
+      })
+        .then(res => {
+          setLoading(false);
           console.log(`${JSON.stringify(res, null, 2)} <== res`);
           dispatch({ type: 'appendCurrentFeed', payload: res.items.data });
           dispatch({ type: 'setCurrentFeedAfter', payload: res.items.after });
-        }
-      });
+        })
+        .catch(err => {
+          setLoading(false);
+          setErrorMessage(`An error occured when getting more items for ${state.currentFeed.name}`);
+        });
     }
   };
 
@@ -83,16 +87,20 @@ function GeneralFeed(props) {
         setLoading(true);
         // Add items automatically only if it's empty
         dataFetch('getItems', {
-          subscriptions: state.subscriptions.join('AaNnDd'),
-        }).then(items => {
-          setLoading(false);
-          if (items === 'ERROR') {
-            console.log('ERROR in fetching feed');
-          } else {
+          subscriptions: JSON.stringify(state.subscriptions),
+        })
+          .then(items => {
+            setLoading(false);
             dispatch({ type: 'appendCurrentFeed', payload: items.data });
+            console.dir(items.after);
+            console.log('^items.after^');
+
             dispatch({ type: 'setAfter', payload: items.after });
-          }
-        });
+          })
+          .catch(e => {
+            setLoading(false);
+            console.log(`${e} <== e\n\n`);
+          });
       }
     } else if (state.currentFeed.name !== '' && !state.currentFeed.items.length) {
       setLoading(true);
@@ -114,32 +122,26 @@ function GeneralFeed(props) {
           type: 'appendCurrentFeed',
           payload: state.customPreview.items,
         });
-        console.log('CC');
         setLoading(false);
         return;
       }
 
-      console.log('FF');
-
-      dataFetch('previewSource', { source: state.currentFeed.name })
+      dataFetch('previewFeed', { feed: state.currentFeed.name })
         .then(jsonRes => {
           setLoading(false);
-          if (jsonRes.items === 'ERROR') {
-            setErrorMessage(
-              `An error occured when getting information for ${state.currentFeed.name}`,
-            );
-          } else {
-            dispatch({
-              type: 'appendCurrentFeed',
-              payload: jsonRes.items.data,
-            });
-            dispatch({
-              type: 'setCurrentFeedAfter',
-              payload: jsonRes.items.after,
-            });
-          }
+          dispatch({
+            type: 'appendCurrentFeed',
+            payload: jsonRes.feed.items,
+          });
+          console.log('Setting after');
+          dispatch({
+            type: 'setCurrentFeedAfter',
+            payload: jsonRes.feed.after,
+          });
         })
         .catch(e => {
+          setLoading(false);
+          console.log('Caught error in GF');
           setErrorMessage(
             `An error occured when getting information for ${state.currentFeed.name}`,
           );

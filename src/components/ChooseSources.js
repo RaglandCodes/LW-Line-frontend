@@ -46,9 +46,13 @@ function ChooseSources() {
   const classes = useStyles();
   let { state, dispatch } = React.useContext(Context);
   let [topics, setTopics] = useState([]);
-  let [sources, setSources] = useState([]);
+
+  let [searchedFeeds, setSearchedFeeds] = useState([]);
+  let [getFeedsErrorMessage, setGetFeedsErrorMessage] = useState(null);
+  let [getFeedsLoading, setGetFeedsLoading] = useState(false);
   //let [showing, setShowing] = useState(5);
   let [errorMessage, setErrorMessage] = useState(null);
+
   const toggleChosenState = topic => {
     let i = topics.indexOf(topic);
     let newTopics = topics;
@@ -72,24 +76,23 @@ function ChooseSources() {
           })),
         );
       })
-      .catch(sourceTopicsDataFetchError => {
+      .catch(sourceTopicsError => {
+        console.log(`${sourceTopicsError} <== sourceTopicsDataFetchError\n\n`);
         setErrorMessage("Couldn't get topics");
       });
   }, []);
 
   useEffect(() => {
     if (state.chosenTopics.length) {
-      // TODO change to getFeeds
-      // TODO json.string instead of AaNnDd
-      dataFetch('getSources', { searchTopics: state.chosenTopics.join('AaNnDd') }).then(gs => {
-        setSources(gs);
-      });
-
+      setGetFeedsLoading(true);
       dataFetch('getFeeds', { searchTopics: JSON.stringify(state.chosenTopics) })
-        .then(gs => {
-          //setSources(gs);
+        .then(feeds => {
+          setGetFeedsLoading(false);
+          setSearchedFeeds(feeds);
         })
         .catch(getFeedsError => {
+          setGetFeedsLoading(false);
+          setGetFeedsErrorMessage("Could't get search results");
           console.log(`${getFeedsError} <== getFeedsError\n\n`);
         });
     }
@@ -113,13 +116,25 @@ function ChooseSources() {
           <>{errorMessage ? errorMessage : `Getting topics...  Please wait ...`}</>
         )}
 
-        <Paginator
-          items={sources
-            .filter(source => !state.subscriptions.includes(source.feed))
-            .map(source => (
-              <SourceBox key={source.feed} name={source.feed} custom={false} />
-            ))}
-        />
+        {getFeedsLoading && searchedFeeds.length === 0 ? (
+          <>
+            <br />
+            Loaing... Please wait
+          </>
+        ) : null}
+        {getFeedsErrorMessage ? (
+          <>
+            <br /> {getFeedsErrorMessage}
+          </>
+        ) : (
+          <Paginator
+            items={searchedFeeds
+              //TODO show different for susbcribed
+              .map(searchedFeed => (
+                <SourceBox key={searchedFeed.name} name={searchedFeed.name} custom={false} />
+              ))}
+          />
+        )}
         <br />
       </div>
       <div className={classes.settingContainer}>

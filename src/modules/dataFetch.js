@@ -5,9 +5,12 @@ export function dataFetch(endpoint, params, options) {
   let stringifiedParams = '';
 
   if (params) {
-    // TODO try using array..reduce
     for (const key in params) {
-      stringifiedParams += `${key}=${params[key]}&`;
+      if (stringifiedParams.length) {
+        stringifiedParams += '&';
+      }
+      // TODO check if JSON or array and stringify here
+      stringifiedParams += `${key}=${params[key]}`;
     }
   }
 
@@ -19,11 +22,12 @@ export function dataFetch(endpoint, params, options) {
           reject(new Error("Couldn't fetch"));
           return;
         }
+
         resolve(jsonRes.data);
       })
       .catch(dataFetchError => {
         console.log('Thorwing erro in catch');
-        reject(new Error("Couldn't fetch"));
+        reject(new Error(`Couldn't fetch ${endpoint}`));
         console.log(`${dataFetchError} <= dataFetchError \n ** ${endpoint}`);
       });
   });
