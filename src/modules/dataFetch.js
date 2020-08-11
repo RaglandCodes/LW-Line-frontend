@@ -19,7 +19,7 @@ export function dataFetch(endpoint, params, options) {
       .then(res => res.json())
       .then(jsonRes => {
         if (jsonRes.status === 'ERROR') {
-          reject(new Error("Couldn't fetch"));
+          reject(new Error(jsonRes.data));
           return;
         }
 

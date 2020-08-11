@@ -130,9 +130,17 @@ function ChooseSources() {
           <Paginator
             items={searchedFeeds
               //TODO show different for susbcribed
-              .map(searchedFeed => (
-                <SourceBox key={searchedFeed.name} name={searchedFeed.name} custom={false} />
-              ))}
+              .map(searchedFeed => {
+                let subscribed = state.subscriptions.indexOf(searchedFeed.name) > -1;
+                return (
+                  <SourceBox
+                    key={searchedFeed.name}
+                    subscribed={subscribed}
+                    name={searchedFeed.name}
+                    custom={false}
+                  />
+                );
+              })}
           />
         )}
         <br />

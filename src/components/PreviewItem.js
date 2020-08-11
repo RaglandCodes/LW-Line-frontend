@@ -128,10 +128,6 @@ function PreviewItem() {
     }
     dataFetch('singleItem', { id })
       .then(jsonRes => {
-        if (jsonRes === 'ERROR') {
-          setErrorMessage('Error in retriving item');
-          return;
-        }
         setTitle(jsonRes.title);
         setMetaDescription(jsonRes.metaDescription);
         setContentSnippet(jsonRes.contentSnippet);
@@ -139,6 +135,7 @@ function PreviewItem() {
         setMetaImage(jsonRes.image);
       })
       .catch(error => {
+        // TODO reflect error in UI
         console.log(`${error} <== error in previewItem`);
       });
   };

@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 //Components
 import Home from './components/Home';
-import Settings from './components/Settings';
+import Settings from './components/Settings/Settings';
 import PreviewSource from './components/PreviewSource';
 import PreviewItem from './components/PreviewItem';
 
