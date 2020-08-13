@@ -96,16 +96,6 @@ function App() {
       }
     }
 
-    // dispatch({
-    //   type: 'setOrientation',
-    //   payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait',
-    // });
-
-    // dispatch({
-    //   type: 'setInnerHeight',
-    //   payload: window.innerHeight,
-    // });
-
     deviceDispatch({
       type: 'setOrientation',
       payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait',
@@ -132,16 +122,6 @@ function App() {
     // });
 
     window.addEventListener('resize', () => {
-      // dispatch({
-      //   type: 'setOrientation',
-      //   payload: window.innerWidth > window.innerHeight ? 'landscape' : 'potrait',
-      // });
-
-      // dispatch({
-      //   type: 'setInnerHeight',
-      //   payload: window.innerHeight,
-      // });
-
       deviceDispatch({
         type: 'setInnerHeight',
         payload: window.innerHeight,

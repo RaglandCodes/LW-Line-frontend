@@ -1,3 +1,5 @@
+// STOP USING THIS AND ADD ANY NEW STYLES TO THEME_CONTEXT './Context/ThemeContext.js'
+
 // Contains theme data
 
 const colours = {

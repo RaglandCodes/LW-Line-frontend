@@ -7,9 +7,12 @@ import { dataFetch } from '../modules/dataFetch';
 //Components
 import SourceBox from './SourceBox';
 import Paginator from './Paginator';
+import Text from './Text';
+
 //Styles
 import { createUseStyles } from 'react-jss';
-import { header4, button, fonts, colours, settingContainer } from '../styles';
+import { ThemeContext } from '../Context/ThemeContext';
+import { fonts, colours } from '../styles';
 
 const SourceTopicStyles = {
   display: 'inline-block',
@@ -19,6 +22,7 @@ const SourceTopicStyles = {
   fontFamily: fonts.secondary,
   fontSize: 16,
 };
+
 const useStyles = createUseStyles({
   ChooseSources: { overflow: 'auto' },
   SourceTopic: {
@@ -29,21 +33,15 @@ const useStyles = createUseStyles({
     backgroundColor: '#1A237E',
     color: 'white',
   },
-  header4: {
-    ...header4,
-  },
-  showMoreBtn: {
-    ...button,
-    color: 'black',
-    float: 'right',
-  },
-  settingContainer: {
-    ...settingContainer,
-  },
+
+  settingContainer: styleState => ({
+    ...styleState.settingContainer,
+  }),
 });
 
 function ChooseSources() {
-  const classes = useStyles();
+  let { themeState, themeDispatch } = React.useContext(ThemeContext);
+  const classes = useStyles(themeState);
   let { state, dispatch } = React.useContext(Context);
   let [topics, setTopics] = useState([]);
 
@@ -101,7 +99,7 @@ function ChooseSources() {
   return (
     <div className={classes.ChooseSources}>
       <div className={classes.settingContainer}>
-        <div className={classes.header3}>Search by topic</div>
+        <Text component="div" styleClass="header3" text="Search by topic" />
         {topics.length ? (
           topics.map(topic => (
             <div
@@ -128,28 +126,29 @@ function ChooseSources() {
           </>
         ) : (
           <Paginator
-            items={searchedFeeds
-              //TODO show different for susbcribed
-              .map(searchedFeed => {
-                let subscribed = state.subscriptions.indexOf(searchedFeed.name) > -1;
-                return (
-                  <SourceBox
-                    key={searchedFeed.name}
-                    subscribed={subscribed}
-                    name={searchedFeed.name}
-                    custom={false}
-                  />
-                );
-              })}
+            items={searchedFeeds.map(searchedFeed => {
+              let subscribed = state.subscriptions.indexOf(searchedFeed.name) > -1;
+              return (
+                <SourceBox
+                  key={searchedFeed.name}
+                  subscribed={subscribed}
+                  name={searchedFeed.name}
+                  custom={false}
+                />
+              );
+            })}
           />
         )}
         <br />
       </div>
       <div className={classes.settingContainer}>
-        <div className={classes.header4}>
-          You're subscribed to {state.subscriptions.length} feed
-          {state.subscriptions.length === 1 ? '' : 's'}
-        </div>
+        <Text
+          component="div"
+          styleClass="header4"
+          text={`You're subscribed to ${state.subscriptions.length} feed
+        ${state.subscriptions.length === 1 ? '' : 's'}`}
+        />
+
         {state.subscriptions.map(subscription => (
           <SourceBox name={subscription} key={subscription} subscribed={true} custom={false} />
         ))}

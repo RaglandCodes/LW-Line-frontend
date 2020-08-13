@@ -32,16 +32,10 @@ const useStyles = createUseStyles({
       paddingBottom: 5, // prevenet jumping around caused by increased border-width,
     },
     '&:hover $title': {
-      //  color: colours.blue900,
       textDecoration: 'underline',
     },
     display: 'flex',
     flexDirection: 'column',
-    // margin: 6
-    // maxHeight: 88,
-    // overflowY: 'hidden',
-    // textOverflow: 'ellipsis'
-    // whiteSpace: 'nowrap'
   },
   title: {
     fontFamily: fonts.primary,

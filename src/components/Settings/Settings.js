@@ -13,9 +13,11 @@ import Paginator from '../Paginator';
 import ChooseSources from '../ChooseSources';
 import AddYourOwnFeed from '../AddYourOwnFeed';
 import MutePhraseChips from './MutePhraseChips/MutePhraseChips';
+import Text from '../Text';
 
 //Styles
 import { createUseStyles } from 'react-jss';
+import { ThemeContext } from '../../Context/ThemeContext';
 import WebFont from 'webfontloader';
 import {
   header2,
@@ -109,7 +111,9 @@ const useStyles = createUseStyles({
 function Settings() {
   let { state, dispatch } = React.useContext(Context);
   let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
-  const classes = useStyles(state);
+  let { themeState, themeDispatch } = React.useContext(ThemeContext);
+
+  const classes = useStyles({ ...themeState });
 
   let [feedSearchResults, setFeedSearchResults] = useState([]);
   let [feedSearchInput, setFeedSearchInput] = useState('');
@@ -160,7 +164,7 @@ function Settings() {
   return (
     <Sheet page="Settings" className={classes.Settings}>
       <div className={classes.Settings}>
-        <div className={classes.header2}>Content</div>
+        <Text component="h2" text="Content" />
         {/* ------ ----- ----- Feeds ----- ----- ----- */}
         <div className={classes.settingContainer}>
           <form onSubmit={e => searchSources(e)} className={classes.form} role="search">
@@ -207,9 +211,7 @@ function Settings() {
         {/* ))} */}
         {/* ------ ----- ----- Mute ----- ----- ----- */}
         <div className={classes.settingContainer}>
-          <label htmlFor="mutePhrases" className={classes.header3}>
-            Mute phrases
-          </label>
+          <Text component="label" styleClass="header3" for="mutePhrases" text="Mute phrases" />
           <form onSubmit={e => addNewMutePhrase(e)}>
             <div className={classes.inputButtonWrap}>
               <input
@@ -231,7 +233,7 @@ function Settings() {
           <MutePhraseChips />
         </div>
         {/* <hr /> */}
-        <div className={classes.header2}>Display</div>
+        <Text component="h2" text="Display" />
         {/* <div className={classes.settingContainer}>
           <div className={classes.checkboxSettingWrap}>
             <label htmlFor="darkThemecb" className={classes.header3}>
@@ -254,9 +256,12 @@ function Settings() {
         </div> */}
         <div className={classes.settingContainer}>
           <div className={classes.checkboxSettingWrap}>
-            <label htmlFor="show-preview-cb" className={classes.header3}>
-              Show preview
-            </label>
+            <Text
+              component="label"
+              styleClass="header3"
+              for="show-preview-cb"
+              text="Show preview"
+            />
             <input
               type="checkbox"
               id="show-preview-cb"
@@ -272,9 +277,12 @@ function Settings() {
         </div>
         <div className={classes.settingContainer}>
           <div className={classes.checkboxSettingWrap}>
-            <label htmlFor="split-screen-cb" className={classes.header3}>
-              Split screen
-            </label>
+            <Text
+              component="label"
+              styleClass="header3"
+              for="split-screen-cb"
+              text="Split screen"
+            />
             <input
               type="checkbox"
               id="split-screen-cb"

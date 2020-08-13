@@ -54,13 +54,12 @@ function GeneralFeed(props) {
       })
         .then(res => {
           setLoading(false);
-          // TODO error handling
           dispatch({ type: 'appendCurrentFeed', payload: res.data });
           dispatch({ type: 'setAfter', payload: res.after });
         })
         .catch(e => {
           setLoading(false);
-          console.log(`${e} <== e\n\n`);
+          console.error(e);
         });
     } else {
       // This happens when user clicks the "Show more" button when reading from 1 feed (preview Feed)
@@ -70,11 +69,11 @@ function GeneralFeed(props) {
       })
         .then(res => {
           setLoading(false);
-          console.log(`${JSON.stringify(res, null, 2)} <== res`);
-          dispatch({ type: 'appendCurrentFeed', payload: res.items.data });
-          dispatch({ type: 'setCurrentFeedAfter', payload: res.items.after });
+          dispatch({ type: 'appendCurrentFeed', payload: res.data });
+          dispatch({ type: 'setCurrentFeedAfter', payload: res.after });
         })
         .catch(err => {
+          console.error(err);
           setLoading(false);
           setErrorMessage(`An error occured when getting more items for ${state.currentFeed.name}`);
         });
@@ -99,7 +98,7 @@ function GeneralFeed(props) {
           })
           .catch(e => {
             setLoading(false);
-            console.log(`${e} <== e\n\n`);
+            console.error(e);
           });
       }
     } else if (state.currentFeed.name !== '' && !state.currentFeed.items.length) {
@@ -141,7 +140,7 @@ function GeneralFeed(props) {
         })
         .catch(e => {
           setLoading(false);
-          console.log('Caught error in GF');
+          console.error(e);
           setErrorMessage(
             `An error occured when getting information for ${state.currentFeed.name}`,
           );

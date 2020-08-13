@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ContextProvider } from './Context';
 import { DeviceContextProvider } from './Context/DeviceContext.js';
+import { ThemeContextProvider } from './Context/ThemeContext';
 import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
 
 import App from './App';
@@ -11,7 +12,9 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
   <ContextProvider>
     <DeviceContextProvider>
-      <App style={{ backgroundColor: 'yellow' }} />
+      <ThemeContextProvider>
+        <App style={{ backgroundColor: 'yellow' }} />
+      </ThemeContextProvider>
     </DeviceContextProvider>
   </ContextProvider>,
   document.getElementById('root'),
