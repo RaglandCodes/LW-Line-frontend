@@ -1,6 +1,6 @@
 {
   "name": "lw-line-frontend",
-  "version": "0.1.22",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -11,7 +11,7 @@
     "react-dom": "^16.12.0",
     "react-jss": "^10.0.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.0",
+    "react-scripts": "^3.4.3",
     "source-map-explorer": "^2.2.1",
     "webfontloader": "^1.6.28"
   },
@@ -21,7 +21,8 @@
     "deploy": "npm run build && netlify deploy --dir build --prod",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "netlify": "netlify"
   },
   "eslintConfig": {
     "extends": "react-app"

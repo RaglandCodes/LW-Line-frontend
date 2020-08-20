@@ -49,7 +49,7 @@ function GeneralFeed(props) {
     if (state.currentFeed.name === 'Feed') {
       // This happens when user clicks the "Show more" button when reading from HOME feed
       dataFetch('getItems', {
-        subscriptions: JSON.stringify(state.subscriptions),
+        subscriptions: JSON.stringify(state.subscriptions.concat(state.customSubscriptions)),
         after: JSON.stringify(state.after),
       })
         .then(res => {
@@ -86,7 +86,7 @@ function GeneralFeed(props) {
         setLoading(true);
         // Add items automatically only if it's empty
         dataFetch('getItems', {
-          subscriptions: JSON.stringify(state.subscriptions),
+          subscriptions: JSON.stringify(state.subscriptions.concat(state.customSubscriptions)),
         })
           .then(items => {
             setLoading(false);
@@ -98,32 +98,12 @@ function GeneralFeed(props) {
           })
           .catch(e => {
             setLoading(false);
+            setErrorMessage("Couldn't get items for your feed");
             console.error(e);
           });
       }
     } else if (state.currentFeed.name !== '' && !state.currentFeed.items.length) {
       setLoading(true);
-
-      // TODO ??
-      //Check if it is there in custom feed
-      let feedInCustomFeed = state.customFeeds.filter(feed => feed.name === state.currentFeed.name);
-
-      if (feedInCustomFeed.length) {
-        dispatch({
-          type: 'appendCurrentFeed',
-          payload: feedInCustomFeed[0].items,
-        });
-        console.log('Found in custom feed.. return ??');
-        // set loading False ??? TODO
-      }
-      if (state.customPreview.name === state.currentFeed.name) {
-        dispatch({
-          type: 'appendCurrentFeed',
-          payload: state.customPreview.items,
-        });
-        setLoading(false);
-        return;
-      }
 
       dataFetch('previewFeed', { feed: state.currentFeed.name })
         .then(jsonRes => {
@@ -132,7 +112,6 @@ function GeneralFeed(props) {
             type: 'appendCurrentFeed',
             payload: jsonRes.feed.items,
           });
-          console.log('Setting after');
           dispatch({
             type: 'setCurrentFeedAfter',
             payload: jsonRes.feed.after,

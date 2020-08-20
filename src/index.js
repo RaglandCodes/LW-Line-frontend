@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { ContextProvider } from './Context';
 import { DeviceContextProvider } from './Context/DeviceContext.js';
 import { ThemeContextProvider } from './Context/ThemeContext';
-import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import App from './App';
 

@@ -80,7 +80,7 @@ function appReducer(state, action) {
         currentFeed: {
           ...state.currentFeed,
           items: [],
-          // Remove items from feed when subscriptions chage to trigger fetch to get items for the new subscriptions
+          // Remove items from feed when subscriptions chage to trigger fetch to get items for the new subscription
         },
         subscriptions: [...state.subscriptions, action.payload],
       };
@@ -151,24 +151,14 @@ function appReducer(state, action) {
     }
 
     // -- custom feeds --
-    case 'setCustomPreview': {
+
+    case 'appendCustomSubscription': {
       return {
         ...state,
-        customPreview: action.payload,
+        customSubscriptions: [...state.customSubscriptions, action.payload],
       };
     }
-    case 'followCustomPreview': {
-      return {
-        ...state,
-        customFeeds: [...state.customFeeds, state.customPreview],
-      };
-    }
-    case 'addCustomFeed': {
-      return {
-        ...state,
-        customFeeds: [...state.customFeeds, action.payload],
-      };
-    }
+
     // case 'setInputFocused': {
     //   return {
     //     ...state,
@@ -217,8 +207,7 @@ function ContextProvider(props) {
         id: '', // item id | URL
       },
     },
-    customFeeds: [], // [{name, link, items}]  use this after user subscribes
-    customPreview: {}, //  {name, link, items} use this to save the searched info.
+    customSubscriptions: [], //  use this after user subscribes
   });
 
   useEffect(() => {

@@ -74,8 +74,8 @@ function ChooseSources() {
           })),
         );
       })
-      .catch(sourceTopicsError => {
-        console.log(`${sourceTopicsError} <== sourceTopicsDataFetchError\n\n`);
+      .catch(feedTopicsError => {
+        console.error(feedTopicsError);
         setErrorMessage("Couldn't get topics");
       });
   }, []);

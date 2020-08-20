@@ -50,6 +50,7 @@ const useStyles = createUseStyles({
 
 function SourceBox(source) {
   const classes = useStyles();
+
   let { state, dispatch } = React.useContext(Context);
   let history = useHistory();
   return (
@@ -77,8 +78,7 @@ function SourceBox(source) {
           className={classes.followButton}
           onClick={() => {
             if (source.custom) {
-              dispatch({ type: 'followCustomPreview', payload: {} });
-              dispatch({ type: 'setCustomPreview', payload: {} });
+              dispatch({ type: 'appendCustomSubscription', payload: source.name });
             } else {
               console.log('doing regular subscription');
               dispatch({ type: 'appendSubscription', payload: source.name });

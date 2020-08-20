@@ -18,29 +18,25 @@ import Text from '../Text';
 //Styles
 import { createUseStyles } from 'react-jss';
 import { ThemeContext } from '../../Context/ThemeContext';
-import WebFont from 'webfontloader';
 import {
-  header2,
-  header3,
-  header4,
   button,
-  fonts,
   settingContainer,
   settingsExplanation,
   input,
   inputSubmitButton,
 } from '../../styles';
 
-WebFont.load({
-  google: {
-    families: [
-      `${header2.fontFamily}:${header2.fontWeight}`,
-      `${header3.fontFamily}:${header3.fontWeight}`,
-      `${header4.fontFamily}:${header4.fontWeight}`,
-      fonts.primary,
-    ],
-  },
-});
+// WebFont.load({
+//   google: {
+//     families: [
+//       `${header2.fontFamily}:${header2.fontWeight}`,
+//       `${header3.fontFamily}:${header3.fontWeight}`,
+//       `${header4.fontFamily}:${header4.fontWeight}`,
+//       fonts.primary,
+//     ],
+//   },
+// });
+
 const padded = {
   padding: {
     left: 15,
@@ -51,20 +47,7 @@ const useStyles = createUseStyles({
   Settings: {
     ...padded,
   },
-  header2: {
-    ...header2,
-    //...padded
-  },
-  header3: {
-    ...header3,
-    //...padded
-  },
-  header4: {
-    ...header4,
-    margin: {
-      top: 35,
-    },
-  },
+
   checkboxSettingWrap: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -168,9 +151,12 @@ function Settings() {
         {/* ------ ----- ----- Feeds ----- ----- ----- */}
         <div className={classes.settingContainer}>
           <form onSubmit={e => searchSources(e)} className={classes.form} role="search">
-            <label htmlFor="searchFeeds" className={classes.header3}>
-              Search for feeds
-            </label>
+            <Text
+              component="label"
+              styleClass="header3"
+              for="searchFeeds"
+              text="Search for feeds"
+            />
             <div className={classes.inputButtonWrap}>
               <input
                 type="text"
@@ -312,7 +298,7 @@ function Settings() {
         <br />
         <br />
         <br />
-        <span className={classes.version}>Version 0.1.22</span>
+        <span className={classes.version}>Version 0.2.0</span>
       </div>
     </Sheet>
   );

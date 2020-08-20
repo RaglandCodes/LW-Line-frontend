@@ -58,6 +58,7 @@ function AddYourOwnFeed(props) {
   const [feedLinkInput, setFeedLinkInput] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [feedSearchResult, setFeedSearcResult] = useState(null);
 
   // Get the feed items, and updtate states.
   async function addNewFeed(e) {
@@ -72,29 +73,15 @@ function AddYourOwnFeed(props) {
       return;
     }
     setLoading(true);
-    dataFetch('feedFromLink', { feedLink: feedLinkInput })
+    dataFetch('addFeedFromLink', { feedLink: feedLinkInput, userId: 'usuhb' })
       .then(feedData => {
         setLoading(false);
-        if (!feedData.items) {
-          if (feedData['message'] === 'Normal Exists') {
-            setMessage('Please subscribe to this feed by searching for it. ^');
-            return;
-          }
-          setMessage('Something went wrong in finding the feed');
-          return;
-        }
         setMessage('');
-        dispatch({
-          type: 'setCustomPreview',
-          payload: {
-            name: feedData.title,
-            link: feedData.link,
-            items: feedData.items,
-          },
-        });
+        setFeedSearcResult(feedData);
       })
       .catch(feedFromLinkError => {
         setLoading(false);
+        // TODO set message based on error
         console.log(`${feedFromLinkError} <== feedFromLinkError`);
         setMessage('Something went wrong in finding the feed');
       });
@@ -106,7 +93,7 @@ function AddYourOwnFeed(props) {
           Add your own feed
         </label>
         <p className={classes.settingsExplanation}>
-          Enter the URL of an RSS feed. (This setting is still in{' '}
+          Enter the URL of an RSS feed. (This setting is still in
           <a href="https://github.com/raglandcodes/lw-line-frontend">development</a>)
         </p>
         <div className={classes.inputButtonWrap}>
@@ -122,22 +109,21 @@ function AddYourOwnFeed(props) {
         </div>
         <p className={classes.message}>{message}</p>
         <div>
-          {state.customPreview.items ? (
-            <SourceBox name={state.customPreview.name} subscribed={false} custom={true} />
+          {feedSearchResult ? (
+            <SourceBox
+              name={feedSearchResult.name}
+              subscribed={state.customSubscriptions.includes(feedSearchResult.name)}
+              custom={true}
+            />
           ) : null}
         </div>
         <div className={classes.settingContainer}>
           <div className={classes.header4}>
-            You're subscribed to {state.customFeeds.length} custom feed
-            {state.subscriptions.length === 1 ? '' : 's'}
+            You're subscribed to {state.customSubscriptions.length} custom feed
+            {state.customSubscriptions.length === 1 ? '' : 's'}
           </div>
-          {state.customFeeds.map(subscription => (
-            <SourceBox
-              name={subscription.name}
-              key={subscription.name}
-              subscribed={true}
-              custom={true}
-            />
+          {state.customSubscriptions.map(subscription => (
+            <SourceBox name={subscription} key={subscription} subscribed={true} custom={true} />
           ))}
         </div>
       </form>

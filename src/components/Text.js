@@ -17,8 +17,6 @@ const useStyles = createUseStyles({
     ...styleState.header3,
   }),
   header4: styleState => {
-    console.log(`${styleState.fonts.primary} <== styleState.fonts.primary\n\n`);
-
     return {
       ...styleState.header4,
       fontFamily: styleState.fonts.primary,

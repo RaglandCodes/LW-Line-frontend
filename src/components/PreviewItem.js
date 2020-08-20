@@ -118,6 +118,7 @@ function PreviewItem() {
   let [metaImage, setMetaImage] = useState('');
   let [contentSnippet, setContentSnippet] = useState('');
   let [errorMessage, setErrorMessage] = useState(null);
+  let [paragraphs, setParagraphs] = useState([]);
   let [link, setLink] = useState('');
 
   let getFromDatabase = () => {
@@ -131,6 +132,7 @@ function PreviewItem() {
         setTitle(jsonRes.title);
         setMetaDescription(jsonRes.metaDescription);
         setContentSnippet(jsonRes.contentSnippet);
+        setParagraphs(jsonRes.contentSnippetParagraphs);
         setLink(jsonRes['link']);
         setMetaImage(jsonRes.image);
       })
@@ -145,7 +147,6 @@ function PreviewItem() {
       let itemToShow = state.currentFeed.items.filter(item => item.id === id)[0];
       if (itemToShow) {
         setTitle(itemToShow.title);
-
         setMetaDescription(itemToShow.metaDescription);
         setLink(itemToShow.link);
         setMetaImage(itemToShow.image);
@@ -158,6 +159,10 @@ function PreviewItem() {
     // TODO check the dependencies
   }, [state.feedItems, id]);
 
+  // useState(() => {
+  //   console.dir(paragraphs);
+  //   console.log('^paragraphs^');
+  // }, [paragraphs]);
   return (
     <>
       <div className={classes.Preview}>
@@ -166,7 +171,7 @@ function PreviewItem() {
           <h1 className={classes.header1}>{title}</h1>
           <p className={classes.metaDescription}>{metaDescription}</p>
           <div className={classes.contentSnippet}>
-            {contentSnippet ? contentSnippet.split('\n').map(para => <p>{para}</p>) : null}
+            {paragraphs && paragraphs.map(p => <p key={p.key}>{p.content}</p>)}
           </div>
           {errorMessage}
         </div>
