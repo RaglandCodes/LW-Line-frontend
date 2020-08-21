@@ -22,11 +22,14 @@ function ThemeContextProvider(props) {
     colours: {
       blue: '#1565C0',
       blue900: '#0D47A1',
+      accent: '#0D47A1', //TODO replace blue900 with accent
       background: '#f5f5f5',
       background2: '#E0E0E0',
       surface: 'white',
       surface2: 'white',
       dark: '#37474F',
+      text: '#000000',
+      text2: '#455A64',
     },
     fonts: {
       primary: 'Merriweather',

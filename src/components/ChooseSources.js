@@ -145,8 +145,9 @@ function ChooseSources() {
         <Text
           component="div"
           styleClass="header4"
-          text={`You're subscribed to ${state.subscriptions.length} feed
-        ${state.subscriptions.length === 1 ? '' : 's'}`}
+          text={`You're subscribed to ${state.subscriptions.length} feed${
+            state.subscriptions.length === 1 ? '' : 's'
+          }`}
         />
 
         {state.subscriptions.map(subscription => (

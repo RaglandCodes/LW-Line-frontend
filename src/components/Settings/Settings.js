@@ -298,7 +298,7 @@ function Settings() {
         <br />
         <br />
         <br />
-        <span className={classes.version}>Version 0.2.0</span>
+        <span className={classes.version}>Version 0.2.2</span>
       </div>
     </Sheet>
   );

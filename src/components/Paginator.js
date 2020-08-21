@@ -5,7 +5,6 @@ Don't use this when items have to be fetched from the server to show more items
 
 //React
 import React, { useState, useEffect } from 'react';
-import { Context } from '../Context';
 
 //Components
 
@@ -15,22 +14,20 @@ import { button } from '../styles';
 const useStyles = createUseStyles({
   showMoreBtn: state => ({
     ...button,
-    display: state.length - state.itemsToShow ? 'block' : 'none'
+    display: state.length - state.itemsToShow ? 'block' : 'none',
   }),
   moreCount: {
     backgroundColor: '#455A64',
     display: 'inline-block',
     padding: 1,
     margin: {
-      left: 4
+      left: 4,
     },
-    borderRadius: 2
-  }
+    borderRadius: 2,
+  },
 });
 
 function Paginator(props) {
-  //let { state, dispatch } = React.useContext(Context);
-
   const [items, setItems] = useState([]);
   const [itemsToShow, setItemsToShow] = useState(0); // This is the length not index
   const [length, setLength] = useState(0);

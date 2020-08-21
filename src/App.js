@@ -12,11 +12,12 @@ import PreviewItem from './components/PreviewItem';
 
 //Styles
 import { createUseStyles } from 'react-jss';
-import { navigationWidth, draggerWidth } from './styles';
+import { draggerWidth } from './styles';
+import { ThemeContext } from './Context/ThemeContext';
 
 const useStyles = createUseStyles({
   App: state => {
-    let navWidth = `${navigationWidth}px`;
+    let navWidth = `${state.navigationWidth}px`;
     let feedWidth = '1fr';
     let previewWidth = '1fr';
 
@@ -29,20 +30,19 @@ const useStyles = createUseStyles({
       previewWidth = `${state.previewWidth}px`;
     }
 
+    let navHeight = 50;
+    if (state.smallDevice) {
+      navHeight -= 10;
+    }
+    if (state.orientation === 'landscape') {
+      navHeight = 0;
+    }
+
     return {
       display: 'grid',
       height: state.innerHeight,
       gridTemplateColumns: `[nav-start] ${navWidth} [nav-end] ${feedWidth} [dragger-start] ${draggerWidth}px [preview-start] ${previewWidth} [preview-end]`,
-
-      // state.inputFocused && state.recentHeigtJank
-      //   ? '[nav-start] 0px [nav-end] 1fr [dragger-start] 17px [preview-start] 1fr [preview-end]'
-      //   : `[nav-start] ${
-      //       state.orientation === 'potrait' ? '0' : '60px'
-      //     } [nav-end] 1fr [dragger-start] 17px [preview-start] 1fr [preview-end]`,
-
-      gridTemplateRows: `[screen-start] auto [nav-start] ${
-        state.orientation === 'potrait' ? '50px' : '0'
-      } [nav-end]`,
+      gridTemplateRows: `[screen-start] auto [nav-start] ${navHeight}px [nav-end]`,
     };
   },
 });
@@ -50,8 +50,9 @@ const useStyles = createUseStyles({
 function App() {
   let { state, dispatch } = React.useContext(Context);
   let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
+  let { themeState, themeDispatch } = React.useContext(ThemeContext);
   let [newUser, setNewUser] = useState(true);
-  const classes = useStyles({ ...state, ...deviceState });
+  const classes = useStyles({ ...state, ...deviceState, ...themeState });
 
   useEffect(() => {
     // Check if user is using for the first time

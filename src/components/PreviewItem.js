@@ -6,9 +6,11 @@ import { useParams } from 'react-router-dom';
 
 //utils
 import { dataFetch } from '../modules/dataFetch';
+import { share } from '../modules/share';
 
 //Components
 import Navigation from './Navigation/Navigation';
+import NavIcon from './Navigation/NavIcon';
 
 //icons
 import { ReactComponent as OpenInNew } from './Navigation/icons/launch.svg';
@@ -201,15 +203,13 @@ function PreviewItem() {
               <Share />
               <span className={classes.actionLabel}>Share</span>
             </div>
-            {/* <div className={classes.actionIconContainer}>
-              <Bookmark />
-              <span className={classes.actionLabel}>Save</span>
-            </div> */}
           </div>
         ) : null}
       </div>
 
-      {state.itemPreview.showInSplitScreen ? null : <Navigation fromPreviewItem storyLink={link} />}
+      {state.itemPreview.showInSplitScreen ? null : (
+        <Navigation fromPreviewItem storyLink={link} story={{ title: title, link: link }} />
+      )}
     </>
   );
 }

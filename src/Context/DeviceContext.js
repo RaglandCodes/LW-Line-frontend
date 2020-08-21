@@ -21,6 +21,7 @@ function deviceReducer(deviceState, action) {
         innerWidth: action.payload,
         feedWidth: 0, // this makes the component send updated width
         previewWidth: 0,
+        smallDevice: action.payload < 400 || deviceState.innerHeight < 600,
       };
     }
 
@@ -29,6 +30,7 @@ function deviceReducer(deviceState, action) {
         ...deviceState,
         recentHeigtJank: Math.abs(deviceState.innerHeight - action.payload) > 111, // used along with inputFocused to guess if mobile keyboard was opened
         innerHeight: action.payload,
+        smallDevice: deviceState.innerWidth < 400 || action.payload < 600,
       };
     }
 
@@ -80,13 +82,14 @@ function DeviceContextProvider(props) {
 
   const [deviceState, deviceDispatch] = useReducer(deviceReducer, {
     orientation: 'potrait',
+    smallDevice: false,
     inputFocused: false, // when an inputFocused  && recentHeigtJank, don't show the navigation menu.
     // That's to try to prevent ugly vertical navigation when typing on phones with the on screen keyboard.
   });
 
   // useEffect(() => {
   //   console.dir(deviceState);
-  //   console.log('⬆ Latest global deviceState');
+  //   console.info('⬆ Latest global deviceState');
   // }, [deviceState]);
 
   useEffect(() => {

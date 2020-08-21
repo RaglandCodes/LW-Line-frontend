@@ -1,6 +1,5 @@
 //React
 import React from 'react';
-import { Context } from '../Context';
 import { DeviceContext } from '../Context/DeviceContext';
 
 //Styles
@@ -25,14 +24,20 @@ const useStyles = createUseStyles({
   pink: {
     color: 'pink',
   },
+  navIconLabel: styleState => ({
+    fontFamily: styleState.fonts.secondary,
+    fontSize: styleState.smallDevice ? 12 : 15,
+    display: 'block',
+    textAlign: 'center',
+    color: 'inherit',
+  }),
 });
 
 function Text(props) {
-  let { state, dispatch } = React.useContext(Context);
   let { deviceState, deviceDispatch } = React.useContext(DeviceContext);
   let { themeState, themeDispatch } = React.useContext(ThemeContext);
 
-  const classes = useStyles({ ...themeState });
+  const classes = useStyles({ ...themeState, ...deviceState });
 
   if (props.component === 'h1') {
     return <h1 className={classes[props.styleClass] || classes.header1}>{props.text}</h1>;
@@ -56,6 +61,9 @@ function Text(props) {
 
   if (props.component === 'div') {
     return <div className={classes[props.styleClass]}> {props.text}</div>;
+  }
+  if (props.component === 'span') {
+    return <span className={classes[props.styleClass]}> {props.text}</span>;
   }
 }
 
