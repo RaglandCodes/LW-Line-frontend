@@ -28,8 +28,22 @@ const useStyles = createUseStyles({
       right: 8,
     },
     '&:hover': {
-      borderBottom: `2px solid ${colours.blue900}`,
-      paddingBottom: 5, // prevenet jumping around caused by increased border-width,
+      //borderBottom: `2px solid ${colours.blue900}`,
+      //paddingBottom: 5, // prevenet jumping around caused by increased border-width,
+    },
+
+    '&:focus': {
+      outlineStyle: 'dashed',
+      outlineWidth: 2,
+      outlineColor: isActive => (isActive ? colours.blue900 : '#455A64'),
+      borderColor: ' white', //TODO
+    },
+
+    '&:focus $title': {
+      color: colours.blue900,
+    },
+    '&:focus $description': {
+      color: '#000000',
     },
     '&:hover $title': {
       textDecoration: 'underline',
@@ -158,6 +172,7 @@ function ArticleBox(item) {
 
   return (
     <div
+      tabIndex="0"
       className={classes.ArticleBox}
       onClick={() => {
         if (state.itemPreview.openOnClick) {

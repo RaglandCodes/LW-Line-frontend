@@ -27,8 +27,6 @@ const useStyles = createUseStyles({
     '&:hover': {
       // backgroundColor: 'pink',
     },
-  }),
-  icon: styleState => ({
     '& svg': {
       alignSelf: 'center',
       width: styleState.smallDevice ? 18 : 30,
@@ -45,7 +43,7 @@ function NavIcon(props) {
 
   return (
     <button className={classes.IconButton} onClick={props.onClick} aria-label={props.label}>
-      <div className={classes.icon}>{props.icon}</div>
+      {props.icon}
       <Text component="span" text={props.label} styleClass={'navIconLabel'} />
     </button>
   );

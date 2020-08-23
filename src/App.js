@@ -17,12 +17,15 @@ import { ThemeContext } from './Context/ThemeContext';
 
 const useStyles = createUseStyles({
   App: state => {
-    let navWidth = `${state.navigationWidth}px`;
+    let navWidth = state.navigationWidth;
     let feedWidth = '1fr';
     let previewWidth = '1fr';
 
+    if (state.smallDevice) {
+      navWidth -= 11;
+    }
     if ((state.inputFocused && state.recentHeigtJank) || state.orientation === 'potrait') {
-      navWidth = '0';
+      navWidth = 0;
     }
 
     if (state.feedWidth && state.previewWidth && state.itemPreview.showInSplitScreen) {
@@ -41,7 +44,7 @@ const useStyles = createUseStyles({
     return {
       display: 'grid',
       height: state.innerHeight,
-      gridTemplateColumns: `[nav-start] ${navWidth} [nav-end] ${feedWidth} [dragger-start] ${draggerWidth}px [preview-start] ${previewWidth} [preview-end]`,
+      gridTemplateColumns: `[nav-start] ${navWidth}px [nav-end] ${feedWidth} [dragger-start] ${draggerWidth}px [preview-start] ${previewWidth} [preview-end]`,
       gridTemplateRows: `[screen-start] auto [nav-start] ${navHeight}px [nav-end]`,
     };
   },

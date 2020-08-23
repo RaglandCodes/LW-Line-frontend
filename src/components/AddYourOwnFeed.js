@@ -93,7 +93,7 @@ function AddYourOwnFeed(props) {
           Add your own feed
         </label>
         <p className={classes.settingsExplanation}>
-          Enter the URL of an RSS feed. (This setting is still in
+          Enter the URL of an RSS feed. (This setting is still in{' '}
           <a href="https://github.com/raglandcodes/lw-line-frontend">development</a>)
         </p>
         <div className={classes.inputButtonWrap}>

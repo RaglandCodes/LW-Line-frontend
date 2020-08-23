@@ -18,6 +18,7 @@ const SourceTopicStyles = {
   display: 'inline-block',
   padding: 4,
   margin: 3,
+  border: 0,
   backgroundColor: colours.surface,
   fontFamily: fonts.secondary,
   fontSize: 16,
@@ -25,23 +26,30 @@ const SourceTopicStyles = {
 
 const useStyles = createUseStyles({
   ChooseSources: { overflow: 'auto' },
-  SourceTopic: {
+  SourceTopic: styleState => ({
     ...SourceTopicStyles,
-  },
-  chosenSourceTopic: {
+    '&:focus': {
+      outline: `2px dashed ${styleState.themeState.colours.lessDark}`,
+    },
+  }),
+  chosenSourceTopic: styleState => ({
     ...SourceTopicStyles,
     backgroundColor: '#1A237E',
     color: 'white',
-  },
+    '&:focus': {
+      outline: `2px solid ${styleState.themeState.colours.accentBright}`,
+      border: 0,
+    },
+  }),
 
   settingContainer: styleState => ({
-    ...styleState.settingContainer,
+    ...styleState.themeState.settingContainer,
   }),
 });
 
 function ChooseSources() {
   let { themeState, themeDispatch } = React.useContext(ThemeContext);
-  const classes = useStyles(themeState);
+  const classes = useStyles({ themeState });
   let { state, dispatch } = React.useContext(Context);
   let [topics, setTopics] = useState([]);
 
@@ -102,13 +110,13 @@ function ChooseSources() {
         <Text component="div" styleClass="header3" text="Search by topic" />
         {topics.length ? (
           topics.map(topic => (
-            <div
+            <button
               className={!topic.chosen ? classes.SourceTopic : classes.chosenSourceTopic}
               key={topic.topic}
               onClick={() => toggleChosenState(topic)}
             >
               {topic.topic}
-            </div>
+            </button>
           ))
         ) : (
           <>{errorMessage ? errorMessage : `Getting topics...  Please wait ...`}</>

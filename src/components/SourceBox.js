@@ -3,6 +3,9 @@ import React from 'react';
 import { Context } from '../Context';
 import { Link, useHistory } from 'react-router-dom';
 
+//components
+import Button from './Button';
+
 //Styles
 import { createUseStyles } from 'react-jss';
 import WebFont from 'webfontloader';
@@ -57,25 +60,32 @@ function SourceBox(source) {
     <div className={classes.SourceBox}>
       <div className={classes.sourceName}>{source.name}</div>
 
-      <button
+      <Button
+        component="button"
+        value="Preview"
+        onClick={() => history.push(`/source/${source.name}`)}
+        styleClass="primary"
+      />
+
+      {/* <button
         className={classes.previewButton}
         onClick={() => history.push(`/source/${source.name}`)}
       >
         Preview
-      </button>
+      </button> */}
 
       {source.subscribed ? (
-        <button
-          className={classes.removeButton}
+        <Button
+          component="button"
+          value="Remove"
+          styleClass="primaryLigher"
           onClick={() => {
             dispatch({ type: 'removeSubscription', payload: source.name });
           }}
-        >
-          Remove
-        </button>
+        />
       ) : (
-        <button
-          className={classes.followButton}
+        <Button
+          component="button"
           onClick={() => {
             if (source.custom) {
               dispatch({ type: 'appendCustomSubscription', payload: source.name });
@@ -84,9 +94,9 @@ function SourceBox(source) {
               dispatch({ type: 'appendSubscription', payload: source.name });
             }
           }}
-        >
-          Follow
-        </button>
+          styleClass="primaryDarker"
+          value="Follow"
+        />
       )}
     </div>
   );

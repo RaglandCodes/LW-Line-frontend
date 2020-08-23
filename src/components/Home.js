@@ -73,7 +73,7 @@ function Home(props) {
           Welcome to <b>LW Line.</b> <br />
           <br />
           Get started by choosing your interestes and subscribing to feeds. <br />
-          You can customise
+          You can customise{' '}
           <u>
             <span onClick={() => history.push('/settings')}>more in the settings</span>
           </u>

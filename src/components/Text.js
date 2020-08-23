@@ -26,7 +26,7 @@ const useStyles = createUseStyles({
   },
   navIconLabel: styleState => ({
     fontFamily: styleState.fonts.secondary,
-    fontSize: styleState.smallDevice ? 12 : 15,
+    fontSize: styleState.smallDevice ? 13 : 15,
     display: 'block',
     textAlign: 'center',
     color: 'inherit',

@@ -14,28 +14,12 @@ import ChooseSources from '../ChooseSources';
 import AddYourOwnFeed from '../AddYourOwnFeed';
 import MutePhraseChips from './MutePhraseChips/MutePhraseChips';
 import Text from '../Text';
+import Button from '../Button';
 
 //Styles
 import { createUseStyles } from 'react-jss';
 import { ThemeContext } from '../../Context/ThemeContext';
-import {
-  button,
-  settingContainer,
-  settingsExplanation,
-  input,
-  inputSubmitButton,
-} from '../../styles';
-
-// WebFont.load({
-//   google: {
-//     families: [
-//       `${header2.fontFamily}:${header2.fontWeight}`,
-//       `${header3.fontFamily}:${header3.fontWeight}`,
-//       `${header4.fontFamily}:${header4.fontWeight}`,
-//       fonts.primary,
-//     ],
-//   },
-// });
+import { settingContainer, settingsExplanation, input, inputSubmitButton } from '../../styles';
 
 const padded = {
   padding: {
@@ -71,7 +55,6 @@ const useStyles = createUseStyles({
   },
   inputField: {
     flexGrow: 1,
-
     ...input,
   },
   inputSubmitButton: {
@@ -79,11 +62,6 @@ const useStyles = createUseStyles({
   },
   checkBoxInput: {
     flexShrink: 1,
-  },
-  showMoreBtn: {
-    ...button,
-    color: 'black',
-    float: 'right',
   },
   settingContainer: {
     ...settingContainer,
@@ -166,12 +144,20 @@ function Settings() {
                 onFocus={() => deviceDispatch({ type: 'setInputFocused', payload: true })}
                 onBlur={() => deviceDispatch({ type: 'setInputFocused', payload: false })}
               />
-              <input
+              <Button
+                component="input"
+                type="submit"
+                value="Search"
+                styleClass="input"
+                disabled={fetchingFeeds}
+              />
+
+              {/* <input
                 type="submit"
                 value="Search"
                 className={classes.inputSubmitButton}
                 disabled={fetchingFeeds}
-              />
+              /> */}
             </div>
           </form>
           {feedSearchWarning}
@@ -298,7 +284,7 @@ function Settings() {
         <br />
         <br />
         <br />
-        <span className={classes.version}>Version 0.2.2</span>
+        <span className={classes.version}>Version 0.2.3</span>
       </div>
     </Sheet>
   );
