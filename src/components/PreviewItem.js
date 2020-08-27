@@ -11,6 +11,7 @@ import { share } from '../modules/share';
 //Components
 import Navigation from './Navigation/Navigation';
 import NavIcon from './Navigation/NavIcon';
+import Text from './Text';
 
 //icons
 import { ReactComponent as OpenInNew } from './Navigation/icons/launch.svg';
@@ -118,7 +119,6 @@ function PreviewItem() {
   let [title, setTitle] = useState('Title is loading');
   let [metaDescription, setMetaDescription] = useState('Description is loading');
   let [metaImage, setMetaImage] = useState('');
-  let [contentSnippet, setContentSnippet] = useState('');
   let [errorMessage, setErrorMessage] = useState(null);
   let [paragraphs, setParagraphs] = useState([]);
   let [link, setLink] = useState('');
@@ -133,7 +133,6 @@ function PreviewItem() {
       .then(jsonRes => {
         setTitle(jsonRes.title);
         setMetaDescription(jsonRes.metaDescription);
-        setContentSnippet(jsonRes.contentSnippet);
         setParagraphs(jsonRes.contentSnippetParagraphs);
         setLink(jsonRes['link']);
         setMetaImage(jsonRes.image);
@@ -152,6 +151,7 @@ function PreviewItem() {
         setMetaDescription(itemToShow.metaDescription);
         setLink(itemToShow.link);
         setMetaImage(itemToShow.image);
+        setParagraphs(itemToShow.contentSnippetParagraphs);
       } else {
         getFromDatabase();
       }
@@ -161,10 +161,6 @@ function PreviewItem() {
     // TODO check the dependencies
   }, [state.feedItems, id]);
 
-  // useState(() => {
-  //   console.dir(paragraphs);
-  //   console.log('^paragraphs^');
-  // }, [paragraphs]);
   return (
     <>
       <div className={classes.Preview}>
@@ -173,7 +169,15 @@ function PreviewItem() {
           <h1 className={classes.header1}>{title}</h1>
           <p className={classes.metaDescription}>{metaDescription}</p>
           <div className={classes.contentSnippet}>
-            {paragraphs && paragraphs.map(p => <p key={p.key}>{p.content}</p>)}
+            {paragraphs &&
+              paragraphs.map(p => (
+                <Text
+                  component="paragraph"
+                  text={p.content}
+                  styleClass="previewParagraph"
+                  key={p.key}
+                />
+              ))}
           </div>
           {errorMessage}
         </div>

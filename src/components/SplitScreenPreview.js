@@ -5,10 +5,14 @@ import { DeviceContext } from '../Context/DeviceContext';
 
 //Components
 import PreviewItem from './PreviewItem';
+import Text from './Text';
 
 //Styles
 import { createUseStyles } from 'react-jss';
 import { colours } from '../styles';
+
+//images
+import logo from './images/logo192.png';
 
 const useStyles = createUseStyles({
   SplitScreenPreview: orientation => ({
@@ -21,6 +25,18 @@ const useStyles = createUseStyles({
 
     // display: 'flex',
   }),
+  blankPreview: {
+    height:'100%',
+    display: 'flex',
+    //backgroundColor: 'cyan',
+    flexDirection: 'column',
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  logo:{
+    opacity:0.4,
+    maxWidth: '90%'
+  }
 });
 
 function SplitScreenPreview(props) {
@@ -41,15 +57,18 @@ function SplitScreenPreview(props) {
 
   useEffect(() => {
     return () => {
-      //TODO fix this
-      console.log('cleaned up');
+      // Remove old preview on unmount
+      dispatch({ type: 'setPreview', payload: { type: 'preview', id: '' } });
     };
   }, []);
 
   return (
     <div className={classes.SplitScreenPreview} ref={previewElement}>
       {state.itemPreview.currentPreview.id === '' ? (
-        <p>Please choose an item to view it here</p>
+        <div className={classes.blankPreview}>
+        <img src={logo} alt="LW Line Logo" className={classes.logo}/>
+          <Text component="paragraph" text="Please choose an item from the feed to see the preview here" styleClass="uninitialisedPreview"/>
+        </div>
       ) : (
         <PreviewItem />
       )}

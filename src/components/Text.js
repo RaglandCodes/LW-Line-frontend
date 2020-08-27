@@ -31,6 +31,15 @@ const useStyles = createUseStyles({
     textAlign: 'center',
     color: 'inherit',
   }),
+  previewParagraph: styleState => ({
+    fontFamily: styleState.fonts.primary,
+  }),
+  paragraph: styleState => ({
+    fontSize: 18
+  }),
+  uninitialisedPreview: styleState => ({
+    fontFamily: styleState.fonts.secondary
+  })
 });
 
 function Text(props) {
@@ -64,6 +73,9 @@ function Text(props) {
   }
   if (props.component === 'span') {
     return <span className={classes[props.styleClass]}> {props.text}</span>;
+  }
+  if (props.component === 'paragraph') {
+    return <p className={classes[props.styleClass] || classes.paragraph}> {props.text}</p>;
   }
 }
 

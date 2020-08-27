@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import GeneralFeed from './GeneralFeed';
 import ChooseSources from './ChooseSources';
 import Sheet from './Layout/Sheet';
+import Button from './Button'
 
 //Styles
 import { createUseStyles } from 'react-jss';
@@ -47,7 +48,7 @@ function Home(props) {
 
     if (deviceState.innerHeight && (props.newUser || state.subscriptions.length === 0)) {
       /*
-        This is to prevent the jarring effect of the settings (usually shown to new users)
+        This is to prevent the jarring effect of the settings (meant for new users)
         being shown to returning users for a few moments
 
         The understanding is that if state.innerHeight is not undefined, 
@@ -81,17 +82,19 @@ function Home(props) {
         </p>
 
         <ChooseSources />
-        <button
-          className={classes.doneButton}
-          onClick={() => {
+        <Button 
+        component="button"
+        value="Done"
+        styleClass="doneButton"
+        disabled={state.subscriptions.length === 0}
+        onClick={() => {
             if (state.subscriptions.length) {
               setShowFeed(true);
               props.setNewUser(false);
             }
           }}
-        >
-          Done
-        </button>
+        />
+        
       </div>
     </Sheet>
   ) : null;

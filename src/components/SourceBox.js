@@ -67,14 +67,7 @@ function SourceBox(source) {
         styleClass="primary"
       />
 
-      {/* <button
-        className={classes.previewButton}
-        onClick={() => history.push(`/source/${source.name}`)}
-      >
-        Preview
-      </button> */}
-
-      {source.subscribed ? (
+            {source.subscribed ? (
         <Button
           component="button"
           value="Remove"

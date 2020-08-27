@@ -15,6 +15,9 @@ const defaultButton = {
   fontSize: 14,
   margin: 3,
   color: 'white',
+  '&:disabled': {
+    opacity:0.6
+  }
 };
 
 const useStyles = createUseStyles({
@@ -58,6 +61,12 @@ const useStyles = createUseStyles({
       backgroundColor: styleState.themeState.colours.accent,
     },
   }),
+
+  doneButton: styleState => ({
+    ...defaultButton,
+    backgroundColor: styleState.themeState.colours.darker,
+    width:'100%'
+  })
 });
 
 function Button(props) {
