@@ -18,6 +18,15 @@
       "sizes": "512x512"
     }
   ],
+  "share_target": {
+    "action": "/settings/",
+    "method": "GET",
+    "params": {
+      "title": "newFeedTitle",
+      "text": "newFeedText",
+      "url": "newFeedUrl"
+    }
+  },
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#1A237E",

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Context } from '../Context';
 import { DeviceContext } from '../Context/DeviceContext';
+import { useLocation } from 'react-router-dom';
 
 //Components
 import SourceBox from './SourceBox';
@@ -60,6 +61,17 @@ function AddYourOwnFeed(props) {
   const [loading, setLoading] = useState(false);
   const [feedSearchResult, setFeedSearcResult] = useState(null);
 
+  const [incommingShareTitle, setIncommingShareTitle] = useState(null);
+  const [incommingShareUrl, setIncommingShareUrl] = useState(null);
+  const [incommingShareText, setIncommingShareText] = useState(null);
+
+  let query = new URLSearchParams(useLocation().search);
+
+  useEffect(() => {
+    setIncommingShareText(query.get('newFeedText'));
+    setIncommingShareTitle(query.get('newFeedTitle'));
+    setIncommingShareUrl(query.get('newFeedUrl'));
+  }, [query]);
   // Get the feed items, and updtate states.
   async function addNewFeed(e) {
     e.preventDefault();
@@ -109,6 +121,9 @@ function AddYourOwnFeed(props) {
         </div>
         <p className={classes.message}>{message}</p>
         <div>
+          Text -= {incommingShareText}Title +++
+          {incommingShareTitle}
+          {incommingShareUrl} LEEFT URL
           {feedSearchResult ? (
             <SourceBox
               name={feedSearchResult.name}
